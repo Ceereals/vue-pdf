@@ -1,0 +1,69 @@
+{
+    "compilerOptions": {
+        "target": "ES2020",
+        "useDefineForClassFields": true,
+        "module": "ESNext",
+        "lib": [
+            "ES2020",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "skipLibCheck": true,
+        "types": [
+            "vite/client"
+        ],
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+            "@dom/*": [
+                "./dom/*"
+            ],
+            "@workers/*": [
+                "./dom/workers/*"
+            ],
+            "@renderer/*": [
+                "./renderer/*"
+            ],
+            "@renderer": [
+                "./renderer"
+            ],
+            "@utils/*": [
+                "./utils/*"
+            ],
+            "@utils": [
+                "./utils"
+            ],
+            "@lib/*": [
+                "./lib/*"
+            ]
+        },
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "noEmit": true,
+        "jsx": "preserve",
+        "jsxImportSource": "vue",
+        "outDir": "dist",
+        "rootDir": "./",
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
+    },
+    "include": [
+        "components/**/*.ts",
+        "dom/**/*.tsx",
+        "dom/**/*.vue",
+        "dom/**/*.ts",
+        "renderer/**/*.ts",
+        "src/**/*.vue",
+        "index.ts",
+        "tests/**/*.ts",
+        "tests/**/*.vue",
+        "lib/**/*.ts"
+    ]
+}

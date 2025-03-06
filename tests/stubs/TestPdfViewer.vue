@@ -1,0 +1,28 @@
+<script setup lang="ts">
+import PdfViewer from '@/dom/PDFViewer.vue'
+import TestDocument from './TestDocument.vue'
+import { provide, toRef } from 'vue'
+import { templateRef } from '@vueuse/core'
+const props = withDefaults(
+  defineProps<{
+    bridge: boolean
+    text?: string
+  }>(),
+  {
+    bridge: false,
+  },
+)
+provide(
+  'bridge',
+  toRef(() => props.bridge),
+)
+const pdfViewer = templateRef<InstanceType<typeof PdfViewer>>('pdfViewer')
+defineExpose({
+  root: () => pdfViewer.value[Symbol.for('root')],
+})
+</script>
+<template>
+  <PdfViewer ref="pdfViewer" enableProvideBridge show-toolbar>
+    <TestDocument :text="text"></TestDocument>
+  </PdfViewer>
+</template>
