@@ -1,0 +1,25 @@
+{
+  "name": "@react-pdf/fns",
+  "version": "3.1.2",
+  "license": "MIT",
+  "description": "React-pdf helper functions",
+  "author": "Diego Muracciole <diegomuracciole@gmail.com>",
+  "homepage": "https://github.com/diegomura/react-pdf#readme",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegomura/react-pdf.git",
+    "directory": "packages/fns"
+  },
+  "scripts": {
+    "test": "vitest",
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "typecheck": "tsc --noEmit"
+  },
+  "files": [
+    "lib"
+  ]
+}
