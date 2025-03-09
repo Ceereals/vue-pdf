@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2020",
+        "target": "ES2024",
         "useDefineForClassFields": true,
         "module": "ESNext",
         "lib": [
@@ -36,7 +36,7 @@
             ],
             "@lib/*": [
                 "./lib/*"
-            ]
+            ],
         },
         /* Bundler mode */
         "moduleResolution": "bundler",
@@ -64,6 +64,14 @@
         "index.ts",
         "tests/**/*.ts",
         "tests/**/*.vue",
-        "lib/**/*.ts"
-    ]
+        "lib/**/*.ts",
+        "docs/**/*.ts",
+        "docs/**/*.vue",
+        "docs/**/*.md",
+    ],
+    "vueCompilerOptions": {
+        "vitePressExtensions": [
+            ".md"
+        ]
+    }
 }

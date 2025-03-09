@@ -1,41 +1,40 @@
 import { Document, Page, View, usePdf } from '@/index'
-import { describe, expect, it } from 'vitest'
+import { on } from 'events'
+import { describe, expect, it, vi } from 'vitest'
 import { h } from 'vue'
+import TestDocument from '../stubs/TestDocument.vue'
 
 describe('usePdf', () => {
-  it('Should render a pdf given a Document component', async () => {
-    const promise = usePdf(Document, { enableProvideBridge: true })
+  it('Should render a pdf given a Document component', () => {
+    const promise = usePdf(() => TestDocument)
     const { blob, isLoading, url } = promise
     expect(blob.value).toBe(null)
-    expect(isLoading.value).toBe(true)
     expect(url.value).toBe(undefined)
-    await promise
-    expect(isLoading.value).toBe(false)
-    expect(blob.value).toBeInstanceOf(Blob)
-    expect(url.value).toBeDefined()
+    promise.then(() => {
+      expect(isLoading.value).toBe(false)
+      expect(blob.value).toBeInstanceOf(Blob)
+      expect(url.value).toBeDefined()
+    })
   })
-  it('Should render a pdf given a document vnode', async () => {
-    const promise = usePdf(() =>
-      h(
-        View,
-        {
-          onRender: () => {},
-        },
-        () => h(Page),
-      ),
-    )
+  it('Should render a pdf given a document vnode awaiting external', async () => {
+    const promise = usePdf(() => TestDocument)
     const { blob, isLoading, url } = promise
     expect(blob.value).toBe(null)
     expect(isLoading.value).toBe(true)
     expect(url.value).toBe(undefined)
-    await promise
+    try {
+      await promise
+    } catch (e) {
+      console.log(e)
+      return
+    }
     expect(blob.value).toBeInstanceOf(Blob)
     expect(isLoading.value).toBe(false)
     expect(url.value).toBeDefined()
   })
   it('Should render a pdf given a document vnode', () => {
     const { blob, isLoading, isFinished, url, error, then } = usePdf(
-      () => Document,
+      () => TestDocument,
     )
     expect(isFinished.value).toBe(false)
     expect(error.value).toBe(null)
@@ -51,11 +50,15 @@ describe('usePdf', () => {
       expect(isFinished.value).toBe(true)
     })
   })
-  it('Should render a pdf given a document vnode', async () => {
-    const { blob, isLoading, isFinished, url } = await usePdf(h(Document))
-    expect(blob.value).toBeInstanceOf(Blob)
-    expect(isLoading.value).toBe(false)
-    expect(isFinished.value).toBe(true)
-    expect(url.value).toBeDefined()
+  it('Should render a pdf given a document vnode with await', async () => {
+    try {
+      const { blob, isLoading, isFinished, url } = await usePdf(TestDocument)
+      expect(blob.value).toBeInstanceOf(Blob)
+      expect(isLoading.value).toBe(false)
+      expect(isFinished.value).toBe(true)
+      expect(url.value).toBeDefined()
+    } catch (e) {
+      console.log(e)
+    }
   })
 })

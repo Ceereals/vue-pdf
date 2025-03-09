@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { describe } from 'node:test'
 import { expect, it } from 'vitest'
 import TestPdfViewer from '../stubs/TestPdfViewer.vue'
-import { PdfViewer } from '@/dom'
+import { PDFViewer } from '@/dom'
 import { h } from 'vue'
 import { Page } from '@/components'
 import { rootSymbol } from '@/dom/symbols'
@@ -45,7 +45,7 @@ describe('PdfViewer', () => {
     ).toBe('Hello')
   })
   it('should mount PdfViewer', async () => {
-    const wrapper = mount(PdfViewer, {
+    const wrapper = mount(PDFViewer, {
       props: {
         showToolbar: true,
       },
@@ -58,7 +58,7 @@ describe('PdfViewer', () => {
     expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(0)
   })
   it('should mount PdfViewer without toolbar', async () => {
-    const wrapper = mount(PdfViewer, {
+    const wrapper = mount(PDFViewer, {
       props: {
         showToolbar: false,
       },

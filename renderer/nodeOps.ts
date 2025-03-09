@@ -50,14 +50,18 @@ export type PDFNode = Omit<PDFElement, 'document'> & {
   value?: string
 }
 
-export const nodeOps: RendererOptions<PDFNode, PDFElement> = {
+export const nodeOps: (context: any) => RendererOptions<PDFNode, PDFElement> = (
+  context,
+) => ({
   insert: (child, parent, anchor) => {
+    if (!child || !parent) return
     if (child.type === 'COMMENT') return
     if (parent.type === 'ROOT') {
       parent.document = child
     } else {
       appendChild(parent, child, anchor)
     }
+    context.execute()
   },
 
   remove: (child) => {
@@ -68,6 +72,7 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement> = {
       child.parentNode?.children.splice(index, 1)
       child.parentNode = null
     }
+    // context.execute()
   },
   createElement: (
     tag,
@@ -96,18 +101,21 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement> = {
 
   setText: (node, text) => {
     node.value = text
+    context.execute()
   },
 
   setElementText: (el, text) => {
     // @ts-expect-error
     el.value = text
+    context.execute()
   },
 
   /* v8 ignore next */
   querySelector: () => null,
   /* v8 ignore next */
   setScopeId(_, __) {},
-  parentNode(node: PDFNode): PDFElement | null {
+  parentNode(node: PDFNode | null): PDFElement | null {
+    if (!node) return node
     return node.parentNode as unknown as PDFElement
   },
   nextSibling: (node: PDFNode): PDFNode | null => {
@@ -128,6 +136,7 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement> = {
       // @ts-expect-error
       el.props[key] = nextValue
     }
+    context.execute()
     return el
   },
-}
+})

@@ -1,4 +1,4 @@
-import PdfViewer from './PDFViewer.vue'
+import PDFViewer from './PDFViewer.vue'
 import usePdf from './usePdf'
 
-export { usePdf, PdfViewer }
+export { usePdf, PDFViewer }

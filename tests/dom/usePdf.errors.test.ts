@@ -2,6 +2,7 @@ import { Document } from '@/components'
 import { usePdf } from '@/dom'
 import { describe, expect, it, vi } from 'vitest'
 import { h } from 'vue'
+import TestDocument from '../stubs/TestDocument.vue'
 vi.mock('@utils', async (importOriginal) => {
   const original = (await importOriginal()) as any
   return {
@@ -13,7 +14,7 @@ vi.mock('@utils', async (importOriginal) => {
 })
 describe('usePdf errors', () => {
   it('execute should throw error', async () => {
-    const { execute } = usePdf(h(Document), {
+    const { execute } = usePdf(() => h(TestDocument), {
       immediate: false,
     })
     try {
@@ -28,13 +29,13 @@ describe('usePdf errors', () => {
     const onError = vi.fn(() => {
       return new Error('Error modified')
     })
-    const { execute } = await usePdf(h(Document), {
+    const { execute } = await usePdf(() => h(TestDocument), {
       immediate: false,
       onError,
     })
     expect(onError).not.toBeCalled()
     try {
-      await execute(true)
+      await execute()
       expect(true).toBe(false)
     } catch (e: any) {
       expect(e).toBeInstanceOf(Error)

@@ -2,7 +2,7 @@
 import type { VNode } from 'vue'
 import { computed } from 'vue'
 import usePdf from './usePdf'
-import { PDFViewerProps } from '@/components'
+import type { PDFViewerProps } from '@/components'
 import { rootSymbol } from './symbols'
 const props = withDefaults(defineProps<PDFViewerProps>(), {
   showToolbar: true,

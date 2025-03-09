@@ -1,8 +1,10 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
 import viteConfig from './vite.config'
 export default mergeConfig(
   viteConfig,
   defineConfig({
+    // plugins: [vue()],
     test: {
       environment: 'happy-dom',
       setupFiles: ['@vitest/web-worker'],
@@ -15,7 +17,7 @@ export default mergeConfig(
         optimizer: {
           web: {
             enabled: true,
-            include: ['@react-pdf/types/primitive', '@react-pdf/primitives'],
+            include: ['@react-pdf/primitives'],
           },
         },
       },

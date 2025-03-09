@@ -2,6 +2,7 @@ import { Readable } from 'stream'
 import {
   cleanObjectForSeralization,
   fileStreamToBlob,
+  makeCancellable,
   mergeReactive,
 } from '@utils'
 import { describe, expect, it } from 'vitest'
@@ -156,4 +157,59 @@ describe('cleanObjectForSeralization', () => {
       },
     })
   })
+})
+describe('makeCancelable', () => {
+    it('should resolve the promise if not cancelled', async () => {
+      const asyncFunction = async (value: string) => {
+        return new Promise<string>((resolve) => {
+          setTimeout(() => resolve(value), 100)
+        })
+      }
+
+      const cancellableFunction = makeCancellable(asyncFunction)
+      const result = await cancellableFunction('test')
+
+      expect(result).toBe('test')
+    })
+
+    it('should reject the promise if cancelled', async () => {
+      const asyncFunction = async (value: string) => {
+        return new Promise<string>((resolve) => {
+          setTimeout(() => resolve(value), 100)
+        })
+      }
+
+      const cancellableFunction = makeCancellable(asyncFunction)
+      const promise = cancellableFunction('test')
+      cancellableFunction('cancelled')
+
+      await expect(promise).rejects.toThrow('Cancelled')
+    })
+
+    it('should handle multiple calls correctly', async () => {
+      const asyncFunction = async (value: string) => {
+        return new Promise<string>((resolve) => {
+          setTimeout(() => resolve(value), 100)
+        })
+      }
+
+      const cancellableFunction = makeCancellable(asyncFunction)
+      const promise1 = cancellableFunction('first')
+      const promise2 = cancellableFunction('second')
+
+      await expect(promise1).rejects.toThrow('Cancelled')
+      const result2 = await promise2
+
+      expect(result2).toBe('second')
+    })
+
+    it('should propagate errors from the original function', async () => {
+      const asyncFunction = async () => {
+        throw new Error('Original Error')
+      }
+
+      const cancellableFunction = makeCancellable(asyncFunction)
+
+      await expect(cancellableFunction()).rejects.toThrow('Original Error')
+    })
 })

@@ -1,8 +1,8 @@
 /* v8 ignore start */
-import { PdfRoot } from '@/dom/usePdf'
-import { PDFNode } from '@/renderer/nodeOps'
+import type { PdfRoot } from '@/dom/usePdf'
+import type { PDFNode } from '@/renderer/nodeOps'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
-import { App, h, Ref, toValue, VNode } from 'vue'
+import { type App, type Ref, toValue } from 'vue'
 const inspectorId = 'my-awesome-plugin'
 const map = new Map()
 export function setupDevtools(
@@ -10,6 +10,7 @@ export function setupDevtools(
   context: {
     execute: () => void
     root: Readonly<Ref<PdfRoot>>
+    onRender: (fn: () => void) => void
   },
 ) {
   map.clear()
@@ -24,6 +25,10 @@ export function setupDevtools(
       app,
     },
     (api) => {
+      context.onRender(() => {
+        api.sendInspectorTree(inspectorId)
+      })
+      
       api.addInspector({
         id: inspectorId,
         label: 'VuePDF',
@@ -47,28 +52,26 @@ export function setupDevtools(
           },
         ],
       })
+
       api.on.getInspectorTree((payload) => {
         if (payload.inspectorId === inspectorId) {
           if (context.root.value) {
             const tree = createTree(context.root.value)
-            payload.rootNodes = tree
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            payload.rootNodes = tree as any
           }
         }
       })
       let prevNode = null
       api.on.getInspectorState((payload) => {
         if (payload.inspectorId === inspectorId) {
-          console.log(
-            'getInspectorState',
-            payload,
-            map,
-            map.get(payload.nodeId),
-          )
           if (map.get(payload.nodeId)) {
             if (prevNode && prevNode.uid !== payload.nodeId) {
-              console.log(prevNode)
+              prevNode.props = {
+                ...prevNode.props,
+                debug: false,
+              }
               map.set(prevNode.uid, prevNode)
-              context.execute()
             }
             payload.state = {
               props: Object.entries(map.get(payload.nodeId).props).map(
@@ -88,12 +91,12 @@ export function setupDevtools(
                 },
               ),
             }
-            let currentNode = map.get(payload.nodeId)
+            const currentNode = map.get(payload.nodeId)
             prevNode = toValue(map.get(payload.nodeId))
-            currentNode.style = {
-              ...currentNode.style,
-              border: 1,
-              borderColor: 'red',
+            if (prevNode.type === 'DOCUMENT') return
+            prevNode.props = {
+              ...prevNode.props,
+              debug: true,
             }
             context.execute()
           }
@@ -107,7 +110,7 @@ const createTree = (root: PdfRoot) => {
   const tree: {
     id: string
     label: string
-    children: any[]
+    children: unknown[]
     tags: {
       label: string
       textColor: string
@@ -115,7 +118,7 @@ const createTree = (root: PdfRoot) => {
     }[]
   }[] = []
   tree.push(createNode(root.document))
-  return tree
+  return tree as unknown[]
 }
 
 const createNode = (node: PDFNode) => {
@@ -127,14 +130,14 @@ const createNode = (node: PDFNode) => {
   }
   const nodeData = {
     id: node.uid,
-    label: '<' + firstLetterUppercase(node.type.toLowerCase()) + '>',
+    label: `<${firstLetterUppercase(node.type.toLowerCase())}${node.props?.id ? ` id="${node.props.id}"` : ''}>`,
     tags: [],
     children:
       node.type === 'TEXT'
         ? null
         : (node.children?.map(createNode) ?? undefined),
   }
-  return nodeData
+  return nodeData as unknown
 }
 
 const firstLetterUppercase = (str: string) => {

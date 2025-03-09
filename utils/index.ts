@@ -71,3 +71,52 @@ export const omitNils = (object: any) =>
   Object.fromEntries(
     Object.entries(object).filter(([, value]) => value !== undefined),
   )
+class CancelError extends Error {
+  constructor(message = 'Cancelled') {
+    super(message)
+    this.name = 'CancelError'
+  }
+}
+export function makeCancellable<T extends (...args: any[]) => Promise<any>>(
+  fn: T,
+) {
+  // Keep track of the current active call's controllers (promise and its resolvers)
+  let current: {
+    promise: Promise<T>
+    resolve: (value: T) => void
+    reject: (error: Error) => void
+  } | null = null
+
+  return function cancellableWrapper(...args: Parameters<T>): ReturnType<T> {
+    // If a previous call is still pending, cancel it by rejecting its promise
+    if (current) {
+      console.log('canceling')
+      current.reject(new CancelError()) // Immediately abort previous execution
+    }
+
+    // Create a new promise with manual resolvers using Promise.withResolvers
+    const { promise, resolve, reject } = Promise.withResolvers()
+    current = { promise, resolve, reject } // mark this as the active execution
+
+    // Start the original async function in the background
+    ;(async () => {
+      try {
+        const result = await fn(...args) // execute the original function
+        if (current.promise === promise) {
+          // if still the latest call (not cancelled by a newer one)
+          resolve(result) // resolve with the result
+          current = null // clear current (no active task)
+        }
+      } catch (err) {
+        if (current?.promise === promise) {
+          // if this is still the active call
+          reject(err) // propagate the error
+          current = null
+        }
+      }
+      // If this call was superseded by a newer call, its result/error is ignored.
+    })()
+
+    return promise // return the cancellable promise
+  }
+}

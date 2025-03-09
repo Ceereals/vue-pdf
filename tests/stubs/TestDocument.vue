@@ -9,10 +9,10 @@ withDefaults(
     text: 'testo',
   },
 )
-const bridge = inject('bridge')
+const bridge = inject('bridge', false)
 </script>
 <template>
-  <Document>
+  <Document >
     <Page id="1"><Text>{{ text }}</Text></Page>
     <Page id="2" v-if="bridge"
       ><Text>{{ bridge }}</Text></Page

@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { type PDFNode, nodeOps } from '../../renderer/nodeOps'
-
+import { type PDFNode, nodeOps as nodeOpsFn } from '../../renderer/nodeOps'
+const nodeOps = nodeOpsFn({ execute: () => {} })
 // Utility function to create a mock PDFNode
 
 describe('nodeOps', () => {

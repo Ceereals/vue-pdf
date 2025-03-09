@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
@@ -8,6 +8,7 @@ export default defineConfig({
     vue(),
     dts({
       rollupTypes: true,
+
       tsconfigPath: './tsconfig.app.json',
     }),
   ],
@@ -34,6 +35,7 @@ export default defineConfig({
       name: 'index',
       formats: ['es'],
     },
+    sourcemap: true,
     rollupOptions: {
       external: [
         '@vue/shared',
