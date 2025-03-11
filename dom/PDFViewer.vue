@@ -3,7 +3,7 @@ import type { VNode } from 'vue'
 import { computed } from 'vue'
 import usePdf from './usePdf'
 import type { PDFViewerProps } from '@/components'
-import { rootSymbol } from './symbols'
+import { rootSymbol } from '@/symbols'
 const props = withDefaults(defineProps<PDFViewerProps>(), {
   showToolbar: true,
   enableProvideBridge: true,
@@ -18,8 +18,7 @@ const {
   root,
 } = usePdf(
   () =>
-    slots.default!().filter((slot) => {
-      console.log('slot', slot.type)
+    slots.default().filter((slot) => {
       return slot.type !== Symbol.for('v-cmt')
     })[0],
   { enableProvideBridge: props.enableProvideBridge },
