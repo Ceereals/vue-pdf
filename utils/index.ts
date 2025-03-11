@@ -1,16 +1,11 @@
-import { isReactive, reactive, toRefs } from 'vue'
-export function mergeReactive(target: any, source: any) {
-  const _target = isReactive(target) ? toRefs(target) : target
-  const _source = isReactive(source) ? toRefs(source) : source
-  return reactive({
-    ..._target,
-    ..._source,
-  })
-}
+import type renderPDF from '@react-pdf/render'
 
-export function fileStreamToBlob(fileStream: any): Promise<Blob> {
+export function fileStreamToBlob(
+  fileStream: ReturnType<typeof renderPDF>,
+): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const chunks: Uint8Array[] = []
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     fileStream.on('data', (chunk: any) => {
       /* v8 ignore next */
       chunks.push(chunk instanceof Uint8Array ? chunk : new Uint8Array(chunk))
@@ -24,14 +19,17 @@ export function fileStreamToBlob(fileStream: any): Promise<Blob> {
         reject(error)
       }
     })
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     fileStream.on('error', (error: any) => {
       reject(error)
     })
   })
 }
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function removeCircular(obj: any) {
   const seen = new Map()
-  delete obj['_vnode']
+  obj._vnode = undefined
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const recurse = (obj: any) => {
     seen.set(obj, true)
     /* v8 ignore next */
@@ -45,6 +43,7 @@ function removeCircular(obj: any) {
   }
   recurse(obj)
 }
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function cleanObjectForSeralization(obj: any, recursive = false) {
   !recursive && removeCircular(obj)
   for (const key in obj) {
@@ -57,6 +56,7 @@ export function cleanObjectForSeralization(obj: any, recursive = false) {
       }
     }
     if (key === 'children') {
+      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       obj[key] = obj[key].map((child: any) =>
         cleanObjectForSeralization(child, true),
       )
@@ -67,56 +67,7 @@ export function cleanObjectForSeralization(obj: any, recursive = false) {
   }
   return obj
 }
-export const omitNils = (object: any) =>
+export const omitNils = (object: object) =>
   Object.fromEntries(
     Object.entries(object).filter(([, value]) => value !== undefined),
   )
-class CancelError extends Error {
-  constructor(message = 'Cancelled') {
-    super(message)
-    this.name = 'CancelError'
-  }
-}
-export function makeCancellable<T extends (...args: any[]) => Promise<any>>(
-  fn: T,
-) {
-  // Keep track of the current active call's controllers (promise and its resolvers)
-  let current: {
-    promise: Promise<T>
-    resolve: (value: T) => void
-    reject: (error: Error) => void
-  } | null = null
-
-  return function cancellableWrapper(...args: Parameters<T>): ReturnType<T> {
-    // If a previous call is still pending, cancel it by rejecting its promise
-    if (current) {
-      console.log('canceling')
-      current.reject(new CancelError()) // Immediately abort previous execution
-    }
-
-    // Create a new promise with manual resolvers using Promise.withResolvers
-    const { promise, resolve, reject } = Promise.withResolvers()
-    current = { promise, resolve, reject } // mark this as the active execution
-
-    // Start the original async function in the background
-    ;(async () => {
-      try {
-        const result = await fn(...args) // execute the original function
-        if (current.promise === promise) {
-          // if still the latest call (not cancelled by a newer one)
-          resolve(result) // resolve with the result
-          current = null // clear current (no active task)
-        }
-      } catch (err) {
-        if (current?.promise === promise) {
-          // if this is still the active call
-          reject(err) // propagate the error
-          current = null
-        }
-      }
-      // If this call was superseded by a newer call, its result/error is ignored.
-    })()
-
-    return promise // return the cancellable promise
-  }
-}
