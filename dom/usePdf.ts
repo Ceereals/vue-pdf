@@ -1,49 +1,35 @@
 import { setupDevtools } from '@/devtools'
-import { upperFirst } from '@react-pdf/fns'
-import FontStore from '@react-pdf/font'
-import _layoutDocument from '@react-pdf/layout'
-import type { DocumentNode } from '@react-pdf/layout'
-import { render as createRender } from '@renderer/index'
+import { type PdfRoot, pdfRender } from '@/render'
+import { render } from '@renderer/index'
 import type { PDFElement } from '@renderer/nodeOps'
-import { fileStreamToBlob, makeCancellable, omitNils } from '@utils'
-import {
-  createEventHook,
-  tryOnBeforeMount,
-  until,
-  useObjectUrl,
-  watchImmediate,
-  watchOnce,
-} from '@vueuse/core'
+import { createEventHook, tryOnBeforeMount, useObjectUrl } from '@vueuse/core'
+import defu from 'defu'
 import {
   type App,
   type Component,
+  type ComponentInternalInstance,
   type MaybeRefOrGetter,
   type Ref,
   type VNode,
   defineComponent,
   getCurrentInstance,
   h,
-  hasInjectionContext,
   isVNode,
+  onMounted,
+  onUpdated,
   provide,
   readonly,
   ref,
   shallowRef,
   toValue,
-  watch,
 } from 'vue'
-// @ts-expect-error
-import PDFDocument from '@react-pdf/pdfkit'
-import renderPDF from '@react-pdf/render'
-import defu from 'defu'
-import queue from 'queue'
-const layoutDocument = makeCancellable(_layoutDocument)
+
 type UsePdfConfig = {
   /**
-   * If true, the pdf will be rendered immediately
+   * If true, the pdf will be rendered immediately and updated
    * @default true
    */
-  immediate?: boolean
+  reactive?: boolean
   /**
    * if true, the Pdf components can inject the application provided values
    */
@@ -53,64 +39,9 @@ type UsePdfConfig = {
    *
    * Will run immediately after the pdf is rendered
    */
-  onError?: (error: Error) => Promise<Error | void> | Error | void
+  onError?: (error: Error) => Promise<Error | undefined> | Error | undefined
 }
-type Context = Parameters<typeof renderPDF>[0]
-export const pdfRender = makeCancellable(
-  async (root: PdfRoot, compress = true) => {
-    const fontStore = new FontStore()
-    /* v8 ignore next */
-    const props = root.document?.props || {}
-    const {
-      pdfVersion,
-      language,
-      pageLayout,
-      pageMode,
-      title,
-      author,
-      subject,
-      keywords,
-      creator = 'vue-pdf',
-      producer = 'vue-pdf',
-      creationDate = new Date(),
-      modificationDate,
-    } = props
-    const ctx = new PDFDocument({
-      compress,
-      pdfVersion,
-      lang: language,
-      displayTitle: true,
-      autoFirstPage: false,
-      info: omitNils({
-        Title: title,
-        Author: author,
-        Subject: subject,
-        Keywords: keywords,
-        Creator: creator,
-        Producer: producer,
-        CreationDate: creationDate,
-        ModificationDate: modificationDate,
-      }),
-    }) as Context
-    if (pageLayout) {
-      ctx._root.data.PageLayout = upperFirst(pageLayout)
-    }
 
-    if (pageMode) {
-      ctx._root.data.PageMode = upperFirst(pageMode)
-    }
-    console.log('calling layout', root.document)
-    // @ts-expect-error
-    const layout = await layoutDocument(root.document, ctx, fontStore)
-    console.log('layout', layout)
-    const stream = renderPDF(layout, ctx)
-    return fileStreamToBlob(stream)
-  },
-)
-export interface PdfRoot {
-  type: 'ROOT'
-  document: DocumentNode | null
-}
 export interface UsePdfReturn {
   isLoading: Readonly<Ref<boolean>>
   isFinished: Readonly<Ref<boolean>>
@@ -122,7 +53,7 @@ export interface UsePdfReturn {
    * Manually call the render function
    * @param throwOnFailed false
    */
-  execute: (throwOnFailed?: boolean) => Promise<any>
+  execute: (throwOnFailed?: boolean) => Promise<void>
 }
 
 export function usePdf(
@@ -132,28 +63,25 @@ export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
   options: UsePdfConfig,
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
-// biome-ignore lint/suspicious/noRedeclare: <explanation>
 export default function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
   config?: UsePdfConfig,
 ): UsePdfReturn & PromiseLike<UsePdfReturn> {
   const root = shallowRef<PdfRoot>({
     type: 'ROOT',
-    document: null,
+    document: {} as PdfRoot['document'],
   })
   const instance = getCurrentInstance()
-  const renderQueue = new queue({ autostart: true, concurrency: 1 })
   const options: UsePdfConfig = defu(config, {
     worker: false,
-    immediate: true,
+    reactive: true,
     enableProvideBridge: !!instance,
   })
   const renderHook = createEventHook()
   const isMounted = ref(false)
-  const isMounting = ref(false)
   const blob = shallowRef<Blob | null>(null)
-  const isLoading = ref(!!options.immediate)
-  const isFinished = ref(!options.immediate)
+  const isLoading = ref(!!options.reactive)
+  const isFinished = ref(!options.reactive)
   const error = ref<Error | null>(null)
   const url = useObjectUrl(blob)
   const loading = (loading: boolean) => {
@@ -174,7 +102,12 @@ export default function usePdf(
 
         // Helper function to recursively merge provides from parents
 
-        function mergeProvides(currentInstance: any) {
+        function mergeProvides(
+          currentInstance?: ComponentInternalInstance & {
+            provides?: Record<string, unknown>
+          },
+        ) {
+          /* v8 ignore next 3 */
           if (!currentInstance) {
             return
           }
@@ -201,7 +134,13 @@ export default function usePdf(
             provide(key, value)
           }
         }
-
+        onMounted(() => {
+          isMounted.value = true
+          if (options.reactive) execute()
+        })
+        onUpdated(() => {
+          if (options.reactive) execute()
+        })
         if (typeof window !== 'undefined') {
           // @ts-expect-error
           setupDevtools(instance?.appContext.app, {
@@ -221,91 +160,53 @@ export default function usePdf(
     return isVNode(_doc) ? _doc : h(_doc)
   }
 
-  renderQueue.addEventListener('error', ({ detail: { error: err } }) => {
-    console.log('Error', err)
-    blob.value = null
-    if (options.onError) {
-      const userError = options.onError(err)
-      if (
-        typeof (userError as Promise<Error | undefined>).then === 'function'
-      ) {
-        userError.then(() => {
-          error.value = err
-          loading(false)
-          reject(err)
+  let abortController = new AbortController()
+
+  const execute = async (throwOnFailed = false) => {
+    if (!options.reactive) {
+      mountCustomRenderer()
+    }
+    abortController.abort()
+    abortController = new AbortController()
+    if (isMounted.value) {
+      loading(true)
+      try {
+        const result = await pdfRender(root.value, {
+          signal: abortController.signal,
+          compress: true,
         })
+        blob.value = result
+        loading(false)
+        resolve(shell)
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+      } catch (err: any) {
+        if (err.message === 'Cancelled') {
+          if (options.onError) {
+            error.value = (await options.onError(err)) ?? err
+          }
+          if (throwOnFailed) throw error.value
+          // We don't reject cause the execution was cancelled by another call
+          return
+        }
+        blob.value = null
+        error.value = err
+        if (options.onError) {
+          const userError = await options.onError(err)
+          // If the onError callback returns a promise, wait for it.
+          if (userError) {
+            error.value = userError as Error
+          }
+        }
+        loading(false)
+        if (throwOnFailed) throw error.value
+        reject(error.value as Error)
+        // if canceled is another execute that is called
         return
       }
-      error.value = userError as Error
-      loading(false)
-      reject(userError as Error)
-    } else {
-      error.value = err
-      loading(false)
-      reject(err)
     }
-  })
-
-  renderQueue.addEventListener('success', ({ detail: { result } }) => {
-    blob.value = result[0]
-    loading(false)
-    resolve(shell)
-  })
-
-  const execute = () => {
-    // Promise.withResolvers
-    // if (!isMounted.value && !isMounting.value) {
-    //   mountCustomRenderer()
-    //   return execute()
-    // }
-    // if (isMounting.value) {
-    //   return promise
-    // }
-    loading(true)
-    if (root.value.document) {
-      const renderPromise = pdfRender(root.value)
-      renderPromise
-        .then((result) => {
-          console.log(result)
-          blob.value = result
-          loading(false)
-          resolve(shell)
-        })
-        .catch((err) => {
-          if (err.name === 'CancelError') {
-            console.log('Cancelled', blob.value)
-          }
-          console.log(err)
-          blob.value = null
-          if (options.onError) {
-            const userError = options.onError(err)
-            // If the onError callback returns a promise, wait for it.
-            if (userError && typeof userError.then === 'function') {
-              return userError.then(() => {
-                error.value = err
-                loading(false)
-                reject(err)
-              })
-            }
-            error.value = userError as Error
-          } else {
-            error.value = err
-          }
-          loading(false)
-          reject(err)
-        })
-    } else {
-      loading(false)
-    }
-    return promise
   }
   const mountCustomRenderer = () => {
-    isMounting.value = true
-    createRender(h(createInternalComponent()), root.value as PDFElement, {
-      execute,
-    })
-    isMounted.value = true
-    isMounting.value = false
+    render(h(createInternalComponent()), root.value as unknown as PDFElement)
   }
   const shell: UsePdfReturn = {
     isLoading: readonly(isLoading),
@@ -323,8 +224,9 @@ export default function usePdf(
   }
 
   tryOnBeforeMount(() => {
-    if (options.immediate) {
-      mountCustomRenderer()
+    if (options.reactive) mountCustomRenderer()
+    if (!options.reactive) {
+      resolve(shell)
     }
   })
 
@@ -332,6 +234,8 @@ export default function usePdf(
   }
   return {
     ...shell,
-    then: promise.then.bind(promise),
+    then(onFullfilled, onRejected) {
+      return promise.then(onFullfilled, onRejected)
+    },
   }
 }
