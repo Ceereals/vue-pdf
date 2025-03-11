@@ -19,7 +19,10 @@
     "watch": "rollup -c -w",
     "typecheck": "tsc --noEmit"
   },
-  "files": [
-    "lib"
-  ]
+  "files": ["lib"],
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^12.1.2",
+    "rollup-plugin-delete": "^3.0.1",
+    "rollup-plugin-dts": "^6.1.1"
+  }
 }
