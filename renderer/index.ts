@@ -1,4 +1,5 @@
 import {
+  type ComponentPublicInstance,
   type CreateAppFunction,
   type Renderer,
   type RootRenderFunction,
@@ -6,26 +7,25 @@ import {
 } from 'vue'
 import { type PDFElement, type PDFNode, nodeOps } from './nodeOps'
 
-let renderer: Renderer<PDFElement>
+let renderer: Renderer<PDFElement | PDFNode>
 
-export function ensureRenderer(context: any) {
+export function ensureRenderer() {
   if (!renderer) {
-    renderer = createRenderer<PDFNode, PDFElement>(nodeOps(context))
+    renderer = createRenderer(nodeOps)
   }
   return renderer
 }
 export const render = ((...args) => {
-  ensureRenderer(args[2]).render(args[0], args[1])
+  ensureRenderer().render(...args)
 }) as RootRenderFunction<PDFElement>
 
 export const createApp = ((...args) => {
-  const app = ensureRenderer({ execute: () => {} }).createApp(...args)
+  const app = ensureRenderer().createApp(...args)
 
   const { mount } = app
-  app.mount = (containerOrSelector: PDFElement): any => {
+  app.mount = (containerOrSelector: PDFElement): ComponentPublicInstance => {
     const proxy = mount(containerOrSelector, false)
     return proxy
   }
-  // return proxy}
   return app
 }) as CreateAppFunction<PDFElement>
