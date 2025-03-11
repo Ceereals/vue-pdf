@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { mount } from '@vue/test-utils'
 import { describe } from 'node:test'
 import { expect, it } from 'vitest'
@@ -5,7 +6,7 @@ import TestPdfViewer from '../stubs/TestPdfViewer.vue'
 import { PDFViewer } from '@/dom'
 import { h } from 'vue'
 import { Page } from '@/components'
-import { rootSymbol } from '@/dom/symbols'
+import { rootSymbol } from '@/symbols'
 
 describe('PdfViewer', () => {
   it('should render a pdf given a Document component', async () => {

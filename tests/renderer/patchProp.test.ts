@@ -1,8 +1,8 @@
 // @ts-nocheck
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import type { PDFElement } from '../../renderer/nodeOps'
 import { nodeOps } from '../../renderer/nodeOps'
-const { patchProp } = nodeOps({ execute: () => {} })
+const { patchProp } = nodeOps
 describe('patchProp', () => {
   let element: PDFElement
 

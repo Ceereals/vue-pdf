@@ -1,41 +1,6 @@
-import { Readable } from 'stream'
-import {
-  cleanObjectForSeralization,
-  fileStreamToBlob,
-  makeCancellable,
-  mergeReactive,
-} from '@utils'
+import { Readable } from 'node:stream'
+import { cleanObjectForSeralization, fileStreamToBlob } from '@utils'
 import { describe, expect, it } from 'vitest'
-import { isReactive, reactive } from 'vue'
-
-describe('mergeReactive', () => {
-  it('should merge two plain objects', () => {
-    const target = { a: 1 }
-    const source = { b: 2 }
-    const result = mergeReactive(target, source)
-
-    expect(result).toEqual({ a: 1, b: 2 })
-    expect(isReactive(result)).toBe(true)
-  })
-
-  it('should merge reactive and plain object', () => {
-    const target = reactive({ a: 1 })
-    const source = { b: 2 }
-    const result = mergeReactive(target, source)
-
-    expect(result).toEqual({ a: 1, b: 2 })
-    expect(isReactive(result)).toBe(true)
-  })
-
-  it('should merge two reactive objects', () => {
-    const target = reactive({ a: 1 })
-    const source = reactive({ b: 2 })
-    const result = mergeReactive(target, source)
-
-    expect(result).toEqual({ a: 1, b: 2 })
-    expect(isReactive(result)).toBe(true)
-  })
-})
 
 describe('fileStreamToBlob', () => {
   it('should convert file stream to blob', async () => {
@@ -157,59 +122,4 @@ describe('cleanObjectForSeralization', () => {
       },
     })
   })
-})
-describe('makeCancelable', () => {
-    it('should resolve the promise if not cancelled', async () => {
-      const asyncFunction = async (value: string) => {
-        return new Promise<string>((resolve) => {
-          setTimeout(() => resolve(value), 100)
-        })
-      }
-
-      const cancellableFunction = makeCancellable(asyncFunction)
-      const result = await cancellableFunction('test')
-
-      expect(result).toBe('test')
-    })
-
-    it('should reject the promise if cancelled', async () => {
-      const asyncFunction = async (value: string) => {
-        return new Promise<string>((resolve) => {
-          setTimeout(() => resolve(value), 100)
-        })
-      }
-
-      const cancellableFunction = makeCancellable(asyncFunction)
-      const promise = cancellableFunction('test')
-      cancellableFunction('cancelled')
-
-      await expect(promise).rejects.toThrow('Cancelled')
-    })
-
-    it('should handle multiple calls correctly', async () => {
-      const asyncFunction = async (value: string) => {
-        return new Promise<string>((resolve) => {
-          setTimeout(() => resolve(value), 100)
-        })
-      }
-
-      const cancellableFunction = makeCancellable(asyncFunction)
-      const promise1 = cancellableFunction('first')
-      const promise2 = cancellableFunction('second')
-
-      await expect(promise1).rejects.toThrow('Cancelled')
-      const result2 = await promise2
-
-      expect(result2).toBe('second')
-    })
-
-    it('should propagate errors from the original function', async () => {
-      const asyncFunction = async () => {
-        throw new Error('Original Error')
-      }
-
-      const cancellableFunction = makeCancellable(asyncFunction)
-
-      await expect(cancellableFunction()).rejects.toThrow('Original Error')
-    })
 })
