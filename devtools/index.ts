@@ -1,10 +1,11 @@
 /* v8 ignore start */
-import type { PdfRoot } from '@/dom/usePdf'
-import type { PDFNode } from '@/renderer/nodeOps'
+import type { PdfRoot } from '@/render'
+import { isTextInstance, type PDFNode } from '@/renderer/nodeOps'
+import type { TextInstanceNode } from '@react-pdf/types'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
 import { type App, type Ref, toValue } from 'vue'
 const inspectorId = 'my-awesome-plugin'
-const map = new Map()
+const map = new Map<string, Exclude<PDFNode, TextInstanceNode>>()
 export function setupDevtools(
   app: App,
   context: {
@@ -28,7 +29,7 @@ export function setupDevtools(
       context.onRender(() => {
         api.sendInspectorTree(inspectorId)
       })
-      
+
       api.addInspector({
         id: inspectorId,
         label: 'VuePDF',
@@ -62,11 +63,16 @@ export function setupDevtools(
           }
         }
       })
-      let prevNode = null
+      let prevNode: PDFNode | null = null
       api.on.getInspectorState((payload) => {
         if (payload.inspectorId === inspectorId) {
-          if (map.get(payload.nodeId)) {
-            if (prevNode && prevNode.uid !== payload.nodeId) {
+          const currentNode = map.get(payload.nodeId)
+          if (currentNode && !isTextInstance(currentNode)) {
+            if (
+              prevNode &&
+              !isTextInstance(prevNode) &&
+              prevNode.uid !== payload.nodeId
+            ) {
               prevNode.props = {
                 ...prevNode.props,
                 debug: false,
@@ -74,7 +80,7 @@ export function setupDevtools(
               map.set(prevNode.uid, prevNode)
             }
             payload.state = {
-              props: Object.entries(map.get(payload.nodeId).props).map(
+              props: Object.entries(currentNode.props ?? {}).map(
                 ([key, value]) => {
                   return {
                     key,
@@ -82,7 +88,8 @@ export function setupDevtools(
                   }
                 },
               ),
-              style: Object.entries(map.get(payload.nodeId).style ?? {}).map(
+              // @ts-expect-error
+              style: Object.entries(currentNode.style ?? {}).map(
                 ([key, value]) => {
                   return {
                     key,
@@ -91,8 +98,8 @@ export function setupDevtools(
                 },
               ),
             }
-            const currentNode = map.get(payload.nodeId)
-            prevNode = toValue(map.get(payload.nodeId))
+            prevNode = toValue(currentNode)
+            if (!prevNode) return
             if (prevNode.type === 'DOCUMENT') return
             prevNode.props = {
               ...prevNode.props,
@@ -107,40 +114,44 @@ export function setupDevtools(
 }
 
 const createTree = (root: PdfRoot) => {
-  const tree: {
-    id: string
-    label: string
-    children: unknown[]
-    tags: {
-      label: string
-      textColor: string
-      backgroundColor: string
-    }[]
-  }[] = []
-  tree.push(createNode(root.document))
+  const tree: NodeData[] = []
+  const node = createNode(root.document as unknown as PDFNode)
+  if (node) tree.push(node)
   return tree as unknown[]
 }
-
+type NodeData = {
+  id: string
+  label: string
+  tags: {
+    label: string
+    textColor: string
+    backgroundColor: string
+  }[]
+  children: NodeData[] | null
+}
 const createNode = (node: PDFNode) => {
+  if (isTextInstance(node)) return
   if (node.uid) {
     map.set(node.uid, node)
   }
-  if (node.type === 'TEXT_INSTANCE') {
-    return
-  }
-  const nodeData = {
+  const nodeData: NodeData = {
     id: node.uid,
+    // @ts-expect-error
     label: `<${firstLetterUppercase(node.type.toLowerCase())}${node.props?.id ? ` id="${node.props.id}"` : ''}>`,
     tags: [],
     children:
       node.type === 'TEXT'
         ? null
-        : (node.children?.map(createNode) ?? undefined),
+        : node.children
+          ? (node.children as Exclude<PDFNode, TextInstanceNode>[])
+              .map(createNode)
+              .filter((e) => e !== undefined)
+          : null,
   }
-  return nodeData as unknown
+  return nodeData
 }
 
-const firstLetterUppercase = (str: string) => {
+const firstLetterUppercase = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 /* v8 ignore end */
