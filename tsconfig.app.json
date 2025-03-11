@@ -4,7 +4,7 @@
         "useDefineForClassFields": true,
         "module": "ESNext",
         "lib": [
-            "ES2020",
+            "ES2024",
             "DOM",
             "DOM.Iterable"
         ],
@@ -68,6 +68,7 @@
         "docs/**/*.ts",
         "docs/**/*.vue",
         "docs/**/*.md",
+        "symbols/index.ts",
     ],
     "vueCompilerOptions": {
         "vitePressExtensions": [

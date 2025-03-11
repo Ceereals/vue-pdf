@@ -8,8 +8,8 @@ export default defineConfig({
     vue(),
     dts({
       rollupTypes: true,
-
       tsconfigPath: './tsconfig.app.json',
+      exclude: ['**/node_modules/**', 'tests/**'],
     }),
   ],
 
