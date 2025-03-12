@@ -34,12 +34,10 @@ const asyncCompose =
     value: FirstFnParameterType<T>,
     ...args: Parameters<T[0]> extends [any, ...infer Rest] ? Rest : []
   ): AbortablePromise<LastFnReturnType<T>> => {
-    let abort: () => void = () => {}
-
+    const { promise: abortPromise, reject, resolve } = Promise.withResolvers()
     // Create a promise that will never resolve normally, but can be rejected on abort.
-    const abortPromise = new Promise<never>((_, reject) => {
-      abort = () => reject(new Error('Async compose aborted'))
-    })
+
+    const abort: () => void = () => reject(new Error('Async compose aborted'))
 
     // Compose the functions. Each async step is raced against the abortPromise.
     const composedPromise = (async () => {
@@ -49,7 +47,7 @@ const asyncCompose =
       for (const fn of reversedFns) {
         result = await Promise.race([fn(result, ...args), abortPromise])
       }
-
+      resolve(null)
       return result as LastFnReturnType<T>
     })() as AbortablePromise<LastFnReturnType<T>>
 
