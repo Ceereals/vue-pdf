@@ -25,7 +25,7 @@
     "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/dist", "**/coverage"]
+    "ignore": ["**/dist", "**/coverage", "react-pdf/**"]
   },
   "organizeImports": {
     "enabled": true
