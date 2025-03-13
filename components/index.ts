@@ -31,7 +31,7 @@ export interface PDFViewerProps {
    * Toggle the visibility of the toolbar
    * @default true
    */
-  showToolbar: boolean
+  showToolbar?: boolean
   /**
    * Enable the provide bridge to provide App provides to the Document context
    * @default true
