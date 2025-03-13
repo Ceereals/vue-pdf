@@ -7,8 +7,21 @@ import { PDFViewer } from '@/dom'
 import { h } from 'vue'
 import { Page } from '@/components'
 import { rootSymbol } from '@/symbols'
+import TestDocument from '../stubs/TestDocument.vue'
 
 describe('PdfViewer', () => {
+  it('unmounts the component', async () => {
+    const wrapper = mount(PDFViewer, {
+      slots: {
+        default() {
+          return [h(TestDocument)]
+        },
+      },
+    })
+    expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(1)
+    wrapper.unmount()
+    expect(wrapper.vm[rootSymbol]._vnode).toBeNull()
+  })
   it('should render a pdf given a Document component', async () => {
     const wrapper = mount(TestPdfViewer, {
       props: {

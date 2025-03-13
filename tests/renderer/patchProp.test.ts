@@ -2,7 +2,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { PDFElement } from '../../renderer/nodeOps'
 import { nodeOps } from '../../renderer/nodeOps'
-const { patchProp } = nodeOps
+const { patchProp } = nodeOps()
 describe('patchProp', () => {
   let element: PDFElement
 

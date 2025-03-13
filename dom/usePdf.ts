@@ -2,7 +2,12 @@ import { setupDevtools } from '@/devtools'
 import { type PdfRoot, pdfRender } from '@/render'
 import { render } from '@renderer/index'
 import type { PDFElement } from '@renderer/nodeOps'
-import { createEventHook, tryOnBeforeMount, useObjectUrl } from '@vueuse/core'
+import {
+  createEventHook,
+  tryOnBeforeMount,
+  tryOnBeforeUnmount,
+  useObjectUrl,
+} from '@vueuse/core'
 import defu from 'defu'
 import {
   type App,
@@ -229,7 +234,9 @@ export default function usePdf(
       resolve(shell)
     }
   })
-
+  tryOnBeforeUnmount(() => {
+    render(null, root.value as unknown as PDFElement)
+  })
   if (import.meta.hot) {
   }
   return {

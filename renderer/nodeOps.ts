@@ -75,10 +75,20 @@ const appendChild = (
   }
 }
 
-export const nodeOps: RendererOptions<PDFNode, PDFElement | PDFNode> = {
-  insert: (child, parent, anchor) => {
+export const nodeOps: (
+  root?: PDFElement | PDFNode,
+) => RendererOptions<PDFNode, PDFElement | PDFNode> = (root) => ({
+  insert: (child, _parent, anchor) => {
     // @ts-expect-error
     if (child.type === 'COMMENT') return
+    let parent = _parent
+    if (!parent) {
+      // needed to handle HMR
+      if (child.type === 'DOCUMENT' && root) {
+        parent = root
+        /* v8 ignore next */
+      } else return
+    }
     if (parent.type === 'ROOT') {
       parent.document = child
     } else {
@@ -87,14 +97,14 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement | PDFNode> = {
   },
 
   remove: (child) => {
-    if (hasParentNode(child)) {
-      const index = child.parentNode?.children?.indexOf(child as never)
-      if (index === undefined) return
+    /* v8 ignore next */
+    if (!hasParentNode(child)) return
+    const index = child.parentNode?.children?.indexOf(child as never)
+    if (index === undefined) return
 
-      if (index !== -1) {
-        child.parentNode?.children?.splice(index, 1)
-        child.parentNode = null
-      }
+    if (index !== -1) {
+      child.parentNode?.children?.splice(index, 1)
+      child.parentNode = null
     }
   },
   createElement: (tag, _, __, _props): PDFElement => {
@@ -117,8 +127,10 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement | PDFNode> = {
       value: text,
     } as PDFNode
   },
-  createComment: (text) =>
-    ({ type: 'COMMENT', value: text }) as unknown as PDFNode,
+  createComment: () =>
+    ({
+      type: 'COMMENT',
+    }) as unknown as PDFNode,
 
   setText: (node, text) => {
     ;(node as TextInstanceNode).value = text
@@ -156,4 +168,4 @@ export const nodeOps: RendererOptions<PDFNode, PDFElement | PDFNode> = {
     }
     return el
   },
-}
+})

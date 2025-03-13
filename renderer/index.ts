@@ -9,14 +9,14 @@ import { type PDFElement, type PDFNode, nodeOps } from './nodeOps'
 
 let renderer: Renderer<PDFElement | PDFNode>
 
-export function ensureRenderer() {
+export function ensureRenderer(root?: PDFElement | PDFNode) {
   if (!renderer) {
-    renderer = createRenderer(nodeOps)
+    renderer = createRenderer(nodeOps(root))
   }
   return renderer
 }
 export const render = ((...args) => {
-  ensureRenderer().render(...args)
+  ensureRenderer(args[1]).render(args[0], args[1])
 }) as RootRenderFunction<PDFElement>
 
 export const createApp = ((...args) => {

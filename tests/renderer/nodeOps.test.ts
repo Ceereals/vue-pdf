@@ -1,7 +1,11 @@
 // @ts-nocheck
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { type PDFNode, nodeOps } from '../../renderer/nodeOps'
-
+import { type PDFNode, nodeOps as _ } from '../../renderer/nodeOps'
+const root = {
+  type: 'ROOT',
+  document: null,
+}
+const nodeOps = _(root)
 describe('nodeOps', () => {
   let documentNode: PDFNode
   let pageNode: PDFNode
@@ -138,5 +142,9 @@ describe('nodeOps', () => {
     nodeOps.insert(page1, documentNode, page2)
     expect(documentNode.children[0].uid).toEqual(page1.uid)
     expect(documentNode.children[1].uid).toEqual(page2.uid)
+  })
+  it('simulate HMR', () => {
+    nodeOps.insert(documentNode)
+    expect(root.document).toBe(documentNode)
   })
 })
