@@ -8,7 +8,7 @@ import type {
 import type { RendererOptions } from 'vue'
 
 export type PDFElement = {
-  uid: string
+  uid?: string
   type: string
   document: PDFNode
   style?: Record<string, string>

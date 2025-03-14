@@ -1,6 +1,6 @@
 import { setupDevtools } from '@/devtools'
 import { type PdfRoot, pdfRender } from '@/render'
-import { render } from '@renderer/index'
+import { render } from '@/renderer'
 import type { PDFElement } from '@renderer/nodeOps'
 import {
   createEventHook,
@@ -59,18 +59,23 @@ export interface UsePdfReturn {
    * @param throwOnFailed false
    */
   execute: (throwOnFailed?: boolean) => Promise<void>
+
+  /**
+   * Unmount the current pdf
+   */
+  unmount: () => void
 }
 
 export function usePdf(
-  doc: MaybeRefOrGetter<Component | VNode>,
+  doc: MaybeRefOrGetter<Component | VNode>
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  options: UsePdfConfig,
+  options: UsePdfConfig
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
-export default function usePdf(
+export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  config?: UsePdfConfig,
+  config?: UsePdfConfig
 ): UsePdfReturn & PromiseLike<UsePdfReturn> {
   const root = shallowRef<PdfRoot>({
     type: 'ROOT',
@@ -110,7 +115,7 @@ export default function usePdf(
         function mergeProvides(
           currentInstance?: ComponentInternalInstance & {
             provides?: Record<string, unknown>
-          },
+          }
         ) {
           /* v8 ignore next 3 */
           if (!currentInstance) {
@@ -169,7 +174,7 @@ export default function usePdf(
 
   const execute = async (throwOnFailed = false) => {
     if (!options.reactive) {
-      mountCustomRenderer()
+      mount()
     }
     abortController.abort()
     abortController = new AbortController()
@@ -210,8 +215,11 @@ export default function usePdf(
       }
     }
   }
-  const mountCustomRenderer = () => {
+  const mount = () => {
     render(h(createInternalComponent()), root.value as unknown as PDFElement)
+  }
+  const unmount = () => {
+    render(null, root.value as unknown as PDFElement)
   }
   const shell: UsePdfReturn = {
     isLoading: readonly(isLoading),
@@ -220,6 +228,7 @@ export default function usePdf(
     blob: readonly(blob),
     url,
     execute,
+    unmount,
     root: readonly(root) as UsePdfReturn['root'],
   }
   const { promise, resolve, reject } = Promise.withResolvers() as {
@@ -229,16 +238,15 @@ export default function usePdf(
   }
 
   tryOnBeforeMount(() => {
-    if (options.reactive) mountCustomRenderer()
+    if (options.reactive) mount()
     if (!options.reactive) {
       resolve(shell)
     }
   })
   tryOnBeforeUnmount(() => {
-    render(null, root.value as unknown as PDFElement)
+    unmount()
   })
-  if (import.meta.hot) {
-  }
+
   return {
     ...shell,
     then(onFullfilled, onRejected) {

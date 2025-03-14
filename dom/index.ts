@@ -1,5 +1,5 @@
 import PDFViewer from './PDFViewer.vue'
 import PDFDownloadLink from './PDFDownloadLink.vue'
-import usePdf from './usePdf'
-
-export { usePdf, PDFViewer, PDFDownloadLink }
+export { usePdf } from '@/composables'
+export * from '@/components'
+export { PDFViewer, PDFDownloadLink }

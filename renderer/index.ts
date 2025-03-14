@@ -29,3 +29,5 @@ export const createApp = ((...args) => {
   }
   return app
 }) as CreateAppFunction<PDFElement>
+
+export { usePdf } from '@/composables/usePdf'

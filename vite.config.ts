@@ -2,15 +2,28 @@ import path from 'node:path'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-// https://vitejs.dev/config/
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import pkg from './package.json' with { type: 'json' }
+import cleanPlugin from './vite-clean.plugin'
 export default defineConfig({
   plugins: [
     vue(),
     dts({
       rollupTypes: true,
+      outDir: 'dist/types',
       tsconfigPath: './tsconfig.app.json',
       exclude: ['**/node_modules/**', 'tests/**'],
     }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'react-pdf/fns/lib/*',
+          dest: 'fns',
+        },
+      ],
+      hook: 'writeBundle',
+    }),
+    cleanPlugin(),
   ],
 
   worker: {
@@ -22,8 +35,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './'),
-      '@dom': path.resolve(__dirname, './dom'),
       '@renderer': path.resolve(__dirname, './renderer'),
+      '@dom': path.resolve(__dirname, './dom'),
+      '@node': path.resolve(__dirname, './node'),
       '@utils': path.resolve(__dirname, './utils'),
       '@workers': path.resolve(__dirname, './dom/workers'),
       '@lib': path.resolve(__dirname, './lib'),
@@ -31,23 +45,22 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: 'index.ts',
-      name: 'index',
+      entry: {
+        'node/index': path.resolve(__dirname, 'node/index.ts'),
+        'dom/index': path.resolve(__dirname, 'dom/index.ts'),
+        'vue-pdf-plugin': path.resolve(__dirname, 'vue-pdf.plugin.ts'),
+      },
+      name: 'vue-pdf',
       formats: ['es'],
     },
+    outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
       external: [
-        '@vue/shared',
-        '@react-pdf/layout',
-        '@react-pdf/types/primitive',
-        '@react-pdf/pdfkit',
-        '@react-pdf/render',
-        '@react-pdf/font',
-        '@react-pdf/primitives',
-        'vue',
+        'node:path',
+        ...Object.keys(pkg.dependencies),
+        ...Object.keys(pkg.peerDependencies),
       ],
     },
   },
-  base: './',
 })

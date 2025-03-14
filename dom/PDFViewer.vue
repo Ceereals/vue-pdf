@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
 import { computed } from 'vue'
-import usePdf from './usePdf'
+import { usePdf } from '@/composables'
 import type { PDFViewerProps } from '@/components'
 import { rootSymbol } from '@/symbols'
 const props = withDefaults(defineProps<PDFViewerProps>(), {
@@ -21,14 +21,18 @@ const {
     slots.default().filter((slot) => {
       return slot.type !== Symbol.for('v-cmt')
     })[0],
-  { enableProvideBridge: props.enableProvideBridge },
+  { enableProvideBridge: props.enableProvideBridge }
 )
 
-defineExpose({ execute, [rootSymbol]: root })
+defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
+    execute,
+  // @ts-ignore
+  [rootSymbol]: root,
+})
 const url = computed(() =>
   blobUrl.value
     ? `${blobUrl?.value}${props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''}`
-    : '',
+    : ''
 )
 </script>
 
