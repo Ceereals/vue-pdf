@@ -76,6 +76,7 @@ export const pdfRender = (
   signal?.addEventListener('abort', () => {
     if (!isAbortImplemented) {
       if (typeof layoutPromise.abort !== 'function') {
+        /* v8 ignore next */
         isAbortImplemented = false
       } else {
         isAbortImplemented = true
