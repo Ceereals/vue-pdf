@@ -69,6 +69,7 @@
         "symbols/index.ts",
         "composables/*.ts",
         "vue-pdf.plugin.ts",
+        "tests/node/stubs/TestDocument.ts",
     ],
     "vueCompilerOptions": {
         "vitePressExtensions": [

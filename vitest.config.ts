@@ -1,13 +1,13 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
 import viteConfig from './vite.config'
+import vue from '@vitejs/plugin-vue'
+const { plugins , ...config} = viteConfig
 export default mergeConfig(
-  viteConfig,
+  config,
   defineConfig({
-    // plugins: [vue()],
+    plugins: [vue()],
     test: {
-      environment: 'happy-dom',
-      setupFiles: ['@vitest/web-worker'],
-      include: ['./tests/**/*.test.ts'],
+      workspace: ['tests/*'],
       coverage: {
         provider: 'v8',
         reporter: ['text', 'html'],
@@ -29,16 +29,11 @@ export default mergeConfig(
           '**/vitest.{workspace,projects}.[jt]s?(on)',
           '**/.{eslint,mocha,prettier}rc.{?(c|m)js,yml}',
           'react-pdf',
+          'vue-pdf.plugin.ts',
+          'vite-clean.plugin.ts',
+          'devtools',
         ],
       },
-      deps: {
-        optimizer: {
-          web: {
-            enabled: true,
-            include: ['@react-pdf/primitives'],
-          },
-        },
-      },
     },
-  }),
+  })
 )

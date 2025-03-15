@@ -44,11 +44,10 @@
     "@react-pdf/primitives": "^4",
     "@react-pdf/render": "^4",
     "@react-pdf/renderer": "^4.3.0",
+    "@react-pdf/fns": "file:./react-pdf/fns",
     "@vue/devtools-api": "^7.5.4",
-    "@vue/shared": "^3.4.37",
     "@vueuse/core": "^10.11.1",
     "defu": "^6.1.4",
-    "queue": "^7.0.0",
     "vue": "^3.4.38"
   },
   "peerDependencies": {
@@ -65,19 +64,15 @@
     "@vitest/web-worker": "^3.0.7",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^17.1.8",
-    "pdfkit": "^0.16.0",
-    "prettier": "3.3.3",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.1.1",
     "typescript": "~5.7.3",
     "vite": "^6.2.0",
-    "vite-plugin-clean": "^2.0.1",
     "vite-plugin-dts": "^4.0.3",
     "vite-plugin-static-copy": "^2.3.0",
     "vitepress": "^1.6.3",
     "vitepress-plugin-group-icons": "^1.3.6",
-    "vitest": "^3.0.7",
-    "vue-tsc": "^2.0.29"
+    "vitest": "^3.0.7"
   },
   "overrides": {
     "@react-pdf/fns": "file:./react-pdf/fns"
