@@ -78,9 +78,9 @@ export const pdfRender = (
       if (typeof layoutPromise.abort !== 'function') {
         /* v8 ignore next */
         isAbortImplemented = false
-      } else {
-        isAbortImplemented = true
+        return
       }
+      isAbortImplemented = true
     }
     // @ts-expect-error
     isAbortImplemented && layoutPromise.abort()
