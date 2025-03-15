@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/vue-pdf.js",
+  "main": "dist/node/index.js",
   "files": [
     "dist",
     "dist/types"
