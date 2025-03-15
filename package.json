@@ -1,9 +1,11 @@
 {
   "name": "@ceereals/vue-pdf",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "main": "dist/node/index.js",
+  "browser": {
+    "./dist/node/index.js": "./dist/dom/index.js"
+  },
   "files": [
     "dist",
     "dist/types"
@@ -11,8 +13,7 @@
   "types": "dist/types",
   "exports": {
     ".": {
-      "import": "./dist/dom/index.js",
-      "node": "./dist/node/index.js"
+      "import": "./dist/node/index.js"
     },
     "./fns": {
       "import": "./react-pdf/fns/index.js",
