@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { usePdf } from '@/index'
+import { usePdf } from '@/dom'
 import { describe, expect, it, vi } from 'vitest'
 import { h } from 'vue'
 import TestDocument from '../stubs/TestDocument.vue'

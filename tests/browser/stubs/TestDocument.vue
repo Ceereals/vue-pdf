@@ -10,6 +10,7 @@ withDefaults(
     text: 'testo',
   },
 )
+
 const bridge = inject('bridge', false)
 </script>
 <template>
