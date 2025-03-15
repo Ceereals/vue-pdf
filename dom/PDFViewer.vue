@@ -21,18 +21,18 @@ const {
     slots.default().filter((slot) => {
       return slot.type !== Symbol.for('v-cmt')
     })[0],
-  { enableProvideBridge: props.enableProvideBridge }
+  { enableProvideBridge: props.enableProvideBridge },
 )
 
 defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
-    execute,
+  execute,
   // @ts-ignore
   [rootSymbol]: root,
 })
 const url = computed(() =>
   blobUrl.value
     ? `${blobUrl?.value}${props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''}`
-    : ''
+    : '',
 )
 </script>
 

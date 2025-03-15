@@ -17,7 +17,7 @@ describe('usePdf', () => {
       },
       () => {
         expect(true).toBe(false)
-      }
+      },
     )
   })
   it('Should render a pdf given a document vnode awaiting external', async () => {
@@ -38,7 +38,7 @@ describe('usePdf', () => {
   })
   it('Should render a pdf given a document vnode', () => {
     const { blob, isLoading, isFinished, url, error, then } = usePdf(
-      () => TestDocument
+      () => TestDocument,
     )
     expect(isFinished.value).toBe(false)
     expect(error.value).toBe(null)
@@ -56,7 +56,7 @@ describe('usePdf', () => {
       },
       () => {
         expect(true).toBe(false)
-      }
+      },
     )
   })
   it('Should render a pdf given a document vnode with await', async () => {

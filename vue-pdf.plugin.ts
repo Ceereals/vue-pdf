@@ -8,7 +8,7 @@ export default function vuepdfPlugin(): Plugin {
         resolve: {
           alias: {
             '@react-pdf/fns': path.resolve(
-              './node_modules/@ceereals/vue-pdf/dist/fns/index.js'
+              './node_modules/@ceereals/vue-pdf/dist/fns/index.js',
             ),
           },
         },

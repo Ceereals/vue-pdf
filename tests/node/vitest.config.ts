@@ -10,6 +10,6 @@ export default mergeConfig(
       dedupe: ['vue'],
     },
     // ssr: true,
-    appType: 'spa'
-  })
+    appType: 'spa',
+  }),
 )

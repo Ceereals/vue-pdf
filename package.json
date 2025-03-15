@@ -6,10 +6,7 @@
   "browser": {
     "./dist/node/index.js": "./dist/dom/index.js"
   },
-  "files": [
-    "dist",
-    "dist/types"
-  ],
+  "files": ["dist", "dist/types"],
   "types": "dist/types",
   "exports": {
     ".": {

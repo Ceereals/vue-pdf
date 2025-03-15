@@ -67,15 +67,15 @@ export interface UsePdfReturn {
 }
 
 export function usePdf(
-  doc: MaybeRefOrGetter<Component | VNode>
+  doc: MaybeRefOrGetter<Component | VNode>,
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  options: UsePdfConfig
+  options: UsePdfConfig,
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  config?: UsePdfConfig
+  config?: UsePdfConfig,
 ): UsePdfReturn & PromiseLike<UsePdfReturn> {
   const root = shallowRef<PdfRoot>({
     type: 'ROOT',
@@ -115,7 +115,7 @@ export function usePdf(
         function mergeProvides(
           currentInstance?: ComponentInternalInstance & {
             provides?: Record<string, unknown>
-          }
+          },
         ) {
           /* v8 ignore next 3 */
           if (!currentInstance) {
