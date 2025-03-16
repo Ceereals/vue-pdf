@@ -1,25 +1,35 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2024"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    "types": ["node"],
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "rootDir": ".",
-    "paths": {
-        "@/*": ["./*"],
+    "compilerOptions": {
+        "target": "ES2022",
+        "lib": [
+            "ES2024"
+        ],
+        "module": "ESNext",
+        "skipLibCheck": true,
+        "types": [
+            "node"
+        ],
+        /* Bundler mode */
+        "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
+        "isolatedModules": true,
+        "moduleDetection": "force",
+        "noEmit": true,
+        "rootDir": ".",
+        "paths": {
+            "@/*": [
+                "./*"
+            ],
+        },
+        /* Linting */
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true
     },
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
-  "include": ["../vite.config.ts", "node/**/*.ts", "vite-clean.plugin.ts"]
+    "include": [
+        "../vite.config.ts",
+        "node/**/*.ts",
+        "plugins/vite-clean.plugin.ts"
+    ]
 }

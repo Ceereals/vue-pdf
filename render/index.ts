@@ -23,7 +23,6 @@ export interface PdfRoot {
 }
 
 const fontStore = new FontStore()
-let isAbortImplemented = false
 export const pdfRender = (
   root: PdfRoot,
   { compress, signal }: Partial<{ compress: boolean; signal?: AbortSignal }> = {
@@ -74,16 +73,13 @@ export const pdfRender = (
   // @ts-expect-error
   const layoutPromise = layoutDocument(root.document, fontStore)
   signal?.addEventListener('abort', () => {
-    if (!isAbortImplemented) {
-      if (typeof layoutPromise.abort !== 'function') {
-        /* v8 ignore next */
-        isAbortImplemented = false
-        return
-      }
-      isAbortImplemented = true
+    // @ts-expect-error`
+    if (typeof layoutPromise.abort !== 'function') {
+      /* v8 ignore next 2 */
+      return
     }
     // @ts-expect-error
-    isAbortImplemented && layoutPromise.abort()
+    layoutPromise.abort()
     reject(new Error('Cancelled'))
   })
   layoutPromise

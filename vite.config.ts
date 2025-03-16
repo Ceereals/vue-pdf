@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import pkg from './package.json' with { type: 'json' }
-import cleanPlugin from './vite-clean.plugin'
+import cleanPlugin from './plugins/vite-clean.plugin'
 export default defineConfig({
   plugins: [
     vue(),
@@ -48,7 +48,7 @@ export default defineConfig({
       entry: {
         'node/index': path.resolve(__dirname, 'node/index.ts'),
         'dom/index': path.resolve(__dirname, 'dom/index.ts'),
-        'vue-pdf-plugin': path.resolve(__dirname, 'vue-pdf.plugin.ts'),
+        'vue-pdf-plugin': path.resolve(__dirname, 'plugins/vue-pdf.plugin.ts'),
       },
       name: 'vue-pdf',
       formats: ['es'],
