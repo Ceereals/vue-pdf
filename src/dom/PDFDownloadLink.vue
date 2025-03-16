@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
-import { usePdf } from '@/src/composables'
+import { usePdf } from '@/composables'
 const props = withDefaults(
   defineProps<{
     fileName: string

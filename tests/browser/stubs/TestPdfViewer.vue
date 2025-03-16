@@ -1,12 +1,12 @@
 <script setup lang="ts">
 // biome-ignore lint/style/useImportType: <explanation>
-import { PDFViewer } from '@/src/dom'
+import { PDFViewer } from '@/dom'
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import TestDocument from './TestDocument.vue'
 import { provide, toRef } from 'vue'
 import { templateRef } from '@vueuse/core'
-import { rootSymbol } from '@/src/symbols'
-import type { PdfRoot } from '@/src/render'
+import { rootSymbol } from '@/symbols'
+import type { PdfRoot } from '@/render'
 const props = withDefaults(
   defineProps<{
     bridge: boolean
@@ -23,6 +23,7 @@ provide(
 const pdfViewer = templateRef<InstanceType<typeof PDFViewer>>('pdfViewer')
 
 defineExpose<{ root: () => PdfRoot }>({
+  // @ts-expect-error
   root: () => pdfViewer.value[rootSymbol],
 })
 </script>

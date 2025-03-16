@@ -1,4 +1,4 @@
-import { usePdf } from '@/src/dom'
+import { usePdf } from '@/dom'
 import { describe, expect, it } from 'vitest'
 import TestDocument from '../stubs/TestDocument.vue'
 import { h } from 'vue'

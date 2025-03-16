@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
 import { computed } from 'vue'
-import { usePdf } from '@/src/composables'
-import type { PDFViewerProps } from '@/src/components'
-import { rootSymbol } from '@/src/symbols'
+import { usePdf } from '@/composables'
+import type { PDFViewerProps } from '@/components'
+import { rootSymbol } from '@/symbols'
 const props = withDefaults(defineProps<PDFViewerProps>(), {
   showToolbar: true,
   enableProvideBridge: true,

@@ -1,8 +1,8 @@
-import { setupDevtools } from '@/src/devtools'
+import { setupDevtools } from '@/devtools'
 import { type PdfRoot, pdfRender } from '@/render'
 import { render } from '@/renderer'
 import { fileStreamToBlob } from '@/utils'
-import type { PDFElement } from '@/src/renderer/nodeOps'
+import type { PDFElement } from '@/renderer/nodeOps'
 import {
   createEventHook,
   tryOnBeforeMount,
