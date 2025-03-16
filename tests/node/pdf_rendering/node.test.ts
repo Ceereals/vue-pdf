@@ -20,6 +20,7 @@ describe('renderTo', () => {
       expect(buffer).toBeDefined()
       expect(buffer).toBeInstanceOf(Buffer)
     } catch (e) {
+      // @ts-expect-error
       if (e.name === 'AssertionError') throw e
       expect(true).toBe(false)
     }
@@ -34,6 +35,7 @@ describe('renderTo', () => {
       expect(pdf).toBeInstanceOf(Buffer)
       expect(pdf.byteLength).toBeGreaterThan(0)
     } catch (e) {
+      // @ts-expect-error
       if (e.name === 'AssertionError') throw e
       expect(true).toBe(false)
     }

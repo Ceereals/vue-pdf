@@ -1,4 +1,4 @@
-import { upperFirst } from '@react-pdf/fns'
+import { upperFirst } from '@/src/react-pdf/fns/lib'
 import FontStore from '@react-pdf/font'
 import layoutDocument from '@react-pdf/layout'
 import renderPDF from '@react-pdf/render'
@@ -6,7 +6,7 @@ import renderPDF from '@react-pdf/render'
 import PDFDocument from '@react-pdf/pdfkit'
 import { omitNils } from '@utils'
 import type { DocumentNode as _DocumentNode } from '@react-pdf/types'
-import type { PDFNode } from '@/renderer/nodeOps'
+import type { PDFNode } from '@/src/renderer/nodeOps'
 import type { Readable } from 'node:stream'
 export interface DocumentNode
   extends Omit<_DocumentNode, 'props' | 'children'> {

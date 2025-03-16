@@ -1,12 +1,12 @@
 <script setup lang="ts">
 // biome-ignore lint/style/useImportType: <explanation>
-import { PDFViewer } from '@/dom'
+import { PDFViewer } from '@/src/dom'
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import TestDocument from './TestDocument.vue'
 import { provide, toRef } from 'vue'
 import { templateRef } from '@vueuse/core'
-import { rootSymbol } from '@/symbols'
-import type { PdfRoot } from '@/render'
+import { rootSymbol } from '@/src/symbols'
+import type { PdfRoot } from '@/src/render'
 const props = withDefaults(
   defineProps<{
     bridge: boolean

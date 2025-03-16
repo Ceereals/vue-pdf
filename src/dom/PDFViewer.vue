@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
 import { computed } from 'vue'
-import { usePdf } from '@/composables'
-import type { PDFViewerProps } from '@/components'
-import { rootSymbol } from '@/symbols'
+import { usePdf } from '@/src/composables'
+import type { PDFViewerProps } from '@/src/components'
+import { rootSymbol } from '@/src/symbols'
 const props = withDefaults(defineProps<PDFViewerProps>(), {
   showToolbar: true,
   enableProvideBridge: true,
@@ -31,7 +31,9 @@ defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
 })
 const url = computed(() =>
   blobUrl.value
-    ? `${blobUrl?.value}${props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''}`
+    ? `${blobUrl?.value}${
+        props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''
+      }`
     : '',
 )
 </script>

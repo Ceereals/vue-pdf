@@ -14,25 +14,25 @@
         ],
         "paths": {
             "@/*": [
-                "./*"
+                "./src/*"
             ],
             "@dom/*": [
-                "./dom/*"
+                "./src/dom/*"
             ],
             "@workers/*": [
-                "./dom/workers/*"
+                "./src/dom/workers/*"
             ],
             "@renderer/*": [
-                "./renderer/*"
+                "./src/renderer/*"
             ],
             "@renderer": [
-                "./renderer"
+                "./src/renderer"
             ],
             "@utils/*": [
-                "./utils/*"
+                "./src/utils/*"
             ],
             "@utils": [
-                "./utils"
+                "./src/utils"
             ],
             "@lib/*": [
                 "./lib/*"
@@ -55,20 +55,20 @@
         "noFallthroughCasesInSwitch": true
     },
     "include": [
-        "components/**/*.ts",
-        "dom/**/*.tsx",
-        "dom/**/*.vue",
-        "dom/**/*.ts",
-        "renderer/**/*.ts",
-        "render/**/*.ts",
+        "src/components/**/*.ts",
+        "src/dom/**/*.tsx",
+        "src/dom/**/*.vue",
+        "src/dom/**/*.ts",
+        "src/renderer/**/*.ts",
+        "src/render/**/*.ts",
         "tests/**/*.ts",
         "tests/**/*.vue",
         "docs/**/*.ts",
         "docs/**/*.vue",
         "docs/**/*.md",
-        "symbols/index.ts",
-        "composables/*.ts",
-        "plugins/vue-pdf.plugin.ts",
+        "src/symbols/index.ts",
+        "src/composables/*.ts",
+        "src/plugins/vue-pdf.plugin.ts",
         "tests/node/stubs/TestDocument.ts",
     ],
     "vueCompilerOptions": {

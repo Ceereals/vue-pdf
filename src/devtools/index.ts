@@ -1,6 +1,6 @@
 /* v8 ignore start */
 import type { PdfRoot } from '@/render'
-import { isTextInstance, type PDFNode } from '@/renderer/nodeOps'
+import { isTextInstance, type PDFNode } from '@/src/renderer/nodeOps'
 import type { TextInstanceNode } from '@react-pdf/types'
 import { setupDevtoolsPlugin } from '@vue/devtools-api'
 import { type App, type Ref, toValue } from 'vue'

@@ -1,4 +1,4 @@
-import { PDFDownloadLink } from '@/dom'
+import { PDFDownloadLink } from '@/src/dom'
 import { mount } from '@vue/test-utils'
 import { describe } from 'node:test'
 import { expect, it } from 'vitest'

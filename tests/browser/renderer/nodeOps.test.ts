@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { type PDFNode, nodeOps as _ } from '../../../renderer/nodeOps'
+import { type PDFNode, nodeOps as _ } from '../../../src/renderer/nodeOps'
 const root = {
   type: 'ROOT',
   document: null,

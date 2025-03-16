@@ -25,14 +25,14 @@
     "lineWidth": 80,
     "attributePosition": "auto",
     "bracketSpacing": true,
-    "ignore": ["**/dist", "**/coverage", "react-pdf/**"]
+    "ignore": ["**/dist", "**/coverage", "src/react-pdf/**"]
   },
   "organizeImports": {
     "enabled": true
   },
   "linter": {
     "enabled": true,
-    "ignore": ["**/dist", "**/coverage", "**/node_modules", "react-pdf/**"],
+    "ignore": ["**/dist", "**/coverage", "**/node_modules", "src/react-pdf/**"],
     "rules": {
       "recommended": true,
       "suspicious": {

@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { h } from 'vue'
-import { Document } from '../../../components'
-import { createApp, render } from '../../../renderer'
-import type { PDFElement } from '../../../renderer/nodeOps'
+import { Document } from '../../../src/components'
+import { createApp, render } from '../../../src/renderer'
+import type { PDFElement } from '../../../src/renderer/nodeOps'
 describe('renderer', () => {
   // Mock data and utility functions
 

@@ -3,10 +3,10 @@ import { mount } from '@vue/test-utils'
 import { describe } from 'node:test'
 import { expect, it } from 'vitest'
 import TestPdfViewer from '../stubs/TestPdfViewer.vue'
-import { PDFViewer } from '@/dom'
+import { PDFViewer } from '@/src/dom'
 import { h } from 'vue'
-import { Page } from '@/components'
-import { rootSymbol } from '@/symbols'
+import { Page } from '@/src/components'
+import { rootSymbol } from '@/src/symbols'
 import TestDocument from '../stubs/TestDocument.vue'
 
 describe('PdfViewer', () => {

@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import pkg from './package.json' with { type: 'json' }
-import cleanPlugin from './plugins/vite-clean.plugin'
+import cleanPlugin from './src/plugins/vite-clean.plugin'
 export default defineConfig({
   plugins: [
     vue(),
@@ -17,7 +17,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: 'react-pdf/fns/lib/*',
+          src: 'src/react-pdf/fns/lib/*',
           dest: 'fns',
         },
       ],
@@ -34,21 +34,23 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './'),
-      '@renderer': path.resolve(__dirname, './renderer'),
-      '@dom': path.resolve(__dirname, './dom'),
-      '@node': path.resolve(__dirname, './node'),
-      '@utils': path.resolve(__dirname, './utils'),
-      '@workers': path.resolve(__dirname, './dom/workers'),
-      '@lib': path.resolve(__dirname, './lib'),
+      '@': path.resolve(__dirname, './src/'),
+      '@renderer': path.resolve(__dirname, './src/renderer'),
+      '@dom': path.resolve(__dirname, './src/dom'),
+      '@node': path.resolve(__dirname, './src/node'),
+      '@utils': path.resolve(__dirname, './src/utils'),
+      '@workers': path.resolve(__dirname, './src/dom/workers'),
     },
   },
   build: {
     lib: {
       entry: {
-        'node/index': path.resolve(__dirname, 'node/index.ts'),
-        'dom/index': path.resolve(__dirname, 'dom/index.ts'),
-        'vue-pdf-plugin': path.resolve(__dirname, 'plugins/vue-pdf.plugin.ts'),
+        'node/index': path.resolve(__dirname, './src/node/index.ts'),
+        'dom/index': path.resolve(__dirname, './src/dom/index.ts'),
+        'vue-pdf-plugin': path.resolve(
+          __dirname,
+          './src/plugins/vue-pdf.plugin.ts',
+        ),
       },
       name: 'vue-pdf',
       formats: ['es'],
