@@ -7,12 +7,12 @@ export default function (): Plugin {
     name: 'clean-plugin',
     closeBundle() {
       fs.rm(
-        path.resolve(__dirname, 'dist/types/node'),
+        path.resolve('./dist/types/node'),
         { recursive: true },
         () => void 0,
       )
       fs.rm(
-        path.resolve(__dirname, 'dist/types/dom'),
+        path.resolve('./dist/types/dom'),
         { recursive: true },
         () => void 0,
       )
