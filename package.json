@@ -51,6 +51,7 @@
     "vue": "^3.4.38"
   },
   "devDependencies": {
+    "@react-pdf/fns": "file:./src/react-pdf/fns",
     "@biomejs/biome": "1.9.4",
     "@react-pdf/types": "^2.5.0",
     "@types/node": "^22.5.0",
@@ -73,6 +74,6 @@
     "vitest": "^3.0.7"
   },
   "overrides": {
-    "@react-pdf/fns": "file:./react-pdf/fns"
+    "@react-pdf/fns": "file:./src/react-pdf/fns"
   }
 }
