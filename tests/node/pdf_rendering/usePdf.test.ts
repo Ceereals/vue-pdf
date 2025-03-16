@@ -1,11 +1,10 @@
 import { usePdf } from '@/node'
 import { describe, expect, it } from 'vitest'
 import TestDocument from '../stubs/TestDocument.ts'
-import { getCurrentInstance, h } from 'vue'
+import { h } from 'vue'
 
 describe('usePdf', () => {
   it('Should render a pdf given a Document component', () => {
-    console.log(getCurrentInstance())
     try {
       const promise = usePdf(() => h(TestDocument), {
         enableProvideBridge: false,
@@ -59,7 +58,6 @@ describe('usePdf', () => {
     expect(url.value).toBe(undefined)
     then(
       () => {
-        console.log('resolved')
         expect(error.value).toBe(null)
         expect(blob.value).toBeInstanceOf(Blob)
         expect(isLoading.value).toBe(false)

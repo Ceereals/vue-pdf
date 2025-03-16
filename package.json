@@ -61,6 +61,7 @@
     "@vitest/web-worker": "^3.0.7",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^17.1.8",
+    "memfs": "^4.17.0",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-dts": "^6.1.1",
     "typescript": "~5.7.3",
