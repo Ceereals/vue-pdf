@@ -1,6 +1,7 @@
 import { setupDevtools } from '@/devtools'
 import { type PdfRoot, pdfRender } from '@/render'
 import { render } from '@/renderer'
+import { fileStreamToBlob } from '@/utils'
 import type { PDFElement } from '@renderer/nodeOps'
 import {
   createEventHook,
@@ -185,7 +186,8 @@ export function usePdf(
           signal: abortController.signal,
           compress: true,
         })
-        blob.value = result
+        const blobResult = await fileStreamToBlob(result)
+        blob.value = blobResult
         loading(false)
         resolve(shell)
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>

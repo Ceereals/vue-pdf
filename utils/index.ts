@@ -1,29 +1,25 @@
-import type renderPDF from '@react-pdf/render'
+import type { pdfRender } from '@/render'
 
 export function fileStreamToBlob(
-  fileStream: ReturnType<typeof renderPDF>,
+  fileStream: Awaited<ReturnType<typeof pdfRender>>,
 ): Promise<Blob> {
-  return new Promise((resolve, reject) => {
-    const chunks: Uint8Array[] = []
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    fileStream.on('data', (chunk: any) => {
-      /* v8 ignore next */
-      chunks.push(chunk instanceof Uint8Array ? chunk : new Uint8Array(chunk))
-    })
-
-    fileStream.on('end', () => {
-      try {
-        resolve(new Blob(chunks, { type: 'application/pdf' }))
-        /* v8 ignore next 3 */
-      } catch (error) {
-        reject(error)
-      }
-    })
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    fileStream.on('error', (error: any) => {
-      reject(error)
-    })
+  const { promise, resolve, reject } = Promise.withResolvers<Blob>()
+  const chunks: Uint8Array[] = []
+  fileStream.on('data', (chunk: Uint8Array) => {
+    chunks.push(chunk)
   })
+  fileStream.on('end', () => {
+    try {
+      resolve(new Blob(chunks, { type: 'application/pdf' }))
+      /* v8 ignore next 3 */
+    } catch (error) {
+      reject(error)
+    }
+  })
+  fileStream.on('error', (error) => {
+    reject(error)
+  })
+  return promise
 }
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function removeCircular(obj: any) {

@@ -4,10 +4,10 @@ import layoutDocument from '@react-pdf/layout'
 import renderPDF from '@react-pdf/render'
 // @ts-expect-error
 import PDFDocument from '@react-pdf/pdfkit'
-import { fileStreamToBlob, omitNils } from '@utils'
+import { omitNils } from '@utils'
 import type { DocumentNode as _DocumentNode } from '@react-pdf/types'
 import type { PDFNode } from '@/renderer/nodeOps'
-
+import type { Readable } from 'node:stream'
 export interface DocumentNode
   extends Omit<_DocumentNode, 'props' | 'children'> {
   uid: string
@@ -28,8 +28,8 @@ export const pdfRender = (
   { compress, signal }: Partial<{ compress: boolean; signal?: AbortSignal }> = {
     compress: true,
   },
-): Promise<Blob> => {
-  const { promise, resolve, reject } = Promise.withResolvers<Blob>()
+): Promise<Readable> => {
+  const { promise, resolve, reject } = Promise.withResolvers<Readable>()
   const {
     pdfVersion = '1.3',
     language = 'en',
@@ -84,7 +84,6 @@ export const pdfRender = (
   })
   layoutPromise
     .then((layout) => renderPDF(ctx, layout))
-    .then(fileStreamToBlob)
     .then(resolve)
     .catch(reject)
   return promise
