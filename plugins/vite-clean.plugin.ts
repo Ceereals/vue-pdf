@@ -11,11 +11,7 @@ export default function (): Plugin {
         { recursive: true },
         () => void 0,
       )
-      fs.rm(
-        path.resolve('./dist/types/dom'),
-        { recursive: true },
-        () => void 0,
-      )
+      fs.rm(path.resolve('./dist/types/dom'), { recursive: true }, () => void 0)
     },
   }
 }
