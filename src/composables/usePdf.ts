@@ -1,10 +1,8 @@
-import { setupDevtools } from '@/devtools'
 import { type PdfRoot, pdfRender } from '@/render'
 import { render } from '@/renderer'
 import { fileStreamToBlob } from '@/utils'
 import type { PDFElement } from '@/renderer/nodeOps'
 import {
-  createEventHook,
   tryOnBeforeMount,
   tryOnBeforeUnmount,
   useObjectUrl,
@@ -77,9 +75,8 @@ export function usePdf(
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
   config?: UsePdfConfig,
-): UsePdfReturn & PromiseLike<UsePdfReturn>
-// #endregion usePdf
-{
+): UsePdfReturn & PromiseLike<UsePdfReturn> {
+  // #endregion usePdf
   const root = shallowRef<PdfRoot>({
     type: 'ROOT',
     document: {} as PdfRoot['document'],
@@ -90,7 +87,6 @@ export function usePdf(
     reactive: true,
     enableProvideBridge: !!instance,
   })
-  const renderHook = createEventHook()
   const isMounted = ref(false)
   const blob = shallowRef<Blob | null>(null)
   const isLoading = ref(!!options.reactive)
@@ -154,14 +150,6 @@ export function usePdf(
         onUpdated(() => {
           if (options.reactive) execute()
         })
-        if (typeof window !== 'undefined') {
-          // @ts-expect-error
-          setupDevtools(instance?.appContext.app, {
-            execute,
-            root: root,
-            onRender: renderHook.on,
-          })
-        }
         return () => {
           return getDoc()
         }
@@ -192,7 +180,6 @@ export function usePdf(
         blob.value = blobResult
         loading(false)
         resolve(shell)
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       } catch (err: any) {
         if (err.message === 'Cancelled') {
           if (options.onError) {
