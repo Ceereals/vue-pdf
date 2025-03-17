@@ -42,10 +42,7 @@ type renderToBufferType = (
   options?: Parameters<typeof pdfRender>[1],
 ) => Promise<Buffer<ArrayBuffer>>
 // #endregion renderToBuffer
-export const renderToBuffer: renderToBufferType = (
-  document,
-  options,
-) => {
+export const renderToBuffer: renderToBufferType = (document, options) => {
   return renderToStream(document, options).then((stream) => {
     const chunks: Uint8Array[] = []
     return new Promise<Buffer<ArrayBuffer>>((resolve, reject) => {

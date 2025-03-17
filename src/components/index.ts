@@ -49,7 +49,12 @@ interface PDFDownloadLinkEvents {
 }
 // #endregion PDFDownloadLinkEvents
 
-export type { PDFViewerProps, PDFDownloadLinkProps, PDFDownloadLinkSlots, PDFDownloadLinkEvents }
+export type {
+  PDFViewerProps,
+  PDFDownloadLinkProps,
+  PDFDownloadLinkSlots,
+  PDFDownloadLinkEvents,
+}
 // #region DocumentProps
 type PageMode =
   | 'useNone'
