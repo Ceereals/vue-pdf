@@ -59,6 +59,7 @@
         "src/dom/**/*.tsx",
         "src/dom/**/*.vue",
         "src/dom/**/*.ts",
+        "src/node/**/*.ts",
         "src/renderer/**/*.ts",
         "src/render/**/*.ts",
         "tests/**/*.ts",
