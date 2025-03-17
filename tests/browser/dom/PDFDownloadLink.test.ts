@@ -19,7 +19,7 @@ describe('PDFDownloadLink', () => {
       },
     })
     const { promise, resolve } = Promise.withResolvers()
-    setTimeout(resolve, 100)
+    setTimeout(resolve, 150)
     await promise
     const url = wrapper.vm.url
     const link = wrapper.get('a')
