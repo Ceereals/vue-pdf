@@ -9,6 +9,9 @@ export default mergeConfig(
     test: {
       workspace: ['tests/*'],
       coverage: {
+        thresholds: {
+            "100": true
+        },
         provider: 'v8',
         reporter: ['text', 'html'],
         exclude: [
