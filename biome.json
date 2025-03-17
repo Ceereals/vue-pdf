@@ -37,7 +37,8 @@
       "recommended": true,
       "suspicious": {
         "noThenProperty": "off",
-        "noRedeclare": "off"
+        "noRedeclare": "off",
+        "noExplicitAny": "off"
       },
       "correctness": {
         "noUnusedImports": "error"
