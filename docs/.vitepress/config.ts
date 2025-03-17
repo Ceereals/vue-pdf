@@ -8,7 +8,14 @@ export default defineConfig({
   title: 'Vue PDF',
   description: 'Custom Renderer for PDF Creation',
   lastUpdated: true,
+  head: [
+    [
+      'link',
+      { rel: 'icon', type: 'image/svg+xml', href: '/vuepdf-logo.svg' },
+    ],
+  ],
   themeConfig: {
+    logo: { src: '/vuepdf-logo.svg', width: 24, height: 24 },
     search: {
       provider: 'local',
     },

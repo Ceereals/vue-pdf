@@ -1,0 +1,29 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1936.28 2295.89">
+    <defs>
+        <style>
+            .cls-2,.cls-3{fill:#fafafa}.cls-10,.cls-2,.cls-4,.cls-5,.cls-6{stroke-miterlimit:10}.cls-2,.cls-4,.cls-5,.cls-6{stroke:#f0f1f2;stroke-linecap:square;stroke-width:59px}.cls-10,.cls-4,.cls-5,.cls-6{fill:none}.cls-5{stroke-dasharray:12.21 3.05 10.17 12.21}.cls-6{stroke-dasharray:3.05 10.17 12.21 3.05 10.17 12.21}.cls-9{fill:#364a5e}.cls-10{stroke:#fafafa;stroke-width:40px}
+        </style>
+    </defs>
+    <rect x="56.12" y="49.48" width="1834.13" height="2199.67" rx="347.46" style="stroke-miterlimit:10;stroke:#365563;stroke-width:82px;fill:#fafafa"/>
+    <path class="cls-2" d="M452.3 636.28h1017.32M452.49 785.44h1017.32"/>
+    <path class="cls-3" d="M452.68 934.59H1470"/>
+    <path class="cls-4" d="M452.68 934.59h1.5"/>
+    <path class="cls-5" d="M464.35 934.59h31.54"/>
+    <path class="cls-6" d="M502 934.59h960.4"/>
+    <path class="cls-4" d="M1468.5 934.59h1.5"/>
+    <path class="cls-3" d="M452.68 1100.11H1470"/>
+    <path class="cls-4" d="M452.68 1100.11h1.5"/>
+    <path class="cls-5" d="M464.35 1100.11h31.54"/>
+    <path class="cls-6" d="M502 1100.11h960.4"/>
+    <path class="cls-4" d="M1468.5 1100.11h1.5"/>
+    <path class="cls-3" d="M452.68 1265.64H1470"/>
+    <path class="cls-4" d="M452.68 1265.64h1.5"/>
+    <path class="cls-5" d="M464.35 1265.64h31.54"/>
+    <path class="cls-6" d="M502 1265.64h960.4"/>
+    <path class="cls-4" d="M1468.5 1265.64h1.5"/>
+    <path style="stroke-dasharray:10 7 10;stroke:#f0f1f2;stroke-linecap:square;stroke-width:59px;stroke-miterlimit:10;fill:#fafafa" d="M452.68 1431.16H1470"/>
+    <path d="m1109.2 299.71-148.32 256.9-148.33-256.9H318.62l642.26 1112.43 642.25-1112.43Z" style="fill:#4ab382"/>
+    <path class="cls-9" d="m1109.2 299.71-148.32 256.9-148.33-256.9h-237l385.33 667.45 385.35-667.45ZM396.05 1995.07V1590.5h184.37q55.49 0 95.94 17.92t62.13 51.73q21.68 33.81 21.67 79.47 0 46.82-21.67 80t-62.13 51.44q-40.46 18.21-95.94 18.21H459.05l51.44-50.27v156Zm114.44-142.75-51.44-53.75h114.43q35.84 0 53.75-15.32t17.92-43.63q0-27.16-17.92-43.06t-53.75-15.89H459.05l51.44-52.6ZM787.33 1995.07V1590.5h191.3q66.47 0 117.33 24.86t79.46 69.93q28.62 45.07 28.61 106.92 0 62.41-28.61 107.79t-79.42 70.22q-50.87 24.85-117.33 24.85Zm114.43-91.31h71.09q35.25 0 61-13.3A96.53 96.53 0 0 0 1074 1852q14.44-25.14 14.45-59.24 0-35.25-14.45-59.82a97.61 97.61 0 0 0-40.16-37.85q-25.72-13.29-61-13.3h-71.08ZM1350.25 1995.07h-114.44V1590.5h316.72v89h-202.28Zm-8.67-227.13h186.68v88.42h-186.68Z"/>
+    <path class="cls-3" d="M814.02 299.45 961.9 556.61l148.76-256.65-327.16-.56"/>
+    <path class="cls-10" d="m289.59 302.35 675.19 1156.66M1656.78 247.86 905.91 1549.11"/>
+</svg>

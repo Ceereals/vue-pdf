@@ -1,0 +1,26 @@
+:root {
+  --vp-home-hero-image-background-image: radial-gradient(
+    var(--vp-c-brand-1) 0%,var(--vp-c-bg) 75%
+  );
+  --vp-home-hero-image-filter: blur(80px);
+  --vp-c-brand-1: #49aeb2;
+  --vp-c-brand-2: #49b281;
+  --vp-c-brand-3: #497ab2;
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    var(--vp-c-brand-1) 30%,
+    var(--vp-c-brand-3)
+  );
+}
+
+.image-src {
+  /** needs a -9deg rotate keeping it centered */
+  transform: translate(-50%, -50%) scale(0.75) rotate(-9deg) !important;
+  transform-origin: 50% 50% !important;
+  filter: drop-shadow(-30px 20px 0px rgba(41, 60, 79, 1));
+}
+.image-bg {
+  transform: translate(-50%, -50%) scale(1.3) !important;
+}

@@ -13,6 +13,9 @@ hero:
     - theme: alt
       text: Reference
       link: /reference/components-api
+  image:
+    src: /vuepdf-logo.svg
+    alt: Vue PDF
 
 features:
   - icon: 📄
