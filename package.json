@@ -16,7 +16,7 @@
       "import": "./react-pdf/fns/index.js",
       "types": "./react-pdf/fns/index.d.ts"
     },
-    "./plugin": {
+    "./vite": {
       "import": "./dist/vue-pdf-plugin.js",
       "types": "./dist/types/vue-pdf-plugin.d.ts"
     }
