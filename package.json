@@ -41,7 +41,6 @@
     "@react-pdf/pdfkit": "^4",
     "@react-pdf/primitives": "^4",
     "@react-pdf/render": "^4",
-    "@react-pdf/renderer": "^4.3.0",
     "@vue/devtools-api": "^7.5.4",
     "@vueuse/core": "^10.11.1",
     "defu": "^6.1.4",
