@@ -51,11 +51,8 @@ export default defineConfig({
           ],
         },
         {
-          text: 'Guide',
-          items: [
-            { text: 'Components', link: '/docs/components' },
-            { text: 'Composables', link: '/docs/composables' },
-          ],
+          text: 'API Reference',
+          link: '/reference/components-api',
         },
       ],
       '/reference': [
