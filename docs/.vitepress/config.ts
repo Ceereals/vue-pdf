@@ -13,7 +13,7 @@ export default defineConfig({
       provider: 'local',
     },
     editLink: {
-      pattern: 'https://github.com/Ceereals/vue-pdf/edit/main/docs/:path'
+      pattern: 'https://github.com/Ceereals/vue-pdf/edit/main/docs/:path',
     },
     // https://vitepress.dev/reference/default-theme-config
     nav: [

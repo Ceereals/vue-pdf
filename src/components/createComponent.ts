@@ -1,6 +1,6 @@
 import { defineComponent, h } from 'vue'
 import type { Primitive } from '@react-pdf/types/primitive'
-export default function <M extends Record<string,any>  >(
+export default function <M extends Record<string, any>>(
   type: Primitive | string,
   name: string,
   propsDef?: Array<keyof M>,

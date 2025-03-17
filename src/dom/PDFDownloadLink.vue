@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { usePdf } from '@/composables'
-import type { PDFDownloadLinkProps, PDFDownloadLinkSlots, PDFDownloadLinkEvents } from '@/components'
+import type {
+  PDFDownloadLinkProps,
+  PDFDownloadLinkSlots,
+  PDFDownloadLinkEvents,
+} from '@/components'
 const props = withDefaults(defineProps<PDFDownloadLinkProps>(), {
   fileName: 'document.pdf',
   label: 'Download',
@@ -17,7 +21,7 @@ const { url, blob, isLoading } = usePdf(
     })[0] ??
     (() => {
       throw new Error('PDFDownloadLink requires a default slot')
-    })()
+    })(),
 )
 const handleDownloadIE = () => {
   /* v8 ignore next 6 */
