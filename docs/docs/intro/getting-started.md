@@ -1,3 +1,6 @@
+---
+outline: 2,3
+---
 # Getting Started
 
 ## Installation
@@ -33,11 +36,26 @@ $ bun add -D @ceereals/vue-pdf
 
 :::
 
-## Basic Usage
+### Vite plugin
 
-### Create a PDF Document component
+The `vue-pdf` package includes a custom Vite plugin that streamlines the integration of modified `@react-pdf/fns` library into your project. This plugin automatically aliases `@react-pdf/fns` to the enhanced version bundled with `vue-pdf`, which introduces an `abort` method to halt layout execution, a critical improvement for managing long or resource-intensive PDF rendering tasks, due to reactivity changes.
 
-Here's an example of how to create a simple PDF document using the components provided by vue-pdf:
+```ts [vite.config.ts]
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vuePdf from "@ceereals/vue-pdf/vite";
+
+export default defineConfig({
+  plugins: [vue(), vuePdf()],
+});
+```
+
+> [!NOTE]
+> The Vite plugin is *not mandatory*. Code includes runtime checks to verify if the modified feature is implemented, ensuring that even without the plugin, your project will work correctly. This design allows you to adopt the plugin for convenience, while still maintaining full functionality in its absence.
+
+## Document component
+
+Here's an example of how to write a simple PDF document template using the components provided by `vue-pdf`:
 ::: code-group
 
 ```vue [HelloWorldDocument.vue]
@@ -133,7 +151,12 @@ export default defineComponent(() => {
 
 :::
 
-### Render the PDF Document
+> [!WARNING]
+> The `Document` component must be the root of your tree element structure, and under no circumstances should it be used as a child of another `vue-pdf` component. In addition, it should only have children of type `Page`. For more information, see the [API Reference for Document](../../api-reference#document).
+
+## Browser Usage
+
+### Rendering
 
 We have more options to render the PDF document:
 
@@ -141,11 +164,13 @@ We have more options to render the PDF document:
 2. Render the PDF document to a `Blob` using `usePdf` composable.
 3. Generate a PDF file using `Node.js`.
 
-#### Render the document in the browser with `PDFViewer`
+For more information about the rendering process, see the [Rendering process](https://react-pdf.org/rendering-process) section in the `@react-pdf` documentation.
+
+#### Using `PDFViewer` <Badge type="info" text="component"/>
 
 To render the document in the browser with [`PDFViewer`](../components#pdfviewer) component do the following:
 
-```vue [MyApp.vue]
+```vue [MyApp.vue] {6-8}
 <script setup>
 import { PDFViewer } from "@ceereals/vue-pdf";
 import HelloWorldDocument from "./HelloWorldDocument.vue";
@@ -159,11 +184,12 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 
 `PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents.
 
-#### Render the document in the browser with `usePdf`
+#### Using `usePdf` <Badge type="info" text="composable"/>
 
-To render the document in the browser, you can use the [`usePdf`](../composables#usepdf) composable:
+To render the document in the browser on your own, you can use the [`usePdf`](../composables#usepdf) composable:
+::: code-group
 
-```vue [MyApp.vue]
+```vue [MyVueComponent.vue] {6}
 <script setup>
 import { h } from "vue";
 import { usePdf } from "@ceereals/vue-pdf";
@@ -172,8 +198,50 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 const { url } = usePdf(h(HelloWorldDocument, /* props */));
 </script>
 <template>
-  
+  <iframe :src="url"/>
 </template>
 ```
 
-`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents.
+```vue [MyVueComponent.vue - no render function] {5}
+<script setup>
+import { usePdf } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.vue";
+
+const { url } = usePdf(HelloWorldDocument);
+</script>
+<template>
+  <iframe :src="url" />
+</template>
+```
+
+:::
+
+## Node Usage
+
+### Render to File
+
+To generate a PDF file using `Node.js`, you can use the `renderToFile` function from the `@ceereals/vue-pdf` package. This function returns a `Promise` that resolves to a `Stream.Readable` object containing the PDF document when has been succesfully writte to the filesystem.
+::: code-group
+
+```js [index.js]
+import { renderToFile } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.ts";
+
+
+await renderToFile(HelloWorldDocument, "hello-world.pdf");
+
+```
+
+```js [withProps.js]
+import { h } from "vue";
+import { renderToFile } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.ts";
+
+
+await renderToFile(h(HelloWorldDocument, /** props */), "hello-world.pdf");
+
+```
+
+:::
+
+Node API also includes a `renderToStream` and `renderToBuffer`, for more information see the [Node API Reference](../../api-reference#rendertofile).
