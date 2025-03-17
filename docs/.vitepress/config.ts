@@ -43,7 +43,7 @@ export default defineConfig({
           text: 'Introduction',
           items: [
             {
-              text: 'What is vue-pdf?',
+              text: 'What is Vue PDF?',
               link: '/docs/intro/what-is-vue-pdf.md',
             },
             { text: 'Getting Started', link: '/docs/intro/getting-started.md' },
