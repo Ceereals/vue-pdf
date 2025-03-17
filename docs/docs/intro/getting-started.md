@@ -152,7 +152,7 @@ export default defineComponent(() => {
 :::
 
 > [!WARNING]
-> The `Document` component must be the root of your tree element structure, and under no circumstances should it be used as a child of another `vue-pdf` component. In addition, it should only have children of type `Page`. For more information, see the [API Reference for Document](../../api-reference#document).
+> The `Document` component must be the root of your tree element structure, and under no circumstances should it be used as a child of another `vue-pdf` component. In addition, it should only have children of type `Page`. For more information, see the [API Reference for Document](../../reference/components-api#document).
 
 ## Browser Usage
 
@@ -160,7 +160,7 @@ export default defineComponent(() => {
 
 We have more options to render the PDF document:
 
-1. Render the document in the browser using the [`PDFViewer`](../components#pdfviewer) component.
+1. Render the document in the browser using the [`PDFViewer`](../../reference/browser-api#pdfviewer) component.
 2. Render the PDF document to a `Blob` using `usePdf` composable.
 3. Generate a PDF file using `Node.js`.
 
@@ -168,7 +168,7 @@ For more information about the rendering process, see the [Rendering process](ht
 
 #### Using `PDFViewer` <Badge type="info" text="component"/>
 
-To render the document in the browser with [`PDFViewer`](../components#pdfviewer) component do the following:
+To render the document in the browser with [`PDFViewer`](../../reference/browser-api#pdfviewer) component do the following:
 
 ```vue [MyApp.vue] {6-8}
 <script setup>
@@ -186,7 +186,7 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 
 #### Using `usePdf` <Badge type="info" text="composable"/>
 
-To render the document in the browser on your own, you can use the [`usePdf`](../composables#usepdf) composable:
+To render the document in the browser on your own, you can use the [`usePdf`](../../reference/browser-api#usepdf) composable:
 ::: code-group
 
 ```vue [MyVueComponent.vue] {6}
@@ -244,4 +244,4 @@ await renderToFile(h(HelloWorldDocument, /** props */), "hello-world.pdf");
 
 :::
 
-Node API also includes a `renderToStream` and `renderToBuffer`, for more information see the [Node API Reference](../../api-reference#rendertofile).
+Node API also includes a `renderToStream` and `renderToBuffer`, for more information see the [Node API Reference](../../reference/node-api).
