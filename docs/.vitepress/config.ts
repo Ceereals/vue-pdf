@@ -8,6 +8,7 @@ export default defineConfig({
   title: 'Vue PDF',
   description: 'Custom Renderer for PDF Creation',
   base: '/vue-pdf/',
+  lastUpdated: true,
   themeConfig: {
     search: {
       provider: 'local',
