@@ -1,21 +1,12 @@
 <script setup lang="ts">
-import type { VNode } from 'vue'
 import { usePdf } from '@/composables'
-const props = withDefaults(
-  defineProps<{
-    fileName: string
-  }>(),
-  {
-    fileName: 'document.pdf',
-  },
-)
-const emits = defineEmits<{
-  click: [event: MouseEvent]
-}>()
-const slots = defineSlots<{
-  default: () => VNode[]
-  label: () => VNode[]
-}>()
+import type { PDFDownloadLinkProps, PDFDownloadLinkSlots, PDFDownloadLinkEvents } from '@/components'
+const props = withDefaults(defineProps<PDFDownloadLinkProps>(), {
+  fileName: 'document.pdf',
+  label: 'Download',
+})
+const emits = defineEmits<PDFDownloadLinkEvents>()
+const slots = defineSlots<PDFDownloadLinkSlots>()
 if (!slots.default) {
   throw new Error('PDFDownloadLink requires a default slot')
 }
@@ -26,7 +17,7 @@ const { url, blob, isLoading } = usePdf(
     })[0] ??
     (() => {
       throw new Error('PDFDownloadLink requires a default slot')
-    })(),
+    })()
 )
 const handleDownloadIE = () => {
   /* v8 ignore next 6 */
@@ -45,6 +36,8 @@ defineExpose({ blob, isLoading, url })
 </script>
 <template>
   <a v-if="url" :href="url" :download="fileName" @click="onClick">
-    <slot name="label" :blob="blob"></slot>
+    <slot name="label" :blob="blob">
+      {{ label }}
+    </slot>
   </a>
 </template>

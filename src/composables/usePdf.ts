@@ -29,8 +29,8 @@ import {
   shallowRef,
   toValue,
 } from 'vue'
-
-type UsePdfConfig = {
+// #region usePdf
+interface UsePdfConfig {
   /**
    * If true, the pdf will be rendered immediately and updated
    * @default true
@@ -48,11 +48,11 @@ type UsePdfConfig = {
   onError?: (error: Error) => Promise<Error | undefined> | Error | undefined
 }
 
-export interface UsePdfReturn {
+interface UsePdfReturn {
   isLoading: Readonly<Ref<boolean>>
   isFinished: Readonly<Ref<boolean>>
   blob: Readonly<Ref<Blob | null>>
-  url: ReturnType<typeof useObjectUrl>
+  url: Readonly<Ref<string | undefined>>
   error: Readonly<Ref<Error | null>>
   root: Readonly<Ref<PdfRoot>>
   /**
@@ -77,7 +77,9 @@ export function usePdf(
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
   config?: UsePdfConfig,
-): UsePdfReturn & PromiseLike<UsePdfReturn> {
+): UsePdfReturn & PromiseLike<UsePdfReturn>
+// #endregion usePdf
+{
   const root = shallowRef<PdfRoot>({
     type: 'ROOT',
     document: {} as PdfRoot['document'],

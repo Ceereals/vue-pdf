@@ -15,11 +15,13 @@ export const PDFViewer = () => {
 export const PDFDownloadLink = () => {
   throw new Error('PDFDownloadLink is not available in the browser')
 }
-
-export const renderToStream = (
+// #region renderToStream
+type renderToStream = (
   document: Component | VNode,
   options?: Parameters<typeof pdfRender>[1],
-) => {
+) => Promise<Readable>
+// #endregion renderToStream
+export const renderToStream: renderToStream = (document, options) => {
   const root = {
     type: 'ROOT',
     document: null,
@@ -34,9 +36,15 @@ export const renderToStream = (
   return pdfRender(root as unknown as PdfRoot, options)
 }
 
-export const renderToBuffer = (
+// #region renderToBuffer
+type renderToBuffer = (
   document: Component | VNode,
   options?: Parameters<typeof pdfRender>[1],
+) => Promise<Buffer<ArrayBuffer>>
+// #endregion renderToBuffer`
+export const renderToBuffer: renderToBuffer = (
+  document,
+  options,
 ) => {
   return renderToStream(document, options).then((stream) => {
     const chunks: Uint8Array[] = []
@@ -52,6 +60,13 @@ export const renderToBuffer = (
   })
 }
 
+// #region renderToFile
+type renderToFile = (
+  document: Component | VNode,
+  filePath: string,
+  options?: Parameters<typeof pdfRender>[1],
+) => Promise<Readable>
+// #endregion renderToFile
 export const renderToFile = async (
   document: Component | VNode,
   filePath: string,
