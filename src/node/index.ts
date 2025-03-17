@@ -41,7 +41,7 @@ type renderToBuffer = (
   document: Component | VNode,
   options?: Parameters<typeof pdfRender>[1],
 ) => Promise<Buffer<ArrayBuffer>>
-// #endregion renderToBuffer`
+// #endregion renderToBuffer
 export const renderToBuffer: renderToBuffer = (
   document,
   options,
