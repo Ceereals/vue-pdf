@@ -1,6 +1,6 @@
 {
   "name": "@ceereals/vue-pdf",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Ceereals/vue-pdf.git"
@@ -10,7 +10,10 @@
   "browser": {
     "./dist/node/index.js": "./dist/dom/index.js"
   },
-  "files": ["dist", "dist/types"],
+  "files": [
+    "dist",
+    "dist/types"
+  ],
   "types": "dist/types",
   "exports": {
     ".": {
