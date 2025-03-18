@@ -19,7 +19,8 @@
   "types": "dist/types",
   "exports": {
     ".": {
-      "import": "./dist/node/index.js"
+      "import": "./dist/node/index.js",
+      "types": "./dist/types/index.d.ts"
     },
     "./fns": {
       "import": "./react-pdf/fns/index.js",
