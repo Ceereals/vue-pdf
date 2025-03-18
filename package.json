@@ -7,6 +7,8 @@
   },
   "type": "module",
   "main": "dist/node/index.js",
+  "license": "MIT",
+  "author": "Ceereals",
   "browser": {
     "./dist/node/index.js": "./dist/dom/index.js"
   },
