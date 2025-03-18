@@ -60,6 +60,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'node:path',
+        'node:fs',
         ...Object.keys(pkg.dependencies),
         ...Object.keys(pkg.peerDependencies),
       ],
