@@ -22,6 +22,8 @@ jobs:
         run: npm run build:fns
       - name: Run tests
         run: npm run coverage
+      - name: Build
+        run: npm run build
       - name: Publish to npm
         run: npm publish --provenance --access public
         env:
