@@ -179,27 +179,27 @@ interface ViewProps {
   /**
    * Enable/disable page wrapping for element
    */
-  wrap: boolean
+  wrap?: boolean
   /**
    * Defines view styles
    */
-  style: object | object[]
+  style?: object | object[]
   /**
    * Enables debug mode on view bounding box
    */
-  debug: boolean
+  debug?: boolean
   /**
    * Render component in all wrapped pages
    */
-  fixed: boolean
+  fixed?: boolean
   /**
    * Destination ID to be linked to
    */
-  id: string
+  id?: string
   /**
    * Attach bookmark to element
    */
-  bookmark: string | Bookmark
+  bookmark?: string | Bookmark
 }
 // #endregion ViewProps
 
