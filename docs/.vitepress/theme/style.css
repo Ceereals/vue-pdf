@@ -1,6 +1,7 @@
 :root {
   --vp-home-hero-image-background-image: radial-gradient(
-    var(--vp-c-brand-1) 0%,var(--vp-c-bg) 75%
+    var(--vp-c-brand-1) 0%,
+    var(--vp-c-bg) 75%
   );
   --vp-home-hero-image-filter: blur(80px);
   --vp-c-brand-1: #49aeb2;
