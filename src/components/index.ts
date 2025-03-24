@@ -200,6 +200,14 @@ interface ViewProps {
    * Attach bookmark to element
    */
   bookmark?: string | Bookmark
+  /**
+   *
+   * Render dynamic text based on the context the element is rendered
+   */
+  render?: (args: {
+    pageNumber: number
+    subPageNumber: string
+  }) => string
 }
 // #endregion ViewProps
 
@@ -312,6 +320,16 @@ interface TextProps {
    * Attach bookmark to element
    */
   bookmark?: string | Bookmark
+  /**
+   *
+   * Render dynamic text based on the context the element is rendered
+   */
+  render?: (args: {
+    pageNumber: number
+    totalPages: number
+    subPageNumber: string
+    subPageTotalPages: number
+  }) => string
 }
 // #endregion TextProps
 
@@ -743,6 +761,7 @@ export const View = createComponent<ViewProps>(P.View, 'View', [
   'fixed',
   'wrap',
   'debug',
+  'render',
 ])
 export const Text = createComponent<TextProps>(P.Text, 'Text', [
   'id',
@@ -751,6 +770,7 @@ export const Text = createComponent<TextProps>(P.Text, 'Text', [
   'wrap',
   'debug',
   'hyphenationCallback',
+  'render',
 ])
 export const Link = createComponent<LinkProps>(P.Link, 'Link', [
   'style',
