@@ -5,12 +5,8 @@
     "type": "git",
     "url": "git+https://github.com/Ceereals/vue-pdf.git"
   },
-  "keywords": [
-    "vue",
-    "pdf",
-    "vue-pdf",
-    "renderer"
-  ],
+  "homepage": "https://vue-pdf.org",
+  "keywords": ["vue", "pdf", "vue-pdf", "renderer"],
   "type": "module",
   "main": "dist/node/index.js",
   "license": "MIT",
@@ -18,10 +14,7 @@
   "browser": {
     "./dist/node/index.js": "./dist/dom/index.js"
   },
-  "files": [
-    "dist",
-    "dist/types"
-  ],
+  "files": ["dist", "dist/types"],
   "types": "dist/types",
   "exports": {
     ".": {
