@@ -21,11 +21,9 @@ export function fileStreamToBlob(
   })
   return promise
 }
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 function removeCircular(obj: any) {
   const seen = new Map()
   obj._vnode = undefined
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const recurse = (obj: any) => {
     seen.set(obj, true)
     /* v8 ignore next */
@@ -39,7 +37,6 @@ function removeCircular(obj: any) {
   }
   recurse(obj)
 }
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export function cleanObjectForSeralization(obj: any, recursive = false) {
   !recursive && removeCircular(obj)
   for (const key in obj) {
@@ -52,7 +49,6 @@ export function cleanObjectForSeralization(obj: any, recursive = false) {
       }
     }
     if (key === 'children') {
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
       obj[key] = obj[key].map((child: any) =>
         cleanObjectForSeralization(child, true),
       )

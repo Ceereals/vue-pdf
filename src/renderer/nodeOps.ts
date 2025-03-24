@@ -108,7 +108,8 @@ export const nodeOps: (
     }
   },
   createElement: (tag, _, __, _props): PDFElement => {
-    const { style, ...props } = _props || {}
+    const { style, render, ...props } = _props || {}
+
     return {
       uid: crypto.randomUUID(),
       type: tag,
@@ -116,7 +117,7 @@ export const nodeOps: (
       parentNode: null,
       style: style || {},
       /* v8 ignore next */
-      props: props || {},
+      props: render ? { ...props, render } : props || {},
       box: {},
     } as unknown as PDFElement
   },
@@ -163,6 +164,7 @@ export const nodeOps: (
     if (key === 'style') {
       ;(el as Exclude<Node, DocumentNode>).style = nextValue
     } else {
+      if (key === 'render' && nextValue === undefined) return el
       // @ts-expect-error
       el.props[key] = nextValue
     }
