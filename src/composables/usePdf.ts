@@ -20,7 +20,6 @@ import {
   h,
   isVNode,
   onMounted,
-  onUpdated,
   provide,
   readonly,
   ref,
@@ -143,11 +142,11 @@ export function usePdf(
             provide(key, value)
           }
         }
-        onMounted(() => {
-          isMounted.value = true
+        provide('execute', () => {
           if (options.reactive) execute()
         })
-        onUpdated(() => {
+        onMounted(() => {
+          isMounted.value = true
           if (options.reactive) execute()
         })
         return () => {
