@@ -1,6 +1,7 @@
 import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
+import { Style } from '@react-pdf/types'
 
 // #region PDFViewerProps
 interface PDFViewerProps {
@@ -152,7 +153,7 @@ interface PageProps {
   /**
    * Defines page styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Enables debug mode on page bounding box
    * @default false
@@ -183,7 +184,7 @@ interface ViewProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Enables debug mode on view bounding box
    */
@@ -264,7 +265,7 @@ interface ImageProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Enables debug mode on view bounding box
    * @default false
@@ -297,7 +298,7 @@ interface TextProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Enables debug mode on view bounding box
    * @default false
@@ -347,7 +348,7 @@ interface LinkProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Enables debug mode on view bounding box
    * @default false
@@ -370,7 +371,7 @@ interface NoteProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Renders component in all wrapped pages
    * @default false
@@ -384,7 +385,7 @@ interface CanvasProps {
   /**
    * Defines view styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
   /**
    * Painter function
    */
@@ -517,7 +518,7 @@ interface SvgProps {
   /**
    * Defines SVG styles
    */
-  style?: object | object[]
+  style?: Style | Style[]
 }
 // #endregion SvgProps
 
