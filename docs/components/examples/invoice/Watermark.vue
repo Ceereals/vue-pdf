@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { View, Image } from '@/components'
+import { View, Image } from '@ceereals/vue-pdf'
 defineProps<{ src: string }>()
 </script>
 <template>

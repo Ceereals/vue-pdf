@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
-import { View, Text } from '@/components'
+import { View, Text } from '@ceereals/vue-pdf'
 </script>
 <template>
   <Text

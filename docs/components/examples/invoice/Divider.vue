@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { View } from '@/components'
+import { View } from '@ceereals/vue-pdf'
 </script>
 <template>
   <View

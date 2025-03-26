@@ -69,6 +69,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@ceereals/vue-pdf": "^0.0.9",
     "@react-pdf/fns": "file:./src/react-pdf/fns",
     "@react-pdf/types": "^2.5.0",
     "@types/node": "^22.5.0",

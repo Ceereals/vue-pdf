@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
-import { Document, Image, Page, Text, View } from '@/components'
+import { Document, Image, Page, Text, View } from '@ceereals/vue-pdf'
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import PageCounter from '../../PageCounter.vue'
 import { useDark, useDateFormat, useNow } from '@vueuse/core'

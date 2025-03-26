@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTemplateRef, watchEffect, shallowRef, type VNode } from 'vue'
 import * as pdfjs from 'pdfjs-dist'
-import { usePdf } from '../../src/dom/index'
+import { usePdf } from '@ceereals/vue-pdf'
 import { useCounter, useMediaQuery } from '@vueuse/core'
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.mjs?url'
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker

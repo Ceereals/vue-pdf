@@ -4,6 +4,7 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import vuePdfPlugin from '../../src/plugins/vue-pdf.plugin'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Vue PDF',
