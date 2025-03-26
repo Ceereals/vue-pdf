@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { defineConfig, type Plugin } from 'vitepress'
 import {
   groupIconMdPlugin,
@@ -42,6 +43,11 @@ export default defineConfig({
           { text: 'Node API', link: '/reference/node-api' },
         ],
       },
+      {
+        text: 'Examples',
+        activeMatch: '^/examples/',
+        items: [{ text: 'Invoice', link: '/examples/invoice' }],
+      },
     ],
 
     sidebar: {
@@ -71,6 +77,12 @@ export default defineConfig({
           ],
         },
       ],
+      '/examples': [
+        {
+          text: 'Examples',
+          items: [{ text: 'Invoice', link: '/examples/invoice' }],
+        },
+      ],
     },
 
     socialLinks: [
@@ -84,6 +96,19 @@ export default defineConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      exclude: ['pdfjs-dist'],
+    },
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, '../../src/'),
+        '@renderer': path.resolve(__dirname, '../../src/renderer'),
+        '@dom': path.resolve(__dirname, '../../src/dom'),
+        '@node': path.resolve(__dirname, '../../src/node'),
+        '@utils': path.resolve(__dirname, '../../src/utils'),
+        '@workers': path.resolve(__dirname, '../../src/dom/workers'),
+      },
+    },
     plugins: [
       groupIconVitePlugin({
         customIcon: {
