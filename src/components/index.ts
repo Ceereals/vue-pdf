@@ -205,10 +205,7 @@ interface ViewProps {
    *
    * Render dynamic text based on the context the element is rendered
    */
-  render?: (args: {
-    pageNumber: number
-    subPageNumber: string
-  }) => string
+  render?: (args: { pageNumber: number; subPageNumber: string }) => string
 }
 // #endregion ViewProps
 
@@ -734,168 +731,330 @@ interface RadialGradientProps {
 }
 // #endregion RadialGradientProps
 
-export const Document = createComponent<DocumentProps>(P.Document, 'Document', [
-  'title',
-  'author',
-  'subject',
-  'creator',
-  'keywords',
-  'producer',
-  'language',
-  'pdfVersion',
-  'pageMode',
-  'pageLayout',
-])
-export const Page = createComponent<PageProps>(P.Page, 'Page', [
-  'id',
-  'style',
-  'wrap',
-  'debug',
-  'size',
-  'orientation',
-  'dpi',
-  'bookmark',
-])
-export const View = createComponent<ViewProps>(P.View, 'View', [
-  'id',
-  'style',
-  'fixed',
-  'wrap',
-  'debug',
-  'render',
-])
-export const Text = createComponent<TextProps>(P.Text, 'Text', [
-  'id',
-  'style',
-  'fixed',
-  'wrap',
-  'debug',
-  'hyphenationCallback',
-  'render',
-])
-export const Link = createComponent<LinkProps>(P.Link, 'Link', [
-  'style',
-  'fixed',
-  'wrap',
-  'debug',
-  'src',
-])
-export const Note = createComponent<NoteProps>(P.Note, 'Note', [
-  'style',
-  'fixed',
-])
-export const Path = createComponent<PathProps>(P.Path, 'Path', [
-  'style',
-  'd',
-  'fill',
-  'stroke',
-  'transform',
-  'strokeDasharray',
-  'opacity',
-  'strokeWidth',
-  'fillOpacity',
-  'fillRule',
-  'strokeOpacity',
-  'textAnchor',
-  'strokeLinecap',
-  'strokeLinejoin',
-  'visibility',
-  'dominantBaseline',
-])
-export const Rect = createComponent<RectProps>(P.Rect, 'Rect', [
-  'x',
-  'y',
-  'width',
-  'height',
-  'rx',
-  'ry',
-])
-export const Line = createComponent<LineProps>(P.Line, 'Line', [
-  'x1',
-  'x2',
-  'y1',
-  'y2',
-])
-export const Stop = createComponent<StopProps>(P.Stop, 'Stop', [
-  'offset',
-  'stopColor',
-  'stopOpacity',
-])
+export const Document = createComponent<DocumentProps>(P.Document, 'Document', {
+  author: String,
+  creator: {
+    type: String,
+    default: 'vue-pdf',
+  },
+  keywords: String,
+  language: String,
+  // @ts-expect-error
+  pageLayout: {
+    type: String,
+    default: 'singlePage',
+  },
+  // @ts-expect-error
+  pageMode: {
+    type: String,
+    default: 'useNone',
+  },
+  pdfVersion: {
+    type: String,
+    default: '1.3',
+  },
+  producer: {
+    type: String,
+    default: 'vue-pdf',
+  },
+  subject: String,
+  title: String,
+})
+export const Page = createComponent<PageProps>(P.Page, 'Page', {
+  bookmark: [String, Object],
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  dpi: {
+    type: Number,
+    default: 72,
+  },
+  id: String,
+  // @ts-expect-error
+  orientation: {
+    type: String,
+    default: 'portrait',
+  },
+  size: {
+    type: [String, Array, Number, Object],
+    default: 'A4',
+  },
+  style: [Object, Array],
+  wrap: {
+    type: Boolean,
+    default: true,
+  },
+})
+export const View = createComponent<ViewProps>(P.View, 'View', {
+  id: String,
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+  wrap: Boolean,
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  // @ts-expect-error
+  render: Function,
+})
+export const Text = createComponent<TextProps>(P.Text, 'Text', {
+  id: String,
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+  wrap: {
+    type: Boolean,
+    default: true,
+  },
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  // @ts-expect-error
+  hyphenationCallback: Function,
+  // @ts-expect-error
+  render: Function,
+})
+export const Link = createComponent<LinkProps>(P.Link, 'Link', {
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+  wrap: {
+    type: Boolean,
+    default: true,
+  },
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  src: String,
+})
+export const Note = createComponent<NoteProps>(P.Note, 'Note', {
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+})
+export const Path = createComponent<PathProps>(P.Path, 'Path', {
+  style: Object,
+  d: String,
+  fill: String,
+  stroke: String,
+  transform: String,
+  strokeDasharray: String,
+  opacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  strokeWidth: {
+    type: [String, Number],
+    default: 1,
+  },
+  fillOpacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  // @ts-expect-error
+  fillRule: {
+    type: String,
+    default: 'nonzero',
+  },
+  strokeOpacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  // @ts-expect-error
+  textAnchor: String,
+  // @ts-expect-error
+  strokeLinecap: {
+    type: String,
+    default: 'butt',
+  },
+  // @ts-expect-error
+  strokeLinejoin: {
+    type: String,
+    default: 'miter',
+  },
+  // @ts-expect-error
+  visibility: {
+    type: String,
+    default: 'visible',
+  },
+  // @ts-expect-error
+  dominantBaseline: {
+    type: String,
+    default: 'auto',
+  },
+})
+export const Rect = createComponent<RectProps>(P.Rect, 'Rect', {
+  x: [String, Number],
+  y: [String, Number],
+  width: [String, Number],
+  height: [String, Number],
+  rx: [String, Number],
+  ry: [String, Number],
+})
+export const Line = createComponent<LineProps>(P.Line, 'Line', {
+  x1: [String, Number],
+  x2: [String, Number],
+  y1: [String, Number],
+  y2: [String, Number],
+})
+export const Stop = createComponent<StopProps>(P.Stop, 'Stop', {
+  offset: [String, Number],
+  stopColor: String,
+  stopOpacity: {
+    type: [String, Number],
+    default: 1,
+  },
+})
 export const Defs = createComponent(P.Defs, 'Defs')
-export const Image = createComponent<ImageProps>(P.Image, 'Image', [
-  'style',
-  'fixed',
-  'debug',
-  'cache',
-  'src',
-  'source',
-])
-export const Tspan = createComponent<TspanProps>(P.Tspan, 'Tspan', ['x', 'y'])
-export const Canvas = createComponent<CanvasProps>(P.Canvas, 'Canvas', [
-  'style',
-  'fixed',
-  'debug',
-  'paint',
-])
-export const Svg = createComponent<SvgProps>(P.Svg, 'Svg', [
-  'width',
-  'height',
-  'viewBox',
-  'preserveAspectRatio',
-  'style',
-])
-export const SvgText = createComponent<SvgTextProps>(P.Text, 'Text', ['x', 'y'])
-export const Circle = createComponent<CircleProps>(P.Circle, 'Circle', [
-  'cx',
-  'cy',
-  'r',
-])
-export const Ellipse = createComponent<EllipseProps>(P.Ellipse, 'Ellipse', [
-  'cx',
-  'cy',
-  'rx',
-  'ry',
-])
-export const Polygon = createComponent<PolygonProps>(P.Polygon, 'Polygon', [
-  'points',
-])
-export const Polyline = createComponent<PolylineProps>(P.Polyline, 'Polyline', [
-  'points',
-])
-export const ClipPath = createComponent<ClipPathProps>(P.ClipPath, 'ClipPath', [
-  'id',
-])
-export const G = createComponent<GProps>(P.G, 'G', [
-  'color',
-  'dominantBaseline',
-  'fill',
-  'fillOpacity',
-  'fillRule',
-  'opacity',
-  'stroke',
-  'strokeWidth',
-  'strokeOpacity',
-  'strokeLinecap',
-  'strokeLinejoin',
-  'strokeDasharray',
-  'transform',
-  'textAnchor',
-  'visibility',
-])
-export const TextInstance = createComponent<TspanProps>(
-  P.TextInstance,
-  'TextInstance',
-  ['x', 'y'],
-)
+export const Image = createComponent<ImageProps>(P.Image, 'Image', {
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  cache: {
+    type: Boolean,
+    default: true,
+  },
+  // @ts-expect-error
+  src: [String, Function, Object],
+  // @ts-expect-error
+  source: [String, Function, Object],
+})
+export const Tspan = createComponent<TspanProps>(P.Tspan, 'Tspan', {
+  x: [String, Number],
+  y: [String, Number],
+})
+export const Canvas = createComponent<CanvasProps>(P.Canvas, 'Canvas', {
+  style: [Object, Array],
+  fixed: {
+    type: Boolean,
+    default: false,
+  },
+  debug: {
+    type: Boolean,
+    default: false,
+  },
+  // @ts-expect-error
+  paint: Function,
+})
+export const Svg = createComponent<SvgProps>(P.Svg, 'Svg', {
+  width: [String, Number],
+  height: [String, Number],
+  viewBox: String,
+  preserveAspectRatio: String,
+  style: [Object, Array],
+})
+export const SvgText = createComponent<SvgTextProps>(P.Text, 'Text', {
+  x: [String, Number],
+  y: [String, Number],
+})
+export const Circle = createComponent<CircleProps>(P.Circle, 'Circle', {
+  cx: [String, Number],
+  cy: [String, Number],
+  r: [String, Number],
+})
+export const Ellipse = createComponent<EllipseProps>(P.Ellipse, 'Ellipse', {
+  cx: [String, Number],
+  cy: [String, Number],
+  rx: [String, Number],
+  ry: [String, Number],
+})
+export const Polygon = createComponent<PolygonProps>(P.Polygon, 'Polygon', {
+  points: String,
+})
+export const Polyline = createComponent<PolylineProps>(P.Polyline, 'Polyline', {
+  points: String,
+})
+export const ClipPath = createComponent<ClipPathProps>(P.ClipPath, 'ClipPath', {
+  id: String,
+})
+export const G = createComponent<GProps>(P.G, 'G', {
+  color: String,
+  // @ts-expect-error
+  dominantBaseline: {
+    type: String,
+    default: 'auto',
+  },
+  fill: String,
+  fillOpacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  // @ts-expect-error
+  fillRule: {
+    type: String,
+    default: 'nonzero',
+  },
+  opacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  stroke: String,
+  strokeWidth: {
+    type: [String, Number],
+    default: 1,
+  },
+  strokeOpacity: {
+    type: [String, Number],
+    default: 1,
+  },
+  // @ts-expect-error
+  strokeLinecap: {
+    type: String,
+    default: 'butt',
+  },
+  // @ts-expect-error
+  strokeLinejoin: {
+    type: String,
+    default: 'miter',
+  },
+  strokeDasharray: String,
+  transform: String,
+  // @ts-expect-error
+  textAnchor: String,
+  // @ts-expect-error
+  visibility: {
+    type: String,
+    default: 'visible',
+  },
+})
 export const LinearGradient = createComponent<LinearGradientProps>(
   P.LinearGradient,
   'LinearGradient',
-  ['x1', 'x2', 'y1', 'y2'],
+  {
+    x1: [String, Number],
+    x2: [String, Number],
+    y1: [String, Number],
+    y2: [String, Number],
+  },
 )
 export const RadialGradient = createComponent<RadialGradientProps>(
   P.RadialGradient,
   'RadialGradient',
-  ['cx', 'cy', 'fr', 'fx', 'fy'],
+  {
+    cx: [String, Number],
+    cy: [String, Number],
+    fr: [String, Number],
+    fx: [String, Number],
+    fy: [String, Number],
+  },
 )
 
 const components = {
@@ -921,7 +1080,6 @@ const components = {
   Polygon,
   Polyline,
   ClipPath,
-  TextInstance,
   LinearGradient,
   RadialGradient,
 }
