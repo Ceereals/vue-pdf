@@ -34,6 +34,7 @@ export default mergeConfig(
           'src/react-pdf',
           'src/plugins',
           'devtools',
+          'docs',
         ],
       },
     },
