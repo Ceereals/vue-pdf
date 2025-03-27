@@ -121,7 +121,6 @@ export default defineConfig({
           node: 'vscode-icons:file-type-node',
         },
       }) as Plugin,
-      vuePdfPlugin() as Plugin,
     ],
   },
 })
