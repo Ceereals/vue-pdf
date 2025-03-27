@@ -68,7 +68,6 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@ceereals/vue-pdf": "^0.0.10",
-    "@react-pdf/fns": "file:./src/react-pdf/fns",
     "@react-pdf/types": "^2.5.0",
     "@types/node": "^22.5.0",
     "@types/react": "^18.3.18",
@@ -89,8 +88,5 @@
     "vitepress": "^1.6.3",
     "vitepress-plugin-group-icons": "^1.3.6",
     "vitest": "^3.0.7"
-  },
-  "overrides": {
-    "@react-pdf/fns": "file:./src/react-pdf/fns"
   }
 }
