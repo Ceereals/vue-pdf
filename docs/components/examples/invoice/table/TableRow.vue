@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { View } from '@/components'
+import { View } from '@ceereals/vue-pdf'
 import { Style } from '@react-pdf/types'
 defineProps<{
   style?: Style

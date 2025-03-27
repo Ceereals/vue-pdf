@@ -4,7 +4,6 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
-import vuePdfPlugin from '../../src/plugins/vue-pdf.plugin'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Vue PDF',
@@ -100,19 +99,11 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ['pdfjs-dist'],
     },
-    build: {
-      rollupOptions: {
-        external: ['@ceereals/vue-pdf'],
-      },
-    },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '../../src/'),
-        '@renderer': path.resolve(__dirname, '../../src/renderer'),
-        '@dom': path.resolve(__dirname, '../../src/dom'),
-        '@node': path.resolve(__dirname, '../../src/node'),
-        '@utils': path.resolve(__dirname, '../../src/utils'),
-        '@workers': path.resolve(__dirname, '../../src/dom/workers'),
+        '@ceereals/vue-pdf': path.resolve(
+          './node_modules/@ceereals/vue-pdf/dist/dom/index.js',
+        ),
       },
     },
     plugins: [
