@@ -88,5 +88,8 @@
     "vitepress": "^1.6.3",
     "vitepress-plugin-group-icons": "^1.3.6",
     "vitest": "^3.0.7"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-arm64-gnu": "4.37.0"
   }
 }
