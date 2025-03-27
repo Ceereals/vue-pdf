@@ -4,6 +4,7 @@ import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import vuePdfPlugin from '../../src/plugins/vue-pdf.plugin'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Vue PDF',
@@ -102,7 +103,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@ceereals/vue-pdf': path.resolve(
-          './node_modules/@ceereals/vue-pdf/dist/dom/index.js',
+          './node_modules/@ceereals/vue-pdf/dist/dom/index.js'
         ),
       },
     },
@@ -112,6 +113,7 @@ export default defineConfig({
           node: 'vscode-icons:file-type-node',
         },
       }) as Plugin,
+      vuePdfPlugin() as Plugin,
     ],
   },
 })
