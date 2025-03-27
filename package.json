@@ -1,6 +1,6 @@
 {
   "name": "@ceereals/vue-pdf",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Vue PDF - Create PDF documents using Vue components",
   "repository": {
     "type": "git",
