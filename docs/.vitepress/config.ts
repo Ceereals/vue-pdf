@@ -100,6 +100,11 @@ export default defineConfig({
     optimizeDeps: {
       exclude: ['pdfjs-dist'],
     },
+    build: {
+      rollupOptions: {
+        external: ['@ceereals/vue-pdf'],
+      },
+    },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '../../src/'),
