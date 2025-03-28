@@ -168,7 +168,10 @@ export function usePdf(
     }
     abortController.abort()
     abortController = new AbortController()
-    if (isMounted.value) {
+    // Given the possibility that Suspense is used on the root node
+    // we need to check if there is a document to render
+    // otherwise we skip the render
+    if (isMounted.value && 'type' in root.value.document) {
       loading(true)
       try {
         const result = await pdfRender(root.value, {
