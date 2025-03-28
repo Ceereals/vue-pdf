@@ -1,10 +1,9 @@
-import { upperFirst } from '@/react-pdf/fns/'
 import FontStore from '@react-pdf/font'
 import layoutDocument from '@react-pdf/layout'
 import renderPDF from '@react-pdf/render'
 // @ts-expect-error
 import PDFDocument from '@react-pdf/pdfkit'
-import { omitNils } from '@utils'
+import { omitNils, upperFirst } from '@utils'
 import type { DocumentNode as _DocumentNode } from '@react-pdf/types'
 import type { PDFNode } from '@/renderer/nodeOps'
 import type { Readable } from 'node:stream'

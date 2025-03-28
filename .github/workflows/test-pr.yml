@@ -19,7 +19,7 @@ jobs:
           node-version: '22'  # change to your desired Node.js version
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm run coverage
