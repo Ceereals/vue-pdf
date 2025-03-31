@@ -1,14 +1,14 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-
+markdownStyles: true
 hero:
-  name: "Vue PDF"
-  text: "Custom Renderer for PDF Creation"
-  tagline: "Create PDF documents using Vue components"
+  name: 'Vue PDF'
+  text: 'Custom Renderer for PDF Creation'
+  tagline: 'Create PDF documents using Vue components'
   actions:
     - theme: brand
-      text: Get Started 
+      text: Get Started
       link: /docs/intro/getting-started
     - theme: alt
       text: Reference
