@@ -1,6 +1,9 @@
 import PDFViewer from './PDFViewer.vue'
 import PDFDownloadLink from './PDFDownloadLink.vue'
 export { usePdf } from '@/composables'
+export { fontStore } from '@/render'
+export type { Style } from '@react-pdf/types'
+
 export * from '@/components'
 import type {
   renderToBufferType,
