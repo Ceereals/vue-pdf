@@ -1,8 +1,10 @@
+import path from 'node:path'
 import { defineConfig, type Plugin } from 'vitepress'
 import {
   groupIconMdPlugin,
   groupIconVitePlugin,
 } from 'vitepress-plugin-group-icons'
+import vuePdfPlugin from '../../src/plugins/vue-pdf.plugin'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: 'Vue PDF',
@@ -42,6 +44,11 @@ export default defineConfig({
           { text: 'Node API', link: '/reference/node-api' },
         ],
       },
+      {
+        text: 'Examples',
+        activeMatch: '^/examples/',
+        items: [{ text: 'Invoice', link: '/examples/invoice' }],
+      },
     ],
 
     sidebar: {
@@ -71,6 +78,12 @@ export default defineConfig({
           ],
         },
       ],
+      '/examples': [
+        {
+          text: 'Examples',
+          items: [{ text: 'Invoice', link: '/examples/invoice' }],
+        },
+      ],
     },
 
     socialLinks: [
@@ -84,12 +97,23 @@ export default defineConfig({
     },
   },
   vite: {
+    optimizeDeps: {
+      exclude: ['pdfjs-dist'],
+    },
+    resolve: {
+      alias: {
+        '@ceereals/vue-pdf': path.resolve(
+          './node_modules/@ceereals/vue-pdf/dist/dom/index.js'
+        ),
+      },
+    },
     plugins: [
       groupIconVitePlugin({
         customIcon: {
           node: 'vscode-icons:file-type-node',
         },
       }) as Plugin,
+      vuePdfPlugin() as Plugin,
     ],
   },
 })
