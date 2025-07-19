@@ -31,9 +31,7 @@ defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
 })
 const url = computed(() =>
   blobUrl.value
-    ? `${blobUrl?.value}${
-        props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''
-      }`
+    ? `${blobUrl?.value}#toolbar=${+props.showToolbar}`
     : '',
 )
 </script>
