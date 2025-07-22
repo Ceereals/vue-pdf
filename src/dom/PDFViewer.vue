@@ -29,13 +29,23 @@ defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
   // @ts-ignore
   [rootSymbol]: root,
 })
-const url = computed(() =>
-  blobUrl.value
-    ? `${blobUrl?.value}${
-        props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''
-      }`
-    : '',
-)
+const url = computed(() => {
+  if (!blobUrl.value) return ''
+
+  const params = []
+
+  if (props.showToolbar !== undefined) {
+    params.push(`toolbar=${+props.showToolbar}`)
+  }
+
+  if (props.view) {
+    params.push(`view=${props.view}`)
+  }
+
+  const hash = params.length > 0 ? `#${params.join('&')}` : ''
+
+  return `${blobUrl.value}${hash}`
+})
 </script>
 
 <template>

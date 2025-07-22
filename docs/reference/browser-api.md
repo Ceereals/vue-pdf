@@ -25,6 +25,19 @@ import { PDFViewer, Document, ... } from '@ceereals/vue-pdf'
 </template>
 ```
 
+- **Example with view parameter**
+
+```vue
+<script setup>
+import { PDFViewer, Document, ... } from '@ceereals/vue-pdf'
+</script>
+<template>
+  <PDFViewer :showToolbar="true" view="fit" :enableProvideBridge="false">
+    <Document> ... </Document>
+  </PDFViewer>
+</template>
+```
+
 ## `<PDFDownloadLink>` <Badge type="info" text="component" /> {#pdfdownloadlink}
 
 Download link for client-side generated documents.

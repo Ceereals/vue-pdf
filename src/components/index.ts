@@ -1,7 +1,7 @@
 import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
-import { Style } from '@react-pdf/types'
+import type { Style } from '@react-pdf/types'
 
 // #region PDFViewerProps
 interface PDFViewerProps {
@@ -16,6 +16,11 @@ interface PDFViewerProps {
    * @default true
    */
   enableProvideBridge?: boolean
+  /**
+   * Set the view mode for the PDF viewer
+   * @default undefined
+   */
+  view?: string
 }
 // #endregion PDFViewerProps
 

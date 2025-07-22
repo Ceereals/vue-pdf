@@ -182,7 +182,19 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 </template>
 ```
 
-`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents.
+```vue [MyAppWithView.vue] {6-8}
+<script setup>
+import { PDFViewer } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.vue";
+</script>
+<template>
+  <PDFViewer view="fit" :showToolbar="true">
+    <HelloWorldDocument />
+  </PDFViewer>
+</template>
+```
+
+`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents. You can control the toolbar visibility with `showToolbar` and set the view mode with the `view` prop (e.g., `view="fit"`).
 
 #### Using `usePdf` <Badge type="info" text="composable"/>
 

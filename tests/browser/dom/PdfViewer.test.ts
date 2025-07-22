@@ -84,4 +84,32 @@ describe('PdfViewer', () => {
     })
     expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(0)
   })
+  it('should mount PdfViewer with view parameter', async () => {
+    const wrapper = mount(PDFViewer, {
+      props: {
+        showToolbar: true,
+        view: 'fit',
+      },
+      slots: {
+        default() {
+          return [h(Page)]
+        },
+      },
+    })
+    expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(0)
+  })
+  it('should mount PdfViewer with both toolbar and view parameters', async () => {
+    const wrapper = mount(PDFViewer, {
+      props: {
+        showToolbar: false,
+        view: 'fit',
+      },
+      slots: {
+        default() {
+          return [h(Page)]
+        },
+      },
+    })
+    expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(0)
+  })
 })
