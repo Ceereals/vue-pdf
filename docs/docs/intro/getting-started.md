@@ -36,23 +36,6 @@ $ bun add -D @ceereals/vue-pdf
 
 :::
 
-### Vite plugin
-
-The `vue-pdf` package includes a custom Vite plugin that streamlines the integration of modified `@react-pdf/fns` library into your project. This plugin automatically aliases `@react-pdf/fns` to the enhanced version bundled with `vue-pdf`, which introduces an `abort` method to halt layout execution, a critical improvement for managing long or resource-intensive PDF rendering tasks, due to reactivity changes.
-
-```ts [vite.config.ts]
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vuePdf from "@ceereals/vue-pdf/vite";
-
-export default defineConfig({
-  plugins: [vue(), vuePdf()],
-});
-```
-
-> [!NOTE]
-> The Vite plugin is *not mandatory*. Code includes runtime checks to verify if the modified feature is implemented, ensuring that even without the plugin, your project will work correctly. This design allows you to adopt the plugin for convenience, while still maintaining full functionality in its absence.
-
 ## Document component
 
 Here's an example of how to write a simple PDF document template using the components provided by `vue-pdf`:
@@ -169,6 +152,7 @@ For more information about the rendering process, see the [Rendering process](ht
 #### Using `PDFViewer` <Badge type="info" text="component"/>
 
 To render the document in the browser with [`PDFViewer`](../../reference/browser-api#pdfviewer) component do the following:
+:::code-group
 
 ```vue [MyApp.vue] {6-8}
 <script setup>
@@ -182,7 +166,21 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 </template>
 ```
 
-`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents.
+```vue [MyAppWithQueryParams.vue] {6-8}
+<script setup>
+import { PDFViewer } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.vue";
+</script>
+<template>
+  <PDFViewer :queryParams="{ toolbar: 1, view: 'fit' }">
+    <HelloWorldDocument />
+  </PDFViewer>
+</template>
+```
+
+:::
+
+`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents. You can control the toolbar visibility and other query parameters with the `queryParams` prop. More information at [Chromium](https://github.com/chromium/chromium/blob/3c65076a8f20551b8da4784041ba5f6db096f1c0/chrome/browser/resources/pdf/open_pdf_params_parser.ts#L11).
 
 #### Using `usePdf` <Badge type="info" text="composable"/>
 

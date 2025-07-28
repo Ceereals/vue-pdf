@@ -1,20 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.2/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": [
-      "**/dist",
-      "**/coverage",
-      "tsconfig.json",
-      "tsconfig.node.json",
-      "tsconfig.app.json",
-      "package.json"
-    ]
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,
@@ -25,15 +17,10 @@
     "lineEnding": "lf",
     "lineWidth": 80,
     "attributePosition": "auto",
-    "bracketSpacing": true,
-    "ignore": ["**/dist", "**/coverage", "src/react-pdf/**"]
-  },
-  "organizeImports": {
-    "enabled": true
+    "bracketSpacing": true
   },
   "linter": {
     "enabled": true,
-    "ignore": ["**/dist", "**/coverage", "**/node_modules", "src/react-pdf/**"],
     "rules": {
       "recommended": true,
       "suspicious": {

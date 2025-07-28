@@ -24,18 +24,30 @@ const {
   { enableProvideBridge: props.enableProvideBridge },
 )
 
-defineExpose<{ execute: ReturnType<typeof usePdf>['execute'] }>({
+defineExpose<{
+  execute: ReturnType<typeof usePdf>['execute']
+  [rootSymbol]: ReturnType<typeof usePdf>['root'] 
+}>({
   execute,
-  // @ts-ignore
   [rootSymbol]: root,
 })
-const url = computed(() =>
-  blobUrl.value
-    ? `${blobUrl?.value}${
-        props.showToolbar ? `#toolbar=${+props.showToolbar}` : ''
-      }`
-    : '',
-)
+const url = computed(() => {
+  if (!blobUrl.value) return ''
+
+  const params = new URLSearchParams()
+
+  if (props.showToolbar !== undefined) {
+    params.append('toolbar', String(+props.showToolbar))
+  }
+  if (props.queryParams) {
+    Object.entries(props.queryParams).forEach(([key, value]) => {
+      params.append(key, String(value))
+    })
+  }
+
+  const queryString = params.toString()
+  return `${blobUrl.value}#${queryString}`
+})
 </script>
 
 <template>

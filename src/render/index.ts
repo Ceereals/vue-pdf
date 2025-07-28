@@ -21,7 +21,7 @@ export interface PdfRoot {
   document: DocumentNode
 }
 
-const fontStore = new FontStore()
+export const fontStore = new FontStore()
 export const pdfRender = (
   root: PdfRoot,
   { compress, signal }: Partial<{ compress: boolean; signal?: AbortSignal }> = {
