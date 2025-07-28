@@ -13,11 +13,11 @@ const props = withDefaults(
   }>(),
   {
     bridge: false,
-  }
+  },
 )
 provide(
   'bridge',
-  toRef(() => props.bridge)
+  toRef(() => props.bridge),
 )
 const pdfViewer = useTemplateRef('pdfViewer')
 

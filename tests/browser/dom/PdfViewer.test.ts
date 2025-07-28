@@ -55,7 +55,7 @@ describe('PdfViewer', () => {
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.root().document?.children).toHaveLength(2)
     expect(
-      wrapper.vm.root().document?.children[0].children[0].children[0].value
+      wrapper.vm.root().document?.children[0].children[0].children[0].value,
     ).toBe('Hello')
   })
   it('should mount PdfViewer', async () => {
