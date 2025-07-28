@@ -8,6 +8,7 @@ interface PDFViewerProps {
   /**
    * Toggle the visibility of the toolbar
    * @default true
+   * @deprecated Use `queryParams` instead to pass custom parameters to the PDF URL
    */
   showToolbar?: boolean
   /**
@@ -16,6 +17,11 @@ interface PDFViewerProps {
    * @default true
    */
   enableProvideBridge?: boolean
+  /**
+   * Additional query parameters to append to the PDF URL
+   * @default undefined
+   */
+  queryParams?: Record<string, string | number | boolean>
 }
 // #endregion PDFViewerProps
 

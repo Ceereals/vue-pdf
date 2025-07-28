@@ -84,4 +84,57 @@ describe('PdfViewer', () => {
     })
     expect(wrapper.vm[rootSymbol].document?.children).toHaveLength(0)
   })
+
+  it('should add query parameters to the iframe src', async () => {
+    const wrapper = mount(PDFViewer, {
+      props: {
+        queryParams: {
+          toolbar: 0,
+          zoom: 150,
+          page: 2,
+          search: 'test query',
+          highlight: true,
+        },
+      },
+      slots: {
+        default() {
+          return [h(TestDocument, { text: 'text' })]
+        },
+      },
+    })
+
+    // Wait for the component to generate the URL
+    await wrapper.vm.execute()
+    const iframe = wrapper.find('iframe')
+    const src = iframe.attributes('src')
+
+    // Check that query parameters are properly encoded in the URL
+    expect(src).toContain('toolbar=0')
+    expect(src).toContain('zoom=150')
+    expect(src).toContain('page=2')
+    expect(src).toContain('search=test+query')
+    expect(src).toContain('highlight=true')
+  })
+
+  it('should handle empty query parameters', async () => {
+    const wrapper = mount(PDFViewer, {
+      props: {
+        showToolbar: true,
+      },
+      slots: {
+        default() {
+          return [h(TestDocument)]
+        },
+      },
+    })
+
+    await wrapper.vm.execute()
+
+    const iframe = wrapper.find('iframe')
+    const src = iframe.attributes('src')
+
+    // Should only contain the toolbar parameter
+    expect(src).toContain('toolbar=1')
+    expect(src.split('&')).toHaveLength(1)
+  })
 })

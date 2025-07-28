@@ -169,6 +169,7 @@ For more information about the rendering process, see the [Rendering process](ht
 #### Using `PDFViewer` <Badge type="info" text="component"/>
 
 To render the document in the browser with [`PDFViewer`](../../reference/browser-api#pdfviewer) component do the following:
+:::code-group
 
 ```vue [MyApp.vue] {6-8}
 <script setup>
@@ -182,7 +183,21 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 </template>
 ```
 
-`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents.
+```vue [MyAppWithQueryParams.vue] {6-8}
+<script setup>
+import { PDFViewer } from "@ceereals/vue-pdf";
+import HelloWorldDocument from "./HelloWorldDocument.vue";
+</script>
+<template>
+  <PDFViewer :queryParams="{ toolbar: 1, view: 'fit' }">
+    <HelloWorldDocument />
+  </PDFViewer>
+</template>
+```
+
+:::
+
+`PDFViewer` is a web-only component that renders the PDF document in an iframe. It is useful for client-side generated documents. You can control the toolbar visibility and other query parameters with the `queryParams` prop. More information at [Chromium](https://github.com/chromium/chromium/blob/3c65076a8f20551b8da4784041ba5f6db096f1c0/chrome/browser/resources/pdf/open_pdf_params_parser.ts#L11).
 
 #### Using `usePdf` <Badge type="info" text="composable"/>
 
