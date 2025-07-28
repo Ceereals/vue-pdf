@@ -26,7 +26,7 @@ const {
 
 defineExpose<{
   execute: ReturnType<typeof usePdf>['execute']
-  [rootSymbol]: typeof root
+  [rootSymbol]: ReturnType<typeof usePdf>['root'] 
 }>({
   execute,
   [rootSymbol]: root,
