@@ -799,7 +799,10 @@ export const View = createComponent<ViewProps>(P.View, 'View', {
     type: Boolean,
     default: false,
   },
-  wrap: Boolean,
+  wrap: {
+    type: Boolean,
+    default: true,
+  },
   debug: {
     type: Boolean,
     default: false,
