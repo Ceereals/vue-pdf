@@ -19,7 +19,7 @@ Iframe PDF viewer for client-side generated documents.
 import { PDFViewer, Document, ... } from '@ceereals/vue-pdf'
 </script>
 <template>
-  <PDFViewer :showToolbar="false" :enableProvideBridge="false">
+  <PDFViewer :queryParams="{ toolbar: 1 }" :enableProvideBridge="false">
     <Document> ... </Document>
   </PDFViewer>
 </template>
