@@ -3,21 +3,29 @@ import type { SuspenseProps } from 'vue'
 
 export default defineComponent<SuspenseProps>({
   name: 'PDFSuspense',
-  setup(props, { slots }) {
+  emits: ['pending', 'resolve', 'fallback'],
+  setup(props, { slots, emit }) {
     const execute = inject<() => any>('execute', () => void 0)
+    function onPending() {
+      emit('pending')
+    }
     function onFallback() {
-      props.onFallback?.()
+      emit('fallback')
       execute()
     }
     function onResolve() {
-      props.onResolve?.()
+      emit('resolve')
       execute()
     }
     return () => {
-      return h(Suspense, mergeProps(props, { onFallback, onResolve }), {
-        default: () => slots.default?.(),
-        fallback: () => slots.fallback?.(),
-      })
+      return h(
+        Suspense,
+        mergeProps(props, { onPending, onFallback, onResolve }),
+        {
+          default: () => slots.default?.(),
+          fallback: () => slots.fallback?.(),
+        }
+      )
     }
   },
 })
