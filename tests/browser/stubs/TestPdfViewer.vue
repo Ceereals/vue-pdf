@@ -3,8 +3,7 @@
 import { PDFViewer } from '@/dom'
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import TestDocument from './TestDocument.vue'
-import { provide, toRef } from 'vue'
-import { templateRef } from '@vueuse/core'
+import { provide, toRef, useTemplateRef } from 'vue'
 import { rootSymbol } from '@/symbols'
 import type { PdfRoot } from '@/render'
 const props = withDefaults(
@@ -14,21 +13,20 @@ const props = withDefaults(
   }>(),
   {
     bridge: false,
-  },
+  }
 )
 provide(
   'bridge',
-  toRef(() => props.bridge),
+  toRef(() => props.bridge)
 )
-const pdfViewer = templateRef<InstanceType<typeof PDFViewer>>('pdfViewer')
+const pdfViewer = useTemplateRef('pdfViewer')
 
 defineExpose<{ root: () => PdfRoot }>({
-  // @ts-expect-error
-  root: () => pdfViewer.value[rootSymbol],
+  root: () => pdfViewer.value![rootSymbol],
 })
 </script>
 <template>
-  <PDFViewer ref="pdfViewer" enableProvideBridge show-toolbar>
+  <PDFViewer ref="pdfViewer" enableProvideBridge :queryParams="{ toolbar: 1 }">
     <TestDocument :text="text"></TestDocument>
   </PDFViewer>
 </template>
