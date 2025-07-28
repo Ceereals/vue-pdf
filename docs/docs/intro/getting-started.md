@@ -36,23 +36,6 @@ $ bun add -D @ceereals/vue-pdf
 
 :::
 
-### Vite plugin
-
-The `vue-pdf` package includes a custom Vite plugin that streamlines the integration of modified `@react-pdf/fns` library into your project. This plugin automatically aliases `@react-pdf/fns` to the enhanced version bundled with `vue-pdf`, which introduces an `abort` method to halt layout execution, a critical improvement for managing long or resource-intensive PDF rendering tasks, due to reactivity changes.
-
-```ts [vite.config.ts]
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vuePdf from "@ceereals/vue-pdf/vite";
-
-export default defineConfig({
-  plugins: [vue(), vuePdf()],
-});
-```
-
-> [!NOTE]
-> The Vite plugin is *not mandatory*. Code includes runtime checks to verify if the modified feature is implemented, ensuring that even without the plugin, your project will work correctly. This design allows you to adopt the plugin for convenience, while still maintaining full functionality in its absence.
-
 ## Document component
 
 Here's an example of how to write a simple PDF document template using the components provided by `vue-pdf`:

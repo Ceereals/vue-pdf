@@ -47,10 +47,6 @@ export default defineConfig({
       entry: {
         'node/index': path.resolve(__dirname, './src/node/index.ts'),
         'dom/index': path.resolve(__dirname, './src/dom/index.ts'),
-        'vue-pdf-plugin': path.resolve(
-          __dirname,
-          './src/plugins/vue-pdf.plugin.ts',
-        ),
       },
       name: 'vue-pdf',
       formats: ['es'],

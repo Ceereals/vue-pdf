@@ -27,14 +27,6 @@
       "types": "./dist/types/index.d.ts",
       "browser": "./dist/dom/index.js",
       "default": "./dist/node/index.js"
-    },
-    "./fns": {
-      "types": "./dist/fns/index.d.ts",
-      "import": "./dist/fns/index.js"
-    },
-    "./vite": {
-      "types": "./dist/types/vue-pdf-plugin.d.ts",
-      "import": "./dist/vue-pdf-plugin.js"
     }
   },
   "scripts": {

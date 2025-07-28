@@ -47,7 +47,6 @@
     "docs/**/*.md",
     "src/symbols/index.ts",
     "src/composables/*.ts",
-    "src/plugins/vue-pdf.plugin.ts",
     "tests/node/stubs/TestDocument.ts"
   ],
   "vueCompilerOptions": {
