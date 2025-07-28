@@ -31,7 +31,7 @@
   },
   "scripts": {
     "dev": "vite build --watch",
-    "build": "npm run build:fns && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
     "coverage": "vitest run --coverage",
@@ -41,7 +41,6 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "build:fns": "cd src/react-pdf/fns && npm run build",
     "postinstall": "patch-package"
   },
   "dependencies": {
