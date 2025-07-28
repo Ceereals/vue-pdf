@@ -7,7 +7,7 @@ export default mergeConfig(
   defineConfig({
     plugins: [vue()],
     test: {
-      workspace: ['tests/*'],
+      projects: ['tests/*'],
       coverage: {
         thresholds: {
           '100': true,

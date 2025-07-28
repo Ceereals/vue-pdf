@@ -2,6 +2,7 @@ import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
 import { Style } from '@react-pdf/types'
+import Suspense from './Suspense'
 
 // #region PDFViewerProps
 interface PDFViewerProps {
@@ -1065,7 +1066,7 @@ export const RadialGradient = createComponent<RadialGradientProps>(
     fy: [String, Number],
   },
 )
-
+export const PDFSuspense = Suspense
 const components = {
   Document,
   Page,
@@ -1091,6 +1092,7 @@ const components = {
   ClipPath,
   LinearGradient,
   RadialGradient,
+  PDFSuspense: Suspense,
 }
 
 export default components

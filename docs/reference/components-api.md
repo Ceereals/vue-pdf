@@ -162,3 +162,46 @@ No props
 - **Props**
 
 <<< ../../src/components/index.ts#RadialGradientProps
+
+## `<Suspense>`
+
+- **Props**
+
+`PDFSuspense` has the same interface as the native Vue `<Suspense>` component, see [Vue Suspense documentation](https://vuejs.org/api/built-in-components.html#suspense).
+
+- **Example**
+
+:::code-group
+
+```vue [MainDocument.vue]
+<script setup lang="ts">
+import { Document, Page, Text, PDFSuspense } from '@ceereals/vue-pdf'
+import AsyncText from './AsyncText.vue'
+</script>
+<template>
+  <Document>
+    <Page>
+      <PDFSuspense>
+        <template #fallback>
+          <Text>Loading...</Text>
+        </template>
+        <AsyncText />
+      </PDFSuspense>
+    </Page>
+  </Document>
+</template>
+```
+
+```vue [AsyncText.vue]
+<script setup lang="ts">
+import { Text } from '@ceereals/vue-pdf'
+const text = ref(
+  await new Promise((resolve) => setTimeout(() => resolve('Loaded!'), 1000))
+)
+</script>
+<template>
+  <Text>{{ text }}</Text>
+</template>
+```
+
+:::
