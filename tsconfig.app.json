@@ -71,7 +71,6 @@
         "src/composables/*.ts",
         "src/plugins/vue-pdf.plugin.ts",
         "tests/node/stubs/TestDocument.ts",
-        "src/react-pdf/**/*.ts",
     ],
     "vueCompilerOptions": {
         "vitePressExtensions": [

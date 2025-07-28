@@ -1,0 +1,68 @@
+diff --git a/node_modules/@react-pdf/fns/lib/index.d.ts b/node_modules/@react-pdf/fns/lib/index.d.ts
+index e0ed7d4..fd7aa30 100644
+--- a/node_modules/@react-pdf/fns/lib/index.d.ts
++++ b/node_modules/@react-pdf/fns/lib/index.d.ts
+@@ -17,13 +17,17 @@ type LastFnReturnType$1<T extends Fn$1[]> = T extends [
+     (arg: any, ...args: any[]) => Promise<infer R> | infer R,
+     ...any
+ ] ? R : never;
++interface AbortablePromise<T> extends Promise<T> {
++    abort: () => void;
++}
+ /**
+  * Performs right-to-left function composition with async functions support
++ * and returns an abortable promise.
+  *
+- * @param fns - Functions
+- * @returns Composed function
++ * @param fns - Functions to compose
++ * @returns A function that, when invoked, returns an AbortablePromise
+  */
+-declare const asyncCompose: <T extends Fn$1[]>(...fns: T) => (value: FirstFnParameterType$1<T>, ...args: Parameters<T[0]> extends [any, ...infer Rest] ? Rest : []) => Promise<LastFnReturnType$1<T>>;
++declare const asyncCompose: <T extends Fn$1[]>(...fns: T) => (value: FirstFnParameterType$1<T>, ...args: Parameters<T[0]> extends [any, ...infer Rest] ? Rest : []) => AbortablePromise<LastFnReturnType$1<T>>;
+ 
+ /**
+  * Capitalize first letter of each word
+diff --git a/node_modules/@react-pdf/fns/lib/index.js b/node_modules/@react-pdf/fns/lib/index.js
+index a8cc304..e2c3012 100644
+--- a/node_modules/@react-pdf/fns/lib/index.js
++++ b/node_modules/@react-pdf/fns/lib/index.js
+@@ -18,18 +18,28 @@ const adjust = (index, fn, collection) => {
+ /* eslint-disable no-await-in-loop */
+ /**
+  * Performs right-to-left function composition with async functions support
++ * and returns an abortable promise.
+  *
+- * @param fns - Functions
+- * @returns Composed function
++ * @param fns - Functions to compose
++ * @returns A function that, when invoked, returns an AbortablePromise
+  */
+-const asyncCompose = (...fns) => async (value, ...args) => {
+-    let result = value;
+-    const reversedFns = fns.slice().reverse();
+-    for (let i = 0; i < reversedFns.length; i += 1) {
+-        const fn = reversedFns[i];
+-        result = await fn(result, ...args);
+-    }
+-    return result;
++const asyncCompose = (...fns) => (value, ...args) => {
++    const { promise: abortPromise, reject, resolve } = Promise.withResolvers();
++    // Create a promise that will never resolve normally, but can be rejected on abort.
++    const abort = () => reject(new Error('Async compose aborted'));
++    // Compose the functions. Each async step is raced against the abortPromise.
++    const composedPromise = (async () => {
++        let result = value;
++        const reversedFns = fns.slice().reverse();
++        for (const fn of reversedFns) {
++            result = await Promise.race([fn(result, ...args), abortPromise]);
++        }
++        resolve(null);
++        return result;
++    })();
++    // Attach the abort method to the promise.
++    composedPromise.abort = abort;
++    return composedPromise;
+ };
+ 
+ /**
