@@ -2,13 +2,13 @@ import { type Component, h, isVNode, type VNode } from 'vue'
 
 export * from '@/components'
 export * from '@/renderer'
-import { usePdf } from '@/composables'
 import { pdfRender, type PdfRoot } from '@/render'
 import { render } from '@/renderer'
 import type { PDFElement } from '@/renderer/nodeOps'
 import fs from 'node:fs'
 import type { Readable } from 'node:stream'
-export { usePdf }
+export { usePdf } from '@/composables'
+export { fontStore } from '@/render'
 export const PDFViewer = () => {
   throw new Error('PDFViewer is not available in the browser')
 }
