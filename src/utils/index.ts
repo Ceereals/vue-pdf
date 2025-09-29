@@ -1,11 +1,11 @@
 import type { pdfRender } from '@/render'
 
 export function fileStreamToBlob(
-  fileStream: Awaited<ReturnType<typeof pdfRender>>,
+  fileStream: Awaited<ReturnType<typeof pdfRender>>
 ): Promise<Blob> {
   const { promise, resolve, reject } = Promise.withResolvers<Blob>()
-  const chunks: Uint8Array[] = []
-  fileStream.on('data', (chunk: Uint8Array) => {
+  const chunks: BlobPart[] = []
+  fileStream.on('data', (chunk: BlobPart) => {
     chunks.push(chunk)
   })
   fileStream.on('end', () => {
@@ -50,7 +50,7 @@ export function cleanObjectForSeralization(obj: any, recursive = false) {
     }
     if (key === 'children') {
       obj[key] = obj[key].map((child: any) =>
-        cleanObjectForSeralization(child, true),
+        cleanObjectForSeralization(child, true)
       )
     }
     if (key === 'document') {
@@ -61,7 +61,7 @@ export function cleanObjectForSeralization(obj: any, recursive = false) {
 }
 export const omitNils = (object: object) =>
   Object.fromEntries(
-    Object.entries(object).filter(([, value]) => value !== undefined),
+    Object.entries(object).filter(([, value]) => value !== undefined)
   )
 
 export const upperFirst = (str: string) =>
