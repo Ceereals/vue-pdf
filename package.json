@@ -76,6 +76,7 @@
     "eslint-plugin-vue": "^10.5.0",
     "happy-dom": "^19.0.2",
     "husky": "^9.1.7",
+    "jiti": "^2.6.0",
     "lint-staged": "^16.2.3",
     "memfs": "^4.23.0",
     "prettier": "^3.6.2",
