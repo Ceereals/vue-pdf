@@ -11,5 +11,5 @@ export default mergeConfig(
     },
     // ssr: true,
     appType: 'spa',
-  }),
+  })
 )

@@ -39,7 +39,7 @@ export const isTextInstance = (node: PDFNode) => {
   return node.type === 'TEXT_INSTANCE'
 }
 const hasParentNode = (
-  _: PDFNode,
+  _: PDFNode
 ): _ is (Node | TextNode | LinkNode | TspanNode | NoteNode) & {
   parentNode: Exclude<PDFNode, TextInstanceNode> | null
   uid: string
@@ -49,7 +49,7 @@ const hasParentNode = (
 const appendChild = (
   parentInstance: PDFNode,
   child: PDFNode,
-  anchor?: PDFNode | null,
+  anchor?: PDFNode | null
 ) => {
   const isOrphanTextInstance =
     isTextInstance(child) && !isParentText(parentInstance)
@@ -58,7 +58,7 @@ const appendChild = (
   // Caused by cases such as <>{name && <Text>{name}</Text>}</>
   if (isOrphanTextInstance) {
     console.warn(
-      `Invalid '${child.value}' string child outside <Text> component`,
+      `Invalid '${child.value}' string child outside <Text> component`
     )
     return
   }
@@ -76,7 +76,7 @@ const appendChild = (
 }
 
 export const nodeOps: (
-  root?: PDFElement | PDFNode,
+  root?: PDFElement | PDFNode
 ) => RendererOptions<PDFNode, PDFElement | PDFNode> = (root) => ({
   insert: (child, _parent, anchor) => {
     // @ts-expect-error

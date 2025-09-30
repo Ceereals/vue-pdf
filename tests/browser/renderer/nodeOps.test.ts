@@ -72,7 +72,7 @@ describe('nodeOps', () => {
     nodeOps.insert(orphanTextNode, viewNode, null)
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      "Invalid 'Orphan Text' string child outside <Text> component",
+      "Invalid 'Orphan Text' string child outside <Text> component"
     )
     expect(viewNode.children).not.toContain(orphanTextNode)
   })

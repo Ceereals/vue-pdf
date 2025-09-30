@@ -18,7 +18,7 @@ export const PDFDownloadLink = () => {
 // #region renderToStream
 type renderToStreamType = (
   document: Component | VNode,
-  options?: Parameters<typeof pdfRender>[1],
+  options?: Parameters<typeof pdfRender>[1]
 ) => Promise<Readable>
 // #endregion renderToStream
 export const renderToStream: renderToStreamType = (document, options) => {
@@ -39,7 +39,7 @@ export const renderToStream: renderToStreamType = (document, options) => {
 // #region renderToBuffer
 type renderToBufferType = (
   document: Component | VNode,
-  options?: Parameters<typeof pdfRender>[1],
+  options?: Parameters<typeof pdfRender>[1]
 ) => Promise<Buffer<ArrayBuffer>>
 // #endregion renderToBuffer
 export const renderToBuffer: renderToBufferType = (document, options) => {
@@ -61,13 +61,13 @@ export const renderToBuffer: renderToBufferType = (document, options) => {
 type renderToFileType = (
   document: Component | VNode,
   filePath: string,
-  options?: Parameters<typeof pdfRender>[1],
+  options?: Parameters<typeof pdfRender>[1]
 ) => Promise<Readable>
 // #endregion renderToFile
 export const renderToFile: renderToFileType = async (
   document: Component | VNode,
   filePath: string,
-  options?: Parameters<typeof pdfRender>[1],
+  options?: Parameters<typeof pdfRender>[1]
 ) => {
   const output = await renderToStream(document, options)
   const writeStream = fs.createWriteStream(filePath)

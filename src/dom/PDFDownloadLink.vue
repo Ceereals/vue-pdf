@@ -21,7 +21,7 @@ const { url, blob, isLoading } = usePdf(
     })[0] ??
     (() => {
       throw new Error('PDFDownloadLink requires a default slot')
-    })(),
+    })()
 )
 const handleDownloadIE = () => {
   /* v8 ignore next 6 */

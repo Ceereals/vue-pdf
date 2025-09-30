@@ -9,7 +9,7 @@ export default function (): Plugin {
       fs.rm(
         path.resolve('./dist/types/node'),
         { recursive: true },
-        () => void 0,
+        () => void 0
       )
       fs.rm(path.resolve('./dist/types/dom'), { recursive: true }, () => void 0)
     },

@@ -826,7 +826,7 @@ export const Text = createComponent<TextProps>(P.Text, 'Text', {
   debug: {
     type: Boolean,
     default: false,
-    },
+  },
   bookmark: [String, Object],
   // @ts-expect-error
   hyphenationCallback: Function,
@@ -846,7 +846,7 @@ export const Link = createComponent<LinkProps>(P.Link, 'Link', {
   debug: {
     type: Boolean,
     default: false,
-    },
+  },
   bookmark: [String, Object],
   src: String,
 })
@@ -944,7 +944,7 @@ export const Image = createComponent<ImageProps>(P.Image, 'Image', {
   cache: {
     type: Boolean,
     default: true,
-    },
+  },
   bookmark: [String, Object],
   // @ts-expect-error
   src: [String, Function, Object],
@@ -964,7 +964,7 @@ export const Canvas = createComponent<CanvasProps>(P.Canvas, 'Canvas', {
   debug: {
     type: Boolean,
     default: false,
-    },
+  },
   bookmark: [String, Object],
   // @ts-expect-error
   paint: Function,

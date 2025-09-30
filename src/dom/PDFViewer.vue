@@ -21,12 +21,12 @@ const {
     slots.default().filter((slot) => {
       return slot.type !== Symbol.for('v-cmt')
     })[0],
-  { enableProvideBridge: props.enableProvideBridge },
+  { enableProvideBridge: props.enableProvideBridge }
 )
 
 defineExpose<{
   execute: ReturnType<typeof usePdf>['execute']
-  [rootSymbol]: ReturnType<typeof usePdf>['root'] 
+  [rootSymbol]: ReturnType<typeof usePdf>['root']
 }>({
   execute,
   [rootSymbol]: root,

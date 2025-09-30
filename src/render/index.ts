@@ -26,7 +26,7 @@ export const pdfRender = (
   root: PdfRoot,
   { compress, signal }: Partial<{ compress: boolean; signal?: AbortSignal }> = {
     compress: true,
-  },
+  }
 ): Promise<Readable> => {
   const { promise, resolve, reject } = Promise.withResolvers<Readable>()
   const {

@@ -6,9 +6,9 @@ export default mergeConfig(
     test: {
       environment: 'happy-dom',
       setupFiles: ['@vitest/web-worker'],
-          deps: {
+      deps: {
         optimizer: {
-            web: {
+          web: {
             enabled: true,
             include: ['@react-pdf/primitives'],
           },
