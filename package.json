@@ -41,9 +41,11 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "prepare": "husky"
   },
   "dependencies": {
+    "@prettier/plugin-oxc": "^0.0.4",
     "@react-pdf/fns": "^3.1.2",
     "@react-pdf/font": "^4",
     "@react-pdf/layout": "^4",
@@ -68,7 +70,10 @@
     "@vitest/web-worker": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "happy-dom": "^19.0.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
     "memfs": "^4.23.0",
+    "prettier": "^3.6.2",
     "rollup-plugin-dts": "^6.2.1",
     "typescript": "~5.8.2",
     "vite": "^7.0.6",
@@ -79,5 +84,8 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.46.1"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
