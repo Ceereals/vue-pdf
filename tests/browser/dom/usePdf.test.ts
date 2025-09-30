@@ -1,3 +1,4 @@
+// oxlint-disable no-unused-vars
 import { usePdf } from '@/dom'
 import { describe, expect, it } from 'vitest'
 import TestDocument from '../stubs/TestDocument.vue'
@@ -66,7 +67,7 @@ describe('usePdf', () => {
       expect(isLoading.value).toBe(false)
       expect(isFinished.value).toBe(true)
       expect(url.value).toBeDefined()
-    } catch (e) {
+    } catch (_) {
       expect(true).toBe(false)
     }
   })

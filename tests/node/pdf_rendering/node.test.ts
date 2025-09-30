@@ -1,3 +1,4 @@
+// oxlint-disable no-unused-vars
 import { renderToBuffer, renderToFile, renderToStream } from '@/node'
 import { describe, expect, it, vi } from 'vitest'
 import TestDocument from '../stubs/TestDocument'
@@ -10,7 +11,7 @@ describe('renderTo', () => {
       const stream = await renderToStream(TestDocument)
       expect(stream).toBeDefined()
       expect(stream).toBeInstanceOf(Stream.Readable)
-    } catch (e) {
+    } catch (_) {
       expect(true).toBe(false)
     }
   })

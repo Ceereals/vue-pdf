@@ -89,7 +89,7 @@ describe('usePdf errors', () => {
       expect(e.message).toBe('Error modified')
       expect(onError).toHaveBeenCalledOnce()
     }
-    onError.mockImplementationOnce((e) => {})
+    onError.mockImplementationOnce((_) => {})
     try {
       promise.execute(true).catch((e) => {
         expect(e).toBeInstanceOf(Error)

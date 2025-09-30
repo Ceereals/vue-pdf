@@ -11,7 +11,6 @@ describe('nodeOps', () => {
   let pageNode: PDFNode
   let viewNode: PDFNode
   let textNode: PDFNode
-  let imageNode: PDFNode
   let commentNode: PDFNode
 
   beforeEach(() => {
@@ -19,7 +18,6 @@ describe('nodeOps', () => {
     pageNode = nodeOps.createElement('PAGE') as unknown as PDFNode
     viewNode = nodeOps.createElement('VIEW') as unknown as PDFNode
     textNode = nodeOps.createElement('TEXT') as unknown as PDFNode
-    imageNode = nodeOps.createElement('IMAGE') as unknown as PDFNode
     commentNode = nodeOps.createElement('COMMENT') as unknown as PDFNode
   })
   it('should create a root element', () => {

@@ -1,3 +1,4 @@
+// oxlint-disable no-unused-vars
 import { usePdf } from '@/node'
 import { describe, expect, it } from 'vitest'
 import TestDocument from '../stubs/TestDocument.ts'
@@ -23,7 +24,7 @@ describe('usePdf', () => {
         },
       )
       unmount()
-    } catch (e) {
+    } catch (_) {
       expect(true).toBe(false)
     }
   })
@@ -36,14 +37,14 @@ describe('usePdf', () => {
       expect(url.value).toBe(undefined)
       try {
         await promise
-      } catch (e) {
+      } catch (_) {
         expect(true).toBe(false)
       }
       expect(blob.value).toBeInstanceOf(Blob)
       expect(isLoading.value).toBe(false)
       expect(error.value).toBe(null)
       expect(url.value).toBeDefined()
-    } catch (e) {
+    } catch (_) {
       expect(true).toBe(false)
     }
   })
@@ -77,7 +78,7 @@ describe('usePdf', () => {
       expect(isLoading.value).toBe(false)
       expect(isFinished.value).toBe(true)
       expect(url.value).toBeDefined()
-    } catch (e) {
+    } catch (_) {
       expect(true).toBe(false)
     }
   })
