@@ -1,7 +1,7 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
 import viteConfig from './vite.config'
 import vue from '@vitejs/plugin-vue'
-const { plugins, ...config } = viteConfig
+const { plugins: _, ...config } = viteConfig
 export default mergeConfig(
   config,
   defineConfig({
