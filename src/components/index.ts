@@ -1,7 +1,7 @@
 import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
-import { Style } from '@react-pdf/types'
+import type { Style } from '@react-pdf/types'
 import Suspense from './Suspense'
 
 // #region PDFViewerProps
@@ -396,7 +396,7 @@ interface CanvasProps {
   paint?: (
     painter?: any,
     availableWidth?: number,
-    availableHeight?: number,
+    availableHeight?: number
   ) => null
   /**
    * Enables debug mode on view bounding box
@@ -808,6 +808,7 @@ export const View = createComponent<ViewProps>(P.View, 'View', {
     type: Boolean,
     default: false,
   },
+  bookmark: [String, Object],
   // @ts-expect-error
   render: Function,
 })
@@ -825,7 +826,8 @@ export const Text = createComponent<TextProps>(P.Text, 'Text', {
   debug: {
     type: Boolean,
     default: false,
-  },
+    },
+  bookmark: [String, Object],
   // @ts-expect-error
   hyphenationCallback: Function,
   // @ts-expect-error
@@ -844,7 +846,8 @@ export const Link = createComponent<LinkProps>(P.Link, 'Link', {
   debug: {
     type: Boolean,
     default: false,
-  },
+    },
+  bookmark: [String, Object],
   src: String,
 })
 export const Note = createComponent<NoteProps>(P.Note, 'Note', {
@@ -941,7 +944,8 @@ export const Image = createComponent<ImageProps>(P.Image, 'Image', {
   cache: {
     type: Boolean,
     default: true,
-  },
+    },
+  bookmark: [String, Object],
   // @ts-expect-error
   src: [String, Function, Object],
   // @ts-expect-error
@@ -960,7 +964,8 @@ export const Canvas = createComponent<CanvasProps>(P.Canvas, 'Canvas', {
   debug: {
     type: Boolean,
     default: false,
-  },
+    },
+  bookmark: [String, Object],
   // @ts-expect-error
   paint: Function,
 })
@@ -1053,7 +1058,7 @@ export const LinearGradient = createComponent<LinearGradientProps>(
     x2: [String, Number],
     y1: [String, Number],
     y2: [String, Number],
-  },
+  }
 )
 export const RadialGradient = createComponent<RadialGradientProps>(
   P.RadialGradient,
@@ -1064,7 +1069,7 @@ export const RadialGradient = createComponent<RadialGradientProps>(
     fr: [String, Number],
     fx: [String, Number],
     fy: [String, Number],
-  },
+  }
 )
 export const PDFSuspense = Suspense
 const components = {
