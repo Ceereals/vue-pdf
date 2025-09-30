@@ -27,18 +27,18 @@ npm install @ceereals/vue-pdf
 
 ```html
 <script setup>
-import { Document, Page, Text, View, PDFViewer } from "@ceereals/vue-pdf";
-import { reactive } from "vue";
-const viewStyle = reactive({
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-});
+  import { Document, Page, Text, View, PDFViewer } from '@ceereals/vue-pdf'
+  import { reactive } from 'vue'
+  const viewStyle = reactive({
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  })
 
-const textStyle = reactive({
-  fontSize: 24,
-});
+  const textStyle = reactive({
+    fontSize: 24,
+  })
 </script>
 <template>
   <PDFViewer>
@@ -56,29 +56,22 @@ const textStyle = reactive({
 ### Node
 
 ```javascript
-import { Document, Page, Text, View, renderToFile } from "@ceereals/vue-pdf";
-import { defineComponent, h } from "@vue/runtime-core";
-import fs from "fs";
+import { Document, Page, Text, View, renderToFile } from '@ceereals/vue-pdf'
+import { defineComponent, h } from '@vue/runtime-core'
+import fs from 'fs'
 
 const DocumentTemplate = defineComponent(() => {
-    return () => (
-      h(Document, [
-        h(Page, { size: "A4" }, [
-          h(
-            View, { style: viewStyle },
-            [
-              h(
-                Text, { style: textStyle },
-                "Hello, Vue PDF!",
-              ),
-            ],
-          ),
+  return () =>
+    h(Document, [
+      h(Page, { size: 'A4' }, [
+        h(View, { style: viewStyle }, [
+          h(Text, { style: textStyle }, 'Hello, Vue PDF!'),
         ]),
-      ])
-    )
+      ]),
+    ])
 })
 
-const stream = renderToFile(DocumentTemplate,'document.pdf');
+const stream = renderToFile(DocumentTemplate, 'document.pdf')
 ```
 
 ## Documentation

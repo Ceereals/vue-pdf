@@ -3,7 +3,7 @@ name: Run Tests on PRs
 on:
   pull_request:
     branches:
-      - main  # adjust if your main branch has a different name
+      - main # adjust if your main branch has a different name
 
 jobs:
   test:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # change to your desired Node.js version
+          node-version: '22' # change to your desired Node.js version
 
       - name: Install dependencies
         run: npm ci

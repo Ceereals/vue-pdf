@@ -1,6 +1,7 @@
 ---
 outline: 2,3
 ---
+
 # Getting Started
 
 ## Installation
@@ -43,18 +44,18 @@ Here's an example of how to write a simple PDF document template using the compo
 
 ```vue [HelloWorldDocument.vue]
 <script setup>
-import { Document, Page, Text, View } from "@ceereals/vue-pdf";
-import { reactive } from "vue";
+import { Document, Page, Text, View } from '@ceereals/vue-pdf'
+import { reactive } from 'vue'
 const viewStyle = reactive({
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "100%",
-});
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%',
+})
 
 const textStyle = reactive({
   fontSize: 24,
-});
+})
 </script>
 <template>
   <Document>
@@ -68,23 +69,23 @@ const textStyle = reactive({
 ```
 
 ```ts [HelloWorldDocument.ts]
-import { Document, Page, Text, View } from "@ceereals/vue-pdf";
-import { defineComponent, h, reactive } from "vue";
+import { Document, Page, Text, View } from '@ceereals/vue-pdf'
+import { defineComponent, h, reactive } from 'vue'
 
 export default defineComponent(() => {
   const viewStyle = reactive({
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  });
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  })
 
   const textStyle = reactive({
     fontSize: 24,
-  });
+  })
   return () =>
     h(Document, [
-      h(Page, { size: "A4" }, [
+      h(Page, { size: 'A4' }, [
         h(
           View,
           {
@@ -96,30 +97,30 @@ export default defineComponent(() => {
               {
                 style: textStyle,
               },
-              "Hello, Vue PDF!",
+              'Hello, Vue PDF!'
             ),
-          ],
+          ]
         ),
       ]),
-    ]);
-});
+    ])
+})
 ```
 
 ```tsx [HelloWorldDocument.tsx]
-import { Document, Page, Text, View } from "@ceereals/vue-pdf";
-import { defineComponent, reactive } from "vue";
+import { Document, Page, Text, View } from '@ceereals/vue-pdf'
+import { defineComponent, reactive } from 'vue'
 
 export default defineComponent(() => {
   const viewStyle = reactive({
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  });
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  })
 
   const textStyle = reactive({
     fontSize: 24,
-  });
+  })
   return () => (
     <Document>
       <Page size="A4">
@@ -128,8 +129,8 @@ export default defineComponent(() => {
         </View>
       </Page>
     </Document>
-  );
-});
+  )
+})
 ```
 
 :::
@@ -156,8 +157,8 @@ To render the document in the browser with [`PDFViewer`](../../reference/browser
 
 ```vue [MyApp.vue] {6-8}
 <script setup>
-import { PDFViewer } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.vue";
+import { PDFViewer } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.vue'
 </script>
 <template>
   <PDFViewer>
@@ -168,8 +169,8 @@ import HelloWorldDocument from "./HelloWorldDocument.vue";
 
 ```vue [MyAppWithQueryParams.vue] {6-8}
 <script setup>
-import { PDFViewer } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.vue";
+import { PDFViewer } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.vue'
 </script>
 <template>
   <PDFViewer :queryParams="{ toolbar: 1, view: 'fit' }">
@@ -189,23 +190,23 @@ To render the document in the browser on your own, you can use the [`usePdf`](..
 
 ```vue [MyVueComponent.vue] {6}
 <script setup>
-import { h } from "vue";
-import { usePdf } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.vue";
+import { h } from 'vue'
+import { usePdf } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.vue'
 
-const { url } = usePdf(h(HelloWorldDocument, /* props */));
+const { url } = usePdf(h(HelloWorldDocument /* props */))
 </script>
 <template>
-  <iframe :src="url"/>
+  <iframe :src="url" />
 </template>
 ```
 
 ```vue [MyVueComponent.vue - no render function] {5}
 <script setup>
-import { usePdf } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.vue";
+import { usePdf } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.vue'
 
-const { url } = usePdf(HelloWorldDocument);
+const { url } = usePdf(HelloWorldDocument)
 </script>
 <template>
   <iframe :src="url" />
@@ -222,22 +223,18 @@ To generate a PDF file using `Node.js`, you can use the `renderToFile` function 
 ::: code-group
 
 ```js [index.js]
-import { renderToFile } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.ts";
+import { renderToFile } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.ts'
 
-
-await renderToFile(HelloWorldDocument, "hello-world.pdf");
-
+await renderToFile(HelloWorldDocument, 'hello-world.pdf')
 ```
 
 ```js [withProps.js]
-import { h } from "vue";
-import { renderToFile } from "@ceereals/vue-pdf";
-import HelloWorldDocument from "./HelloWorldDocument.ts";
+import { h } from 'vue'
+import { renderToFile } from '@ceereals/vue-pdf'
+import HelloWorldDocument from './HelloWorldDocument.ts'
 
-
-await renderToFile(h(HelloWorldDocument, /** props */), "hello-world.pdf");
-
+await renderToFile(h(HelloWorldDocument /** props */), 'hello-world.pdf')
 ```
 
 :::

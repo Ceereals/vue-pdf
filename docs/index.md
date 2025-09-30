@@ -3,12 +3,12 @@
 layout: home
 
 hero:
-  name: "Vue PDF"
-  text: "Custom Renderer for PDF Creation"
-  tagline: "Create PDF documents using Vue components"
+  name: 'Vue PDF'
+  text: 'Custom Renderer for PDF Creation'
+  tagline: 'Create PDF documents using Vue components'
   actions:
     - theme: brand
-      text: Get Started 
+      text: Get Started
       link: /docs/intro/getting-started
     - theme: alt
       text: Reference

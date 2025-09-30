@@ -11,7 +11,7 @@ title: Node API
 <<< ../../src/node/index.ts#renderToFile
 
 - **Example**
-::: code-group
+  ::: code-group
 
 ```ts [index.ts]
 import { renderToFile } from '@ceereals/vue-pdf/node'
@@ -25,27 +25,32 @@ import { h } from 'vue'
 import { renderToFile } from '@ceereals/vue-pdf/node'
 import HelloWorldDocument from './HelloWorldDocument.ts'
 
-await renderToFile(h(HelloWorldDocument, {/** props */}), 'output.pdf')
+await renderToFile(
+  h(HelloWorldDocument, {
+    /** props */
+  }),
+  'output.pdf'
+)
 ```
 
 ```ts [HelloWorldDocument.ts]
-import { Document, Page, Text, View } from "@ceereals/vue-pdf";
-import { defineComponent, h, reactive } from "vue";
+import { Document, Page, Text, View } from '@ceereals/vue-pdf'
+import { defineComponent, h, reactive } from 'vue'
 
 export default defineComponent(() => {
   const viewStyle = reactive({
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  });
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  })
 
   const textStyle = reactive({
     fontSize: 24,
-  });
+  })
   return () =>
     h(Document, [
-      h(Page, { size: "A4" }, [
+      h(Page, { size: 'A4' }, [
         h(
           View,
           {
@@ -57,13 +62,13 @@ export default defineComponent(() => {
               {
                 style: textStyle,
               },
-              "Hello, Vue PDF!",
+              'Hello, Vue PDF!'
             ),
-          ],
+          ]
         ),
       ]),
-    ]);
-});
+    ])
+})
 ```
 
 :::
@@ -75,7 +80,7 @@ export default defineComponent(() => {
 <<< ../../src/node/index.ts#renderToStream
 
 - **Example**
-::: code-group
+  ::: code-group
 
 ```ts [index.ts]
 import { renderToStream } from '@ceereals/vue-pdf'
@@ -87,7 +92,7 @@ stream.pipe(fs.createWriteStream('output.pdf'))
 
 ```ts [indexWithProp.ts]
 import { h } from 'vue'
-import 
+import
 import { renderToStream } from '@ceereals/vue-pdf'
 import HelloWorldDocument from './HelloWorldDocument.ts'
 
@@ -120,7 +125,11 @@ import { h } from 'vue'
 import { renderToBuffer } from '@ceereals/vue-pdf'
 import HelloWorldDocument from './HelloWorldDocument.ts'
 
-const buffer = await renderToBuffer(h(HelloWorldDocument, {/** props */}))
+const buffer = await renderToBuffer(
+  h(HelloWorldDocument, {
+    /** props */
+  })
+)
 fs.writeFileSync('output.pdf', buffer)
 ```
 

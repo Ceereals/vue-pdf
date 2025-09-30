@@ -103,5 +103,6 @@ const { url } = await usePdf(
 ```
 
 :::
+
 > [!Note]
 > You can also use `usePdf` in Node.js and use the Vue reactivity system without needing to create a Vue App.
