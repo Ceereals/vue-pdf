@@ -1,7 +1,5 @@
 <script setup lang="ts">
-// biome-ignore lint/style/useImportType: <explanation>
 import { PDFViewer } from '@/dom'
-// biome-ignore lint/correctness/noUnusedImports: <explanation>
 import TestDocument from './TestDocument.vue'
 import { provide, toRef, useTemplateRef } from 'vue'
 import { rootSymbol } from '@/symbols'

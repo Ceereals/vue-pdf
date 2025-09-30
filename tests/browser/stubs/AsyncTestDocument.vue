@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// biome-ignore lint/correctness/noUnusedImports: <explanation>
 import { Document, Page, Text } from '@/components'
 import { ref } from 'vue'
 const props = withDefaults(
