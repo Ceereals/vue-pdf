@@ -1,5 +1,5 @@
 import {
-  ComponentObjectPropsOptions,
+  type ComponentObjectPropsOptions,
   defineComponent,
   h,
   inject,
