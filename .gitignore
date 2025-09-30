@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 coverage
-!.github/copilot-instructions.md
+.github/copilot-instructions.md
 # docs
 docs/.vitepress/dist
 docs/.vitepress/cache
