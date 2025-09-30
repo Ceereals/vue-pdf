@@ -1,3 +1,4 @@
+// oxlint-disable no-thenable
 import { type PdfRoot, pdfRender } from '@/render'
 import { render } from '@/renderer'
 import { fileStreamToBlob } from '@/utils'
@@ -14,6 +15,7 @@ import {
   type ComponentInternalInstance,
   type MaybeRefOrGetter,
   type Ref,
+  type ShallowRef,
   type VNode,
   defineComponent,
   getCurrentInstance,
@@ -26,6 +28,7 @@ import {
   shallowRef,
   toValue,
 } from 'vue'
+
 // #region usePdf
 interface UsePdfConfig {
   /**
@@ -51,7 +54,7 @@ interface UsePdfReturn {
   blob: Readonly<Ref<Blob | null>>
   url: Readonly<Ref<string | undefined>>
   error: Readonly<Ref<Error | null>>
-  root: Readonly<Ref<PdfRoot>>
+  root: Readonly<ShallowRef<PdfRoot, PdfRoot>>
   /**
    * Manually call the render function
    * @param throwOnFailed false
@@ -65,15 +68,15 @@ interface UsePdfReturn {
 }
 
 export function usePdf(
-  doc: MaybeRefOrGetter<Component | VNode>,
+  doc: MaybeRefOrGetter<Component | VNode>
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  options: UsePdfConfig,
+  options: UsePdfConfig
 ): UsePdfReturn & PromiseLike<UsePdfReturn>
 export function usePdf(
   doc: MaybeRefOrGetter<Component | VNode>,
-  config?: UsePdfConfig,
+  config?: UsePdfConfig
 ): UsePdfReturn & PromiseLike<UsePdfReturn> {
   // #endregion usePdf
   const root = shallowRef<PdfRoot>({
@@ -96,7 +99,19 @@ export function usePdf(
     isLoading.value = loading
     isFinished.value = !loading
   }
-
+  let settled = false
+  const settleOk = () => {
+    if (!settled) {
+      settled = true
+      readyOk()
+    }
+  }
+  const settleErr = (err: Error) => {
+    if (!settled) {
+      settled = true
+      readyErr(err)
+    }
+  }
   const createInternalComponent = () =>
     defineComponent({
       setup() {
@@ -113,7 +128,7 @@ export function usePdf(
         function mergeProvides(
           currentInstance?: ComponentInternalInstance & {
             provides?: Record<string, unknown>
-          },
+          }
         ) {
           /* v8 ignore next 3 */
           if (!currentInstance) {
@@ -181,7 +196,7 @@ export function usePdf(
         const blobResult = await fileStreamToBlob(result)
         blob.value = blobResult
         loading(false)
-        resolve(shell)
+        settleOk()
       } catch (err: any) {
         if (err.message === 'Cancelled') {
           if (options.onError) {
@@ -201,8 +216,8 @@ export function usePdf(
           }
         }
         loading(false)
+        settleErr(error.value as Error)
         if (throwOnFailed) throw error.value
-        reject(error.value as Error)
         // if canceled is another execute that is called
         return
       }
@@ -224,26 +239,25 @@ export function usePdf(
     unmount,
     root: readonly(root) as UsePdfReturn['root'],
   }
-  const { promise, resolve, reject } = Promise.withResolvers() as {
-    promise: Promise<UsePdfReturn>
-    resolve: (value: UsePdfReturn) => void
-    reject: (error: Error) => void
-  }
+  const {
+    promise: ready,
+    resolve: readyOk,
+    reject: readyErr,
+  } = Promise.withResolvers<void>()
 
   tryOnBeforeMount(() => {
     if (options.reactive) mount()
     if (!options.reactive) {
-      resolve(shell)
+      settleOk()
     }
   })
   tryOnBeforeUnmount(() => {
+    abortController.abort()
     unmount()
   })
-
   return {
     ...shell,
-    then(onFullfilled, onRejected) {
-      return promise.then(onFullfilled, onRejected)
-    },
+    then: (onFulfilled: any, onRejected?: any) =>
+      ready.then(() => onFulfilled(shell), onRejected),
   }
 }
