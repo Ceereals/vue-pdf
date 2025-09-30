@@ -38,7 +38,7 @@ function removeCircular(obj: any) {
   recurse(obj)
 }
 export function cleanObjectForSeralization(obj: any, recursive = false) {
-  !recursive && removeCircular(obj)
+  if (!recursive) removeCircular(obj)
   for (const key in obj) {
     /* v8 ignore next 16 */
     if (key === 'props') {
