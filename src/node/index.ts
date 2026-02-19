@@ -15,6 +15,9 @@ export const PDFViewer = () => {
 export const PDFDownloadLink = () => {
   throw new Error('PDFDownloadLink is not available in the browser')
 }
+export const PDFPrint = () => {
+  throw new Error('PDFPrint is not available in the browser')
+}
 // #region renderToStream
 type renderToStreamType = (
   document: Component | VNode,
