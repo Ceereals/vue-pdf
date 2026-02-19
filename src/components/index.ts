@@ -1,7 +1,7 @@
 import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
-import { Style } from '@react-pdf/types'
+import type { Style } from '@react-pdf/types'
 import Suspense from './Suspense'
 
 // #region PDFViewerProps
