@@ -55,6 +55,36 @@ import { PDFDownloadLink, Document, ... } from '@ceereals/vue-pdf'
 </template>
 ```
 
+## `<PDFPrint>` <Badge type="info" text="component" /> {#pdfprint}
+
+Print link for client-side generated documents.
+
+- **Props**
+
+<<< ../../src/components/index.ts#PDFPrintProps
+
+- **Slots**
+
+<<< ../../src/components/index.ts#PDFPrintSlots
+
+- **Events**
+
+<<< ../../src/components/index.ts#PDFPrintEvents
+
+- **Example**
+
+```vue
+<script setup>
+import { PDFPrint, Document, ... } from '@ceereals/vue-pdf'
+</script>
+<template>
+  <PDFPrint>
+    <template #label> Print Now! </template>
+    <Document> ... </Document>
+  </PDFPrint>
+</template>
+```
+
 ## `usePdf` <Badge type="info" text="composable" /> {#usepdf}
 
 Vue composable for generating PDF documents.

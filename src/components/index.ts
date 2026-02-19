@@ -1,7 +1,7 @@
 import * as P from '@react-pdf/primitives'
 import createComponent from './createComponent'
 import type { VNode } from 'vue'
-import type { Style } from '@react-pdf/types'
+import { Style } from '@react-pdf/types'
 import Suspense from './Suspense'
 
 // #region PDFViewerProps
@@ -57,11 +57,40 @@ interface PDFDownloadLinkEvents {
 }
 // #endregion PDFDownloadLinkEvents
 
+// #region PDFPrintProps
+interface PDFPrintProps {
+  /**
+   * The label of the print link
+   * @default 'Print'
+   */
+  label?: string
+}
+// #endregion PDFPrintProps
+
+// #region PDFPrintSlots
+interface PDFPrintSlots {
+  /**
+   * @returns VNode[] Must return an array with a single `<Document>` component's VNode, if more than one is provided, only the first one will be used
+   */
+  default: () => VNode[]
+  label?: (params: { blob: Blob | null }) => VNode[] | string
+}
+// #endregion PDFPrintSlots
+
+// #region PDFPrintEvents
+interface PDFPrintEvents {
+  click: [event: MouseEvent]
+}
+// #endregion PDFPrintEvents
+
 export type {
   PDFViewerProps,
   PDFDownloadLinkProps,
   PDFDownloadLinkSlots,
   PDFDownloadLinkEvents,
+  PDFPrintProps,
+  PDFPrintSlots,
+  PDFPrintEvents,
 }
 // #region DocumentProps
 type PageMode =
