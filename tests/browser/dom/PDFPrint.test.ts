@@ -6,6 +6,21 @@ import TestDocument from '../stubs/TestDocument.vue'
 import { h } from 'vue'
 
 describe('PDFPrint', () => {
+  it('should render default label when label slot is not provided', async () => {
+    const wrapper = mount(PDFPrint, {
+      slots: {
+        default() {
+          return [h(TestDocument)]
+        },
+      },
+    })
+    const { promise, resolve } = Promise.withResolvers()
+    setTimeout(resolve, 150)
+    await promise
+    const link = wrapper.get('a')
+    expect(link.text()).toBe('Print')
+  })
+
   it('should render a link with the correct href', async () => {
     const wrapper = mount(PDFPrint, {
       slots: {
@@ -74,5 +89,42 @@ describe('PDFPrint', () => {
       // @ts-expect-error
       expect(error?.message).toMatch('PDFPrint requires a default slot')
     }
+  })
+
+  it('should throw when an empty array is passed as default slot', async () => {
+    try {
+      mount(PDFPrint, {
+        slots: {
+          label: 'Print',
+          default() {
+            return []
+          },
+        },
+      })
+    } catch (error) {
+      // @ts-expect-error
+      expect(error?.message).toMatch('PDFPrint requires a default slot')
+    }
+  })
+
+  it('should return early on click when url is not available', async () => {
+    const open = vi.spyOn(window, 'open')
+    const wrapper = mount(PDFPrint, {
+      slots: {
+        default() {
+          return [h(TestDocument)]
+        },
+      },
+    })
+    expect(wrapper.find('a').exists()).toBe(false)
+
+    const onClick = (
+      wrapper.vm as unknown as { $: { setupState: { onClick: (e: MouseEvent) => void } } }
+    ).$.setupState.onClick
+    const preventDefault = vi.fn()
+    onClick({ preventDefault } as unknown as MouseEvent)
+
+    expect(preventDefault).not.toHaveBeenCalled()
+    expect(open).not.toHaveBeenCalled()
   })
 })
